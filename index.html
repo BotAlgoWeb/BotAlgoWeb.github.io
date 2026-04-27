@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOT ALGO — Algoritmo Avanzato TradingView</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070b0f;
+  --bg2: #0d1319;
+  --bg3: #121920;
+  --card: #0f1822;
+  --border: #1a2d3d;
+  --green: #00e676;
+  --green-dim: #00e67622;
+  --cyan: #00bcd4;
+  --cyan-dim: #00bcd415;
+  --red: #ff4444;
+  --red-dim: #ff444418;
+  --gold: #c8940a;
+  --gold-dim: rgba(200,148,10,0.10);
+  --blue: #42a5f5;
+  --purple: #ab47bc;
+  --text: #d8e8f4;
+  --text-muted: #8aaabb;
+  --text-bright: #f0f8ff;
+  --mono: 'Share Tech Mono', monospace;
+  --display: 'Bebas Neue', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── SCANLINES ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(7,11,15,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1rem;
+  height: 52px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+nav .nav-links {
+  display: flex; align-items: center; gap: 4px;
+  flex: 1; justify-content: center;
+}
+nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  height: 30px;
+  display: inline-flex; align-items: center;
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 5px;
+  background: rgba(255,255,255,0.03);
+  transition: color .2s, border-color .2s, background .2s, box-shadow .2s;
+}
+nav a:hover {
+  color: var(--green);
+  border-color: rgba(0,230,118,0.5);
+  background: rgba(0,230,118,0.07);
+}
+nav a.nav-active {
+  color: var(--green);
+  border-color: var(--green);
+  background: rgba(0,230,118,0.12);
+  box-shadow: 0 0 8px rgba(0,230,118,0.2);
+}
+#clicca-btn.clicca-active {
+  border-color: rgba(232,255,0,0.85) !important;
+  box-shadow: 0 0 16px rgba(232,255,0,.25) !important;
+  background: rgba(232,255,0,0.12) !important;
+}
+#clicca-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  border: 1px solid rgba(232,255,0,0.3);
+  border-radius: 5px;
+  padding: 3px 8px;
+  background: rgba(232,255,0,0.04);
+  cursor: default;
+  transition: border-color .25s, box-shadow .25s, background .25s;
+}
+#clicca-btn:hover {
+  border-color: rgba(232,255,0,0.8);
+  box-shadow: 0 0 16px rgba(232,255,0,.2);
+  background: rgba(232,255,0,0.09);
+}
+.nav-logo {
+  font-family: var(--display);
+  font-size: 20px;
+  color: #ffd700;
+  text-shadow: 0 0 12px rgba(200,148,10,0.6);
+  letter-spacing: 3px;
+  margin-right: 1rem;
+  border: 1px solid rgba(200,148,10,0.35);
+  border-radius: 5px;
+  padding: 3px 10px;
+  background: rgba(200,148,10,0.05);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  border: 1px solid var(--cyan);
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-left: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  opacity: 0;
+}
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(ellipse, rgba(0,230,118,0.08) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)} }
+
+.hero-tag {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--cyan);
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  animation: fadeUp .6s ease both;
+  display: inline-block;
+  border: 1.5px solid var(--cyan);
+  border-radius: 50px;
+  padding: .55rem 2.2rem;
+  background: rgba(0,188,212,0.06);
+  backdrop-filter: blur(4px);
+}
+.hero-title {
+  font-family: var(--display);
+  font-size: clamp(72px, 14vw, 160px);
+  line-height: .9;
+  letter-spacing: 8px;
+  color: var(--text-bright);
+  text-shadow: 0 0 80px rgba(0,230,118,0.2);
+  animation: fadeUp .6s .1s ease both;
+}
+.hero-title span { color: var(--green); }
+.hero-sub {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--green);
+  letter-spacing: .18em;
+  margin: 1rem 0 3rem;
+  animation: fadeUp .6s .2s ease both;
+  display: inline-block;
+  border: 1.5px solid rgba(0,230,118,0.55);
+  border-radius: 50px;
+  padding: .55rem 2.5rem;
+  background: rgba(0,230,118,0.05);
+  backdrop-filter: blur(4px);
+  text-transform: uppercase;
+}
+.hero-badges {
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  animation: fadeUp .6s .3s ease both;
+  margin-bottom: 3rem;
+}
+.badge {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  transition: border-color .25s, box-shadow .25s;
+}
+.badge:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 18px rgba(0,230,118,.18);
+}
+.badge-num { font-size: 28px; color: var(--green); font-family: var(--display); letter-spacing: 2px; }
+.badge-label { color: var(--text-muted); font-size: 10px; letter-spacing: .1em; }
+.markets-row {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp .6s .4s ease both;
+}
+.market-pill {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  letter-spacing: .1em;
+}
+.market-btn {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+  display: inline-block;
+}
+.market-btn:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── SECTIONS ── */
+section {
+  padding: 52px 2rem 44px;
+  min-height: calc(100vh - 52px);
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.section-header {
+  margin-bottom: 1.6rem;
+  text-align: center;
+}
+.section-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: .3em;
+  margin-bottom: .4rem;
+  display: inline-block;
+  border: 1px solid rgba(0,230,118,0.4);
+  border-radius: 4px;
+  padding: 2px 10px;
+  background: rgba(0,230,118,0.06);
+}
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(38px, 5.5vw, 58px);
+  letter-spacing: 3px;
+  color: #c8940a;
+  text-shadow: 0 0 30px rgba(200,148,10,0.45), 0 0 60px rgba(200,148,10,0.15);
+  line-height: 1;
+}
+.section-desc {
+  font-size: 14px;
+  color: var(--text);
+  margin-top: .6rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--green), transparent);
+  margin-bottom: 1.6rem;
+}
+
+/* ── FLOW STEPS ── */
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.flow-step {
+  background: var(--card);
+  padding: 1.5rem;
+  position: relative;
+  transition: background .2s;
+}
+.flow-step:hover { background: var(--bg3); }
+.step-num {
+  font-family: var(--display);
+  font-size: 48px;
+  color: var(--border);
+  position: absolute;
+  top: .5rem; right: 1rem;
+  line-height: 1;
+  letter-spacing: 2px;
+}
+.step-icon { font-size: 24px; margin-bottom: .5rem; }
+.step-name {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--green);
+  letter-spacing: .1em;
+  margin-bottom: .25rem;
+}
+.step-detail { font-size: 13px; color: var(--text); }
+.flow-warning {
+  margin-top: 1rem;
+  background: rgba(255,68,68,.08);
+  border: 1px solid rgba(255,68,68,.3);
+  border-radius: 6px;
+  padding: .75rem 1rem;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--red);
+}
+
+/* ── SIGNAL CARDS ── */
+.signal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.signal-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+.signal-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--green);
+  box-shadow: 0 8px 32px rgba(0,230,118,.1);
+}
+.signal-head {
+  background: var(--green-dim);
+  border-bottom: 1px solid var(--border);
+  padding: .75rem 1rem;
+  display: flex; align-items: center; gap: .75rem;
+}
+.signal-code {
+  font-family: var(--display);
+  font-size: 28px;
+  color: var(--green);
+  letter-spacing: 2px;
+}
+.signal-name-block { flex: 1; }
+.signal-fullname { font-size: 13px; color: var(--cyan); font-weight: 500; }
+.signal-tags { display: flex; gap: 4px; margin-top: 3px; }
+.sig-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid;
+}
+.sig-buy { color: var(--green); border-color: var(--green); background: var(--green-dim); }
+.sig-sell { color: var(--red); border-color: var(--red); background: var(--red-dim); }
+.signal-body { padding: 1rem; }
+.signal-params {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+  margin-bottom: .5rem;
+}
+.signal-desc { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+/* ── FILTER CARDS ── */
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 2rem;
+}
+@media(max-width:700px){ .filter-grid { grid-template-columns: 1fr; } }
+.filter-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+.filter-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--cyan);
+  margin-bottom: .75rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid var(--border);
+}
+.filter-rule {
+  display: flex; align-items: center; gap: .5rem;
+  font-size: 12px;
+  margin-bottom: .4rem;
+}
+.arrow-up { color: var(--green); font-size: 14px; }
+.arrow-dn { color: var(--red); font-size: 14px; }
+.filter-note { font-size: 12px; color: var(--text); margin-top: .75rem; }
+
+.mode-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media(max-width:600px){ .mode-grid { grid-template-columns: 1fr; } }
+.mode-card {
+  border-radius: 8px;
+  padding: 1.25rem;
+  border: 1px solid;
+}
+.mode-yellow { background: #1a1700; border-color: #5a4800; }
+.mode-blue   { background: #001620; border-color: #004a6a; }
+.mode-label {
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: 2px;
+  margin-bottom: .5rem;
+}
+.mode-yellow .mode-label { color: var(--gold); }
+.mode-blue   .mode-label { color: var(--blue); }
+.mode-desc { font-size: 12px; line-height: 1.5; }
+.mode-yellow .mode-desc { color: #d4b020; }
+.mode-blue   .mode-desc { color: #88cce4; }
+
+/* ── TABLES ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 12px;
+  margin-top: 1rem;
+}
+.data-table th {
+  background: var(--bg3);
+  color: var(--cyan);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-align: left;
+  padding: .5rem .75rem;
+  border-bottom: 1px solid var(--border);
+}
+.data-table td {
+  padding: .5rem .75rem;
+  border-bottom: 1px solid rgba(26,45,61,.5);
+  color: var(--text);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--bg3); }
+.td-green { color: var(--green); }
+.td-gold  { color: var(--gold); }
+
+/* ── TP/SL CARDS ── */
+.tp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.tp-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.tp-head {
+  padding: .75rem 1rem;
+  display: flex; align-items: center; gap: .75rem;
+  border-bottom: 1px solid var(--border);
+}
+.tp-icon { font-size: 22px; }
+.tp-title-block { flex: 1; }
+.tp-name { font-family: var(--mono); font-size: 13px; color: var(--cyan); }
+.tp-priority {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+.tp-body { padding: 1rem; }
+.tp-example {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+  background: var(--bg3);
+  border-radius: 4px;
+  padding: .5rem .75rem;
+  margin-top: .75rem;
+}
+.tp-desc { font-size: 13px; color: var(--text); line-height: 1.5; }
+
+/* ── SIM SECTION ── */
+.sim-card {
+  background: linear-gradient(135deg, #0a1520 0%, #071018 100%);
+  border: 1px solid var(--cyan);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0,188,212,.08);
+}
+.sim-header {
+  background: rgba(0,188,212,.08);
+  border-bottom: 1px solid rgba(0,188,212,.2);
+  padding: 1rem 1.5rem;
+  display: flex; align-items: center; gap: 1.25rem;
+}
+.sim-icon { font-size: 30px; }
+.sim-title { font-family: var(--display); font-size: 26px; color: var(--cyan); letter-spacing: 4px; }
+.sim-subtitle { font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+.new-badge {
+  margin-left: auto;
+  background: var(--cyan);
+  color: #000;
+  font-family: var(--display);
+  font-size: 16px;
+  letter-spacing: 2px;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+.sim-body { padding: 2rem; }
+.sim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media(max-width:650px){ .sim-grid { grid-template-columns: 1fr; } }
+.sim-info-block {}
+.sim-info-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.sim-info-item {
+  display: flex; gap: .75rem;
+  margin-bottom: .75rem;
+  font-size: 13px;
+}
+.sim-info-item .dot {
+  width: 6px; height: 6px;
+  background: var(--cyan);
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.code-block {
+  background: #020608;
+  border: 1px solid rgba(0,188,212,.25);
+  border-radius: 8px;
+  padding: 1.25rem;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+.code-comment { color: #3a6a7a; }
+.code-keyword { color: #ab47bc; }
+.code-func    { color: var(--cyan); }
+.code-string  { color: var(--gold); }
+.code-var     { color: var(--green); }
+.code-num     { color: #ff8a65; }
+.code-param   { color: var(--text); }
+
+.sim-states {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+.sim-state {
+  border-radius: 6px;
+  padding: .75rem 1rem;
+  border: 1px solid;
+}
+.sim-on  { background: rgba(0,230,118,.05); border-color: rgba(0,230,118,.3); }
+.sim-off { background: rgba(255,68,68,.05); border-color: rgba(255,68,68,.3); }
+.sim-state-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  margin-bottom: .4rem;
+}
+.sim-on .sim-state-label  { color: var(--green); }
+.sim-off .sim-state-label { color: var(--red); }
+.sim-state-text { font-size: 13px; color: var(--text); }
+
+/* ── ALERT GRID ── */
+.alert-section { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
+@media(max-width:700px){ .alert-section { grid-template-columns: 1fr; } }
+.alert-sounds { display: flex; flex-direction: column; gap: 10px; }
+.alert-sound {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: .75rem 1rem;
+  display: flex; gap: .75rem; align-items: center;
+}
+.alert-sound-icon { font-size: 18px; }
+.alert-sound-name { font-family: var(--mono); font-size: 12px; color: var(--cyan); }
+.alert-sound-desc { font-size: 11px; color: var(--text-muted); }
+.webhook-grid { display: flex; flex-direction: column; gap: 10px; }
+.webhook-group {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.webhook-group-header {
+  background: var(--bg3);
+  padding: .5rem 1rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: .1em;
+  border-bottom: 1px solid var(--border);
+}
+.webhook-items { display: flex; flex-wrap: wrap; gap: 8px; padding: .75rem 1rem; }
+.webhook-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+/* ── ERROR TABLE ── */
+.error-grid { display: grid; gap: 8px; background:var(--card); border:1px solid rgba(255,68,68,.15); border-radius:10px; padding:.85rem; transition:border-color .25s, box-shadow .25s; }
+.error-grid:hover { border-color: rgba(255,68,68,.6); box-shadow: 0 0 22px rgba(255,68,68,.12); }
+.error-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  background: rgba(255,68,68,.04);
+  border: 1px solid rgba(255,68,68,.2);
+  border-radius: 6px;
+  padding: .75rem 1rem;
+  align-items: center;
+}
+.error-cause { font-family: var(--mono); font-size: 12px; color: var(--red); }
+.error-fix {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  background: var(--green-dim);
+  border: 1px solid var(--green);
+  border-radius: 4px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+/* ── TRADING MODES ── */
+.trading-mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:600px){ .trading-mode-grid { grid-template-columns: 1fr; } }
+.tmode-card {
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid;
+}
+.tmode-scalp { background: #100a00; border-color: #4a2f00; }
+.tmode-day   { background: #001a10; border-color: #004a28; }
+.tmode-emoji { font-size: 36px; margin-bottom: .75rem; }
+.tmode-name {
+  font-family: var(--display);
+  font-size: 28px;
+  letter-spacing: 3px;
+  margin-bottom: .5rem;
+}
+.tmode-scalp .tmode-name { color: var(--gold); }
+.tmode-day   .tmode-name { color: var(--green); }
+.tmode-rule { font-size: 13px; color: var(--text); margin-bottom: .35rem; }
+
+/* ── LOGIC TABLE ── */
+.logic-table-wrap { overflow-x: auto; }
+.logic-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.logic-table th { background: var(--bg3); color: var(--cyan); font-size: 10px; letter-spacing: .1em; text-align: left; padding: .5rem .75rem; border: 1px solid var(--border); }
+.logic-table td { padding: .5rem .75rem; border: 1px solid var(--border); }
+.logic-table tr:nth-child(even) td { background: var(--bg3); }
+.tag-scalp { background: #2a1a00; color: var(--gold); border: 1px solid #4a2f00; border-radius: 3px; padding: 1px 6px; }
+.tag-day   { background: var(--green-dim); color: var(--green); border: 1px solid #004a28; border-radius: 3px; padding: 1px 6px; }
+
+/* ── INSTRUMENTS GRID ── */
+.instruments-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media(max-width:650px){ .instruments-grid { grid-template-columns: 1fr; } }
+.instr-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--cyan);
+  letter-spacing: .2em;
+  margin-bottom: .75rem;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+footer strong { color: var(--green); }
+
+/* ── SCROLL INDICATOR ── */
+.scroll-top {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  background: var(--green);
+  color: #000;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: 200;
+  text-decoration: none;
+}
+.scroll-top.visible { opacity: 1; }
+
+/* ── INFO ROW ── */
+.info-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 2rem; justify-content: center; }
+.info-chip {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem 2rem;
+  font-family: var(--mono);
+  font-size: 15px;
+  display: flex; align-items: center; gap: .75rem;
+  flex-direction: column;
+  text-align: center;
+  min-width: 200px;
+  transition: border-color .25s, box-shadow .25s;
+}
+.info-chip:hover {
+  border-color: var(--green);
+  box-shadow: 0 0 22px rgba(0,230,118,.18);
+}
+.chip-label { color: var(--text-muted); font-size:13px; }
+.chip-val   { color: var(--green); font-size: 18px; font-weight: 700; letter-spacing:.05em; }
+
+/* ── PIRAMID CARD ── */
+.pir-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 1rem; }
+@media(max-width:600px){ .pir-grid { grid-template-columns: 1fr; } }
+.pir-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.pir-head { padding: .75rem 1rem; border-bottom: 1px solid var(--border); display: flex; gap: .75rem; align-items: center; }
+.pir-icon { font-size: 20px; }
+.pir-name { font-family: var(--mono); font-size: 13px; color: var(--cyan); }
+.pir-sub  { font-size: 11px; color: var(--text-muted); }
+.pir-body { padding: 1rem; }
+.pir-entry { font-family: var(--mono); font-size: 11px; color: var(--cyan); margin-bottom: .25rem; }
+.pir-result { font-family: var(--mono); font-size: 12px; margin-top: .5rem; padding: .5rem; background: var(--bg3); border-radius: 4px; }
+
+.section-sep {
+  height: 1px;
+  background: var(--border);
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ── ANIMATED TICKER ── */
+.ticker-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ticker-inner {
+  display: inline-block;
+  animation: ticker 70s linear infinite;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #ffffff;
+}
+.ticker-inner span { margin: 0 2rem; }
+.ticker-green { color: var(--green); }
+.ticker-red { color: var(--red); }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── GLOBAL HOVER GLOW EFFECTS ── */
+.flow-step {
+  border: 1px solid transparent !important;
+  transition: background .2s, border-color .25s, box-shadow .25s !important;
+}
+.flow-step:hover {
+  background: var(--bg3) !important;
+  border-color: var(--green) !important;
+  box-shadow: 0 0 18px rgba(0,230,118,.15) !important;
+}
+.tp-card { transition: border-color .25s, box-shadow .25s, transform .2s; }
+.tp-card:hover { border-color: var(--cyan); box-shadow: 0 6px 24px rgba(0,188,212,.15); transform: translateY(-2px); }
+.filter-card { transition: border-color .25s, box-shadow .25s; }
+.filter-card:hover { border-color: var(--cyan) !important; box-shadow: 0 0 20px rgba(0,188,212,.14); }
+.filter-gold:hover { border-color: var(--gold) !important; box-shadow: 0 0 20px rgba(200,148,10,.2) !important; }
+.filter-blue:hover { border-color: var(--blue) !important; box-shadow: 0 0 20px rgba(66,165,245,.18) !important; }
+.pir-card { transition: border-color .25s, box-shadow .25s, transform .2s; }
+.pir-card:hover { border-color: var(--cyan); box-shadow: 0 6px 24px rgba(0,188,212,.13); transform: translateY(-2px); }
+.tmode-card { transition: border-color .25s, box-shadow .25s; }
+.tmode-scalp:hover { border-color: var(--gold) !important; box-shadow: 0 0 22px rgba(200,148,10,.18); }
+.tmode-day:hover { border-color: var(--green) !important; box-shadow: 0 0 22px rgba(0,230,118,.14); }
+.sim-card { transition: border-color .25s, box-shadow .25s; }
+.sim-card:hover { border-color: var(--green); box-shadow: 0 0 40px rgba(0,188,212,.18); }
+/* Utility glow classes for inline-styled cards */
+.hov { transition: border-color .25s, box-shadow .25s !important; }
+.hov:hover { border-color: rgba(0,188,212,0.7) !important; box-shadow: 0 0 20px rgba(0,188,212,.15) !important; }
+.hov-green { transition: border-color .25s, box-shadow .25s !important; }
+.hov-green:hover { border-color: rgba(0,230,118,0.7) !important; box-shadow: 0 0 20px rgba(0,230,118,.15) !important; }
+.hov-red { transition: border-color .25s, box-shadow .25s !important; }
+.hov-red:hover { border-color: rgba(255,68,68,0.7) !important; box-shadow: 0 0 20px rgba(255,68,68,.15) !important; }
+.hov-gold { transition: border-color .25s, box-shadow .25s !important; }
+.hov-gold:hover { border-color: rgba(200,148,10,0.8) !important; box-shadow: 0 0 20px rgba(200,148,10,.18) !important; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <span class="nav-logo">BOT ALGO</span>
+  <div class="nav-links">
+    <a href="#flusso">FLUSSO</a>
+    <a href="#modalita">MODALITÀ</a>
+    <a href="#segnali">SEGNALI</a>
+    <a href="#filtri">FILTRI</a>
+    <a href="#fascia">FASCIA</a>
+    <a href="#entry">ENTRY</a>
+    <a href="#tp">TP</a>
+    <a href="#slts">SL/TS</a>
+    <a href="#target">TARGET</a>
+    <a href="#grafica">GRAFICA</a>
+    <a href="#alert">ALERT</a>
+    <a href="#sim">SIM &amp; BT</a>
+    <a href="#strumenti">STRUMENTI</a>
+    <a href="#fuso">FUSO</a>
+    <a href="#messaggi">MESSAGGI</a>
+  </div>
+  <div id="clicca-btn">
+    <span style="color:#e8ff00;font-size:15px;line-height:1;">←</span>
+    <span style="font-family:var(--mono);font-size:10px;color:#e8ff00;letter-spacing:.08em;white-space:nowrap;">clicca x selezionare</span>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-bar" style="margin-top:52px">
+  <div class="ticker-inner">
+    <span>⚡ <span class="ticker-green">4 SEGNALI INDIPENDENTI</span> — SuperTrend · EMA Cross · Parabolic SaR · Trendline Breakout</span>
+    <span>🔍 <span class="ticker-green">FILTRI SMART</span> — SMA200 + SuperTrend filtrano i segnali falsi e operano solo nel trend principale</span>
+    <span>🎯 <span class="ticker-green">TAKE PROFIT TRIPLO</span> — TP a Punti · TP a Valore · TP Limit su prezzo assoluto</span>
+    <span>🛡️ <span class="ticker-green">STOP AVANZATO</span> — Stop Loss · Trailing Stop Classico · Trailing Dinamico con Break Even</span>
+    <span>💰 <span class="ticker-green">TARGET PROFIT / LOSS</span> — Ferma automaticamente l'operatività al raggiungimento dell'obiettivo giornaliero</span>
+    <span>📅 <span class="ticker-green">BACKTEST STORICO ILLIMITATO</span> — Simula qualsiasi giorno dal 2000 al 2100 direttamente dagli input</span>
+    <span>🔔 <span class="ticker-green">16 ALERT WEBHOOK JSON</span> — Pronti per bot e automazioni: entry, exit profit, exit loss</span>
+    <span>📊 <span class="ticker-green">MULTI-MERCATO</span> — Futures USA · Futures Europa · Azioni · Crypto · Forex · Indici · Commodities</span>
+    <span>⚡ <span class="ticker-green">4 SEGNALI INDIPENDENTI</span> — SuperTrend · EMA Cross · Parabolic SaR · Trendline Breakout</span>
+    <span>🔍 <span class="ticker-green">FILTRI SMART</span> — SMA200 + SuperTrend filtrano i segnali falsi e operano solo nel trend principale</span>
+    <span>🎯 <span class="ticker-green">TAKE PROFIT TRIPLO</span> — TP a Punti · TP a Valore · TP Limit su prezzo assoluto</span>
+    <span>🛡️ <span class="ticker-green">STOP AVANZATO</span> — Stop Loss · Trailing Stop Classico · Trailing Dinamico con Break Even</span>
+    <span>💰 <span class="ticker-green">TARGET PROFIT / LOSS</span> — Ferma automaticamente l'operatività al raggiungimento dell'obiettivo giornaliero</span>
+    <span>📅 <span class="ticker-green">BACKTEST STORICO ILLIMITATO</span> — Simula qualsiasi giorno dal 2000 al 2100 direttamente dagli input</span>
+    <span>🔔 <span class="ticker-green">16 ALERT WEBHOOK JSON</span> — Pronti per bot e automazioni: entry, exit profit, exit loss</span>
+    <span>📊 <span class="ticker-green">MULTI-MERCATO</span> — Futures USA · Futures Europa · Azioni · Crypto · Forex · Indici · Commodities</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-title" style="margin-bottom:1.5rem;text-shadow:0 0 60px rgba(200,148,10,0.5),0 0 120px rgba(200,148,10,0.2);"><span style="color:#c8940a">BOT</span><span style="color:#c8940a"> ALGO</span></div>
+  <div class="hero-tag">▸ TradingView · Pine Script® v6 · Algoritmo Avanzato</div>
+  <div class="hero-sub">Sistema di Trading Automatico Multi-Strategia</div>
+  <div class="hero-badges">
+    <div class="badge"><span class="badge-num">2</span><span class="badge-label">📊 MODALITÀ</span></div>
+    <div class="badge"><span class="badge-num">4</span><span class="badge-label">⚡ SEGNALI</span></div>
+    <div class="badge"><span class="badge-num">4</span><span class="badge-label">🔍 FILTRI SMART</span></div>
+    <div class="badge"><span class="badge-num">16</span><span class="badge-label">🔔 ALERT JSON</span></div>
+    <div class="badge"><span class="badge-num">∞</span><span class="badge-label">📅 BACKTEST</span></div>
+  </div>
+  <div class="markets-row">
+    <span class="market-pill market-btn">📈 FUTURES</span>
+    <span class="market-pill market-btn">🏦 AZIONI</span>
+    <span class="market-pill market-btn">₿ CRYPTO</span>
+    <span class="market-pill market-btn">💱 FOREX</span>
+    <span class="market-pill market-btn">📊 INDICI</span>
+    <span class="market-pill market-btn">🛢 COMMODITIES</span>
+  </div>
+</div>
+
+<!-- FLUSSO -->
+<section id="flusso">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">FLUSSO OPERATIVO</div>
+    <div class="section-desc">Come vengono elaborati i segnali<br>dall'indicatore all'alert</div>
+  </div>
+  <div class="divider"></div>
+  <div class="flow-steps">
+    <div class="flow-step"><span class="step-num">1</span><div class="step-icon">📊</div><div class="step-name">MODALITÀ</div><div class="step-detail">Scalping · Day Trading</div></div>
+    <div class="flow-step"><span class="step-num">2</span><div class="step-icon">⚡</div><div class="step-name">4 SEGNALI</div><div class="step-detail">ST · EMA · PSaR · BRK</div></div>
+    <div class="flow-step"><span class="step-num">3</span><div class="step-icon">🔍</div><div class="step-name">FILTRI</div><div class="step-detail">Nessuno · SMA · ST · Entrambi</div></div>
+    <div class="flow-step"><span class="step-num">4</span><div class="step-icon">⏰</div><div class="step-name">FASCIA ORARIA</div><div class="step-detail">Orario di operatività</div></div>
+    <div class="flow-step"><span class="step-num">5</span><div class="step-icon">🚦</div><div class="step-name">SCELTA SEGNALI</div><div class="step-detail">BUY / SELL / BUY&amp;SELL</div></div>
+    <div class="flow-step"><span class="step-num">6</span><div class="step-icon">📥</div><div class="step-name">APERTURA TRADE</div><div class="step-detail">Prezzo · Qty · Mediazione</div></div>
+    <div class="flow-step"><span class="step-num">7</span><div class="step-icon">💰</div><div class="step-name">GESTIONE TRADE</div><div class="step-detail">TP · SL · TS · Target</div></div>
+    <div class="flow-step"><span class="step-num">8</span><div class="step-icon">📤</div><div class="step-name">CHIUSURA TRADE</div><div class="step-detail">P&amp;L · Commissioni</div></div>
+    <div class="flow-step"><span class="step-num">9</span><div class="step-icon">🔔</div><div class="step-name">ALERT JSON</div><div class="step-detail">Webhook · Bot</div></div>
+    <div class="flow-step"><span class="step-num">10</span><div class="step-icon">🔬</div><div class="step-name">SIM &amp; BACKTEST</div><div class="step-detail">Giorno Specifico · Storico</div></div>
+    <div class="flow-step"><span class="step-num">11</span><div class="step-icon">🛠️</div><div class="step-name">STRUMENTI</div><div class="step-detail">Futures USA · Europa · Fuso</div></div>
+    <div class="flow-step"><span class="step-num">12</span><div class="step-icon">⚠️</div><div class="step-name">MESSAGGI</div><div class="step-detail">Avvisi · Correzioni</div></div>
+  </div>
+  <div class="flow-warning" style="text-align:center;font-size:13px;padding:1rem 1.5rem;">⚠️&nbsp;&nbsp;<strong style="color:var(--gold)">4 MODALITÀ DI FILTRO</strong>&nbsp;(Passaggi 2 · 3 · 4): se non superati, il segnale viene scartato e nessun trade viene aperto</div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- MODALITÀ -->
+<section id="modalita">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">SCALPING vs DAY TRADING</div>
+    <div class="section-desc">La modalità cambia automaticamente in base ai parametri TP impostati</div>
+  </div>
+  <div class="divider"></div>
+  <div class="trading-mode-grid">
+    <div class="tmode-card tmode-scalp">
+      <div class="tmode-emoji">🔨</div>
+      <div class="tmode-name">SCALPING</div>
+      <div class="tmode-rule">TP a Valore ≤ 200 $/€</div>
+      <div class="tmode-rule">TP a Punti ≤ 10 pt</div>
+      <div style="margin-top:.85rem;">
+        <div style="font-size:12px;color:#c8940a;background:rgba(200,148,10,.06);border:1px solid rgba(200,148,10,.25);border-radius:5px;padding:.45rem .7rem;">
+          <span style="color:var(--gold);font-family:var(--mono);font-size:10px;letter-spacing:.1em;">TP &gt; 0</span> — Chiude SOLO al TP impostato · Stop &amp; Reverse
+        </div>
+      </div>
+    </div>
+    <div class="tmode-card tmode-day">
+      <div class="tmode-emoji">📈</div>
+      <div class="tmode-name">DAY TRADING</div>
+      <div class="tmode-rule">TP a Valore &gt; 200 $/€</div>
+      <div class="tmode-rule">TP a Punti &gt; 10 pt oppure TP = 0</div>
+      <div style="margin-top:.85rem;display:grid;gap:.45rem;">
+        <div style="font-size:12px;color:#00a86b;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:5px;padding:.45rem .7rem;">
+          <span style="color:var(--green);font-family:var(--mono);font-size:10px;letter-spacing:.1em;">TP &gt; 0</span> — Chiude SOLO al TP · Stop &amp; Reverse
+        </div>
+        <div style="font-size:12px;color:#00a8c8;background:rgba(0,188,212,.06);border:1px solid rgba(0,188,212,.15);border-radius:5px;padding:.45rem .7rem;">
+          <span style="color:var(--cyan);font-family:var(--mono);font-size:10px;letter-spacing:.1em;">TP = 0</span> — Indicatori · S&amp;R · SL · TS · Target · Fascia
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:1.5rem;">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.75rem;letter-spacing:.1em;">LOGICA DI SELEZIONE AUTOMATICA (in ordine di priorità)</div>
+    <div class="logic-table-wrap">
+      <table class="logic-table">
+        <thead><tr><th>CONDIZIONE</th><th>RISULTATO</th></tr></thead>
+        <tbody>
+          <tr><td>TP Limit attivo (prezzo personalizzato)</td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
+          <tr><td>TP a Valore $/€ ≤ 200</td><td><span class="tag-scalp">🔨 SCALPING</span></td></tr>
+          <tr><td>TP a Valore $/€ &gt; 200</td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
+          <tr><td>TP a Punti ≤ 10 pt</td><td><span class="tag-scalp">🔨 SCALPING</span></td></tr>
+          <tr><td>TP a Punti &gt; 10 pt</td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
+          <tr><td>TP non impostato (TP Punti = 0 e TP Valore = 0)</td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- SEGNALI -->
+<section id="segnali">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">4 SEGNALI</div>
+    <div class="section-desc">Quattro indicatori indipendenti<br>attivabili/disattivabili singolarmente</div>
+  </div>
+  <div class="divider"></div>
+  <div class="signal-grid">
+    <div class="signal-card">
+      <div class="signal-head">
+        <div class="signal-code">ST</div>
+        <div class="signal-name-block">
+          <div class="signal-fullname">SuperTrend</div>
+          <div class="signal-tags">
+            <span class="sig-tag sig-buy">BUY S</span>
+            <span class="sig-tag sig-sell">SELL S</span>
+          </div>
+        </div>
+      </div>
+      <div class="signal-body">
+        <div class="signal-params">ATR Length: 7 · ATR Multiplier: 4.0</div>
+        <div class="signal-desc">Segue il trend usando la volatilità ATR. BUY quando il prezzo supera la linea, SELL quando la buca al ribasso.</div>
+      </div>
+    </div>
+    <div class="signal-card">
+      <div class="signal-head">
+        <div class="signal-code">EMA</div>
+        <div class="signal-name-block">
+          <div class="signal-fullname">EMA Cross 9/21</div>
+          <div class="signal-tags">
+            <span class="sig-tag sig-buy">BUY E</span>
+            <span class="sig-tag sig-sell">SELL E</span>
+          </div>
+        </div>
+      </div>
+      <div class="signal-body">
+        <div class="signal-params">EMA Veloce: 9 · EMA Lenta: 21</div>
+        <div class="signal-desc">Golden Cross → BUY quando EMA 9 incrocia sopra EMA 21. Death Cross → SELL quando EMA 9 incrocia sotto EMA 21.</div>
+      </div>
+    </div>
+    <div class="signal-card">
+      <div class="signal-head">
+        <div class="signal-code">PSaR</div>
+        <div class="signal-name-block">
+          <div class="signal-fullname">Parabolic SaR</div>
+          <div class="signal-tags">
+            <span class="sig-tag sig-buy">BUY P</span>
+            <span class="sig-tag sig-sell">SELL P</span>
+          </div>
+        </div>
+      </div>
+      <div class="signal-body">
+        <div class="signal-params">Start: 0.02 · Increment: 0.02 · Max: 0.2</div>
+        <div class="signal-desc">Inversione di tendenza basata su punti parabolici. BUY quando il prezzo supera il punto SaR, SELL quando lo buca.</div>
+      </div>
+    </div>
+    <div class="signal-card">
+      <div class="signal-head">
+        <div class="signal-code">BRK</div>
+        <div class="signal-name-block">
+          <div class="signal-fullname">Trendline Breakout</div>
+          <div class="signal-tags">
+            <span class="sig-tag sig-buy">BUY B</span>
+            <span class="sig-tag sig-sell">SELL B</span>
+          </div>
+        </div>
+      </div>
+      <div class="signal-body">
+        <div class="signal-params">Velocità Pivot: 8 (range 1-20)</div>
+        <div class="signal-desc">Rottura dei massimi/minimi pivot. BUY su breakout del massimo, SELL su rottura del minimo.</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:1.25rem; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1rem 1.5rem; font-family:var(--mono); font-size:13px; display:flex; align-items:center; justify-content:center; gap:1.5rem; flex-wrap:wrap; text-align:center;">
+    <div style="font-weight:700; color:var(--text); letter-spacing:.1em;">🚦 SCELTA SEGNALI</div>
+    <div style="background:rgba(0,230,118,.08); border:1px solid rgba(0,230,118,.3); border-radius:6px; padding:.5rem 1.25rem; transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(0,230,118,0.85)';this.style.boxShadow='0 0 20px rgba(0,230,118,.22)'" onmouseleave="this.style.borderColor='rgba(0,230,118,.3)';this.style.boxShadow=''">
+      <span style="color:var(--green); font-weight:700;">solo BUY ▲</span><br>
+      <span style="color:var(--text-muted); font-size:10px;">genera solo Long</span>
+    </div>
+    <div style="background:rgba(255,68,68,.08); border:1px solid rgba(255,68,68,.3); border-radius:6px; padding:.5rem 1.25rem; transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(255,68,68,0.85)';this.style.boxShadow='0 0 20px rgba(255,68,68,.22)'" onmouseleave="this.style.borderColor='rgba(255,68,68,.3)';this.style.boxShadow=''">
+      <span style="color:var(--red); font-weight:700;">solo SELL ▼</span><br>
+      <span style="color:var(--text-muted); font-size:10px;">genera solo Short</span>
+    </div>
+    <div style="background:rgba(200,148,10,.08); border:1px solid rgba(200,148,10,.3); border-radius:6px; padding:.5rem 1.25rem; transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(200,148,10,0.85)';this.style.boxShadow='0 0 20px rgba(200,148,10,.22)'" onmouseleave="this.style.borderColor='rgba(200,148,10,.3)';this.style.boxShadow=''">
+      <span style="color:var(--gold); font-weight:700;">BUY &amp; SELL ▲▼</span><br>
+      <span style="color:var(--text-muted); font-size:10px;">Stop &amp; Reverse automatico</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- FILTRI -->
+<section id="filtri">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">SISTEMA FILTRI</div>
+    <div class="section-desc">SMA 200 + SuperTrend<br>riducono i segnali falsi ammettendo entry solo nella direzione del trend principale</div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- NESSUNO: opzione separata -->
+  <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:.7rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.45)';this.style.boxShadow='0 0 20px rgba(255,255,255,.07)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.1)';this.style.boxShadow=''">
+    <span style="font-family:var(--mono);font-size:11px;color:var(--text-bright);letter-spacing:.15em;white-space:nowrap;">⭕ NESSUN FILTRO</span>
+    <div style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:5px;padding:.4rem .8rem;font-size:12px;color:var(--text-bright);line-height:1.6;">
+      Tutti i segnali vengono accettati senza condizioni.<br>Operatività massima, nessun filtro di trend.
+    </div>
+  </div>
+
+  <!-- 4 FILTRI NUMERATI -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1.5rem;">
+
+    <!-- 1 - SMA 200 -->
+    <div class="filter-card" style="position:relative;">
+      <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(0,188,212,0.18);line-height:1;letter-spacing:1px;">1</div>
+      <div class="filter-title">📈 SOLO SMA 200</div>
+      <div class="filter-rule"><span class="arrow-up">▲</span> BUY se prezzo &gt; SMA 200</div>
+      <div class="filter-rule"><span class="arrow-dn">▼</span> SELL se prezzo &lt; SMA 200</div>
+      <div class="filter-note" style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:5px;padding:.45rem .7rem;">Filtro semplice e rapido.<br>Nessuna attesa di conferma.</div>
+    </div>
+
+    <!-- 2 - SUPERTREND -->
+    <div class="filter-card" style="position:relative;">
+      <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(0,188,212,0.18);line-height:1;letter-spacing:1px;">2</div>
+      <div class="filter-title">🔁 SOLO SUPERTREND</div>
+      <div class="filter-rule"><span class="arrow-up">▲</span> BUY se SuperTrend rialzista</div>
+      <div class="filter-rule"><span class="arrow-dn">▼</span> SELL se SuperTrend ribassista</div>
+      <div class="filter-note" style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:5px;padding:.45rem .7rem;">Filtro dinamico basato su ATR.<br>Si adatta alla volatilità.</div>
+    </div>
+
+    <!-- 3 - ENTRAMBI FLESSIBILE -->
+    <div class="filter-card filter-gold" style="position:relative;background:#1a1700;border-color:#5a4800;">
+      <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(200,148,10,0.22);line-height:1;letter-spacing:1px;">3</div>
+      <div class="filter-title" style="color:var(--gold);">🟡 ENTRAMBI — FLESSIBILE</div>
+      <div class="filter-rule"><span class="arrow-up">▲</span> BUY se SMA + ST entrambi favorevoli</div>
+      <div class="filter-rule"><span class="arrow-dn">▼</span> SELL se SMA + ST entrambi contrari</div>
+      <div class="filter-note" style="color:#d4b020;background:rgba(200,148,10,.07);border:1px solid rgba(200,148,10,.25);border-radius:5px;padding:.45rem .7rem;">Controlla lo stato in qualsiasi momento.<br>Più reattivo, meno attesa.<br>Entry appena entrambi si allineano.</div>
+    </div>
+
+    <!-- 4 - ENTRAMBI RIGIDA -->
+    <div class="filter-card filter-blue" style="position:relative;background:#001620;border-color:#004a6a;">
+      <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(66,165,245,0.22);line-height:1;letter-spacing:1px;">4</div>
+      <div class="filter-title" style="color:var(--blue);">🔵 ENTRAMBI — RIGIDA</div>
+      <div class="filter-rule"><span class="arrow-up">▲</span> BUY: ST cambia → rialzista con prezzo &gt; SMA</div>
+      <div class="filter-rule"><span class="arrow-dn">▼</span> SELL: ST cambia → ribassista con prezzo &lt; SMA</div>
+      <div class="filter-note" style="color:#88cce4;background:rgba(66,165,245,.06);border:1px solid rgba(66,165,245,.2);border-radius:5px;padding:.45rem .7rem;">Attende il cambio di stato del SuperTrend.<br>Meno segnali, massima affidabilità.</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- FASCIA ORARIA -->
+<section id="fascia">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title">FASCIA ORARIA</div>
+    <div class="section-desc">Limita l'operatività a una finestra temporale precisa<br>obbligatoria per Target Profit/Loss, TP Limit e Mostra Fascia + Segnali</div>
+  </div>
+  <div class="divider"></div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:1.5rem;">
+    <div class="hov-red" style="background:rgba(255,68,68,.05);border:1px solid rgba(255,68,68,.25);border-radius:10px;padding:1.75rem;">
+      <div style="font-family:var(--mono);font-size:14px;color:var(--red);margin-bottom:.75rem;letter-spacing:.1em;">❌ DISATTIVATA</div>
+      <div style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:1rem;">Il BOT opera <strong style="color:var(--text-bright)">H24</strong> senza alcun limite di orario. I segnali vengono generati in <strong style="color:var(--text-bright)">qualsiasi momento</strong> del giorno, incluse ore notturne e pre-market.</div>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--red);background:rgba(255,68,68,.06);border-radius:6px;padding:.6rem .9rem;">
+        ⚠️ Senza fascia: Target Profit · Target Loss · TP Limit non sono disponibili
+      </div>
+    </div>
+    <div class="hov-green" style="background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.25);border-radius:10px;padding:1.75rem;">
+      <div style="font-family:var(--mono);font-size:14px;color:var(--green);margin-bottom:.75rem;letter-spacing:.1em;">✅ ATTIVA</div>
+      <div style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:1rem;">I segnali vengono generati <strong style="color:var(--text-bright)">SOLO tra Ora Inizio e Ora Fine</strong>. Alla fine della fascia: se un trade è aperto viene <strong style="color:var(--gold)">chiuso automaticamente</strong>. Linee verticali verdi (inizio) e rosse (fine) vengono tracciate direttamente sul grafico.</div>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--green);background:rgba(0,230,118,.06);border-radius:6px;padding:.6rem .9rem;">
+        ✅ Abilita: Target Profit · Target Loss · TP Limit · Mostra Fascia + Segnali
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:1.5rem;">
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
+      <div style="font-size:28px;margin-bottom:.5rem;">⏰</div>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--cyan);margin-bottom:.4rem;letter-spacing:.1em;">ORA INIZIO</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.5;">Il BOT attende questo orario prima di generare qualsiasi segnale. Prima di questo momento: nessuna operazione.</div>
+    </div>
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
+      <div style="font-size:28px;margin-bottom:.5rem;">🔔</div>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--cyan);margin-bottom:.4rem;letter-spacing:.1em;">ORA FINE</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.5;">Alla scadenza tutti i segnali si bloccano.<br>I trade aperti vengono chiusi automaticamente con registrazione P&amp;L.</div>
+    </div>
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
+      <div style="font-size:28px;margin-bottom:.5rem;">📅</div>
+      <div style="font-family:var(--mono);font-size:12px;color:var(--cyan);margin-bottom:.4rem;letter-spacing:.1em;">RESET GIORNALIERO</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.5;">Ogni giorno a mezzanotte tutti i contatori e lo stato della fascia si resettano automaticamente per la nuova sessione.</div>
+    </div>
+  </div>
+
+  <div style="background:rgba(255,213,79,.05);border:1px solid rgba(255,213,79,.25);border-radius:8px;padding:1rem 1.5rem;font-family:var(--mono);font-size:12px;color:var(--gold);text-align:center;letter-spacing:.05em;">
+    ⚠️ &nbsp;OBBLIGATORIA per: &nbsp;<strong>Target Profit</strong> · <strong>Target Loss</strong> · <strong>TP Limit</strong> · <strong>Mostra Fascia + Segnali su Tutti i Giorni del Grafico</strong>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- ENTRY -->
+<section id="entry">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title">MAX SEGNALI · MEDIAZIONE · PIRAMIDAZIONE</div>
+    <div class="section-desc">Controllo avanzato del numero di ingressi per singolo trade</div>
+  </div>
+  <div class="divider"></div>
+  <div class="info-row">
+    <div class="info-chip"><span class="chip-label">Max Segnali = 0</span><span class="chip-val">∞ nessun limite</span></div>
+    <div class="info-chip"><span class="chip-label">Max Segnali = N</span><span class="chip-val">max N ingressi per trade</span></div>
+  </div>
+  <div class="pir-grid">
+    <div class="pir-card">
+      <div class="pir-head"><span class="pir-icon">📉</span><div><div class="pir-name">MEDIAZIONE</div><div class="pir-sub">Trade in LOSS</div></div></div>
+      <div class="pir-body">
+        <div class="pir-entry">Entry 1: 100 pt → qty 1</div>
+        <div class="pir-entry">Entry 2: 98 pt → qty 1</div>
+        <div class="pir-result" style="color:var(--gold)">Prezzo medio: 99 pt · TP/SL si ricalcola</div>
+        <div style="font-size:13px;color:var(--text);margin-top:.5rem">Nuovo segnale nella stessa direzione con trade in perdita.<br>Il BOT aggiorna automaticamente il prezzo medio.</div>
+      </div>
+    </div>
+    <div class="pir-card">
+      <div class="pir-head"><span class="pir-icon">📈</span><div><div class="pir-name">PIRAMIDAZIONE</div><div class="pir-sub">Trade in PROFITTO</div></div></div>
+      <div class="pir-body">
+        <div class="pir-entry">Entry 1: 100 pt → qty 1</div>
+        <div class="pir-entry">Entry 2: 105 pt → qty 1</div>
+        <div class="pir-result" style="color:var(--green)">Prezzo medio: 102.5 pt · amplifica i guadagni</div>
+        <div style="font-size:13px;color:var(--text);margin-top:.5rem">Aggiungo posizioni nella stessa direzione con trend forte.<br>Amplifica i guadagni nel momento giusto.</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:1rem; background:rgba(255,68,68,.06); border:1px solid rgba(255,68,68,.2); border-radius:6px; padding:.75rem 1rem; font-size:12px; color:var(--text-muted); text-align:center;">
+    ⚠️ In entrambi i casi il BOT aggiorna automaticamente: <strong style="color:var(--text)">Prezzo Medio · Take Profit · Stop Loss · Trailing Stop · Etichette grafiche</strong>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- TAKE PROFIT -->
+<section id="tp">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title">TAKE PROFIT</div>
+    <div class="section-desc">3 Tipologie di uscita<br>Priorità: TP Limit &gt; TP a Valore &gt; TP a Punti</div>
+  </div>
+  <div class="divider"></div>
+  <div class="tp-grid">
+    <div class="tp-card">
+      <div class="tp-head">
+        <div class="tp-icon">📐</div>
+        <div class="tp-title-block">
+          <div class="tp-name">TP A PUNTI</div>
+        </div>
+        <span class="tp-priority" style="border-color:var(--text-muted);color:var(--text-muted);background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
+      </div>
+      <div class="tp-body">
+        <div class="tp-desc">Chiude il trade quando il profitto raggiunge il numero di punti impostato.</div>
+        <div class="tp-example">📌 TP = 20 → chiude a +20 punti dal prezzo di ingresso</div>
+      </div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-head">
+        <div class="tp-icon">💵</div>
+        <div class="tp-title-block">
+          <div class="tp-name">TP A VALORE $/€</div>
+        </div>
+        <span class="tp-priority">HA PRIORITÀ SU TP A PUNTI</span>
+      </div>
+      <div class="tp-body">
+        <div class="tp-desc">Chiude quando il P&amp;L monetario raggiunge l'importo impostato.</div>
+        <div class="tp-example">📌 TP = 50€ → chiude a +50€ dal prezzo di ingresso</div>
+      </div>
+    </div>
+    <div class="tp-card">
+      <div class="tp-head">
+        <div class="tp-icon">🎯</div>
+        <div class="tp-title-block">
+          <div class="tp-name">TP LIMIT<br><span style="font-size:11px;color:var(--text-muted);">(PREZZO ASSOLUTO)</span></div>
+        </div>
+        <span class="tp-priority" style="border-color:var(--red);color:var(--red);background:var(--red-dim);">MAX PRIORITÀ</span>
+      </div>
+      <div class="tp-body">
+        <div class="tp-desc">Chiude quando il prezzo raggiunge un livello assoluto prefissato. Una volta raggiunto →<br>il trading si <strong style="color:var(--red)">FERMA</strong> per il resto della giornata.</div>
+        <div class="tp-example">📌 solo BUY + TP Limit = 21.500 → chiude quando prezzo tocca 21.500</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- SL/TS -->
+<section id="slts">
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <div class="section-title">STOP LOSS &amp; TRAILING STOP</div>
+    <div class="section-desc">Priorità a cascata: Trailing Dinamico &gt; Trailing Classico &gt; SL Valore &gt; SL Punti</div>
+  </div>
+  <div class="divider"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <!-- STOP LOSS -->
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
+      <div style="font-family:var(--mono);font-size:14px;color:var(--red);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);letter-spacing:.1em;">💸 STOP LOSS</div>
+      <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
+          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">A PUNTI</div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
+        </div>
+        <div style="font-size:13px;color:var(--text);">Chiude quando la perdita raggiunge N punti. Es: SL=20 → chiude a -20 punti</div>
+      </div>
+      <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
+          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">A VALORE $/€</div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);">PRIORITÀ SU SL PUNTI</span>
+        </div>
+        <div style="font-size:13px;color:var(--text);">Chiude quando la perdita raggiunge l'importo. Es: SL=100€ → chiude a -100€</div>
+      </div>
+    </div>
+    <!-- TRAILING STOP -->
+    <div class="hov-gold" style="background:var(--card);border:1px solid rgba(255,140,0,.35);border-radius:8px;padding:1.5rem;">
+      <div style="font-family:var(--mono);font-size:14px;color:#ff8c00;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(255,140,0,.25);letter-spacing:.1em;">🛡️ TRAILING STOP</div>
+      <!-- CLASSICO -->
+      <div style="border:1px solid rgba(255,140,0,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
+          <div style="font-family:var(--mono);font-size:13px;color:#ff8c00;">CLASSICO &nbsp;<span style="font-size:10px;color:var(--text-muted);">Punti Fissi</span></div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
+        </div>
+        <div style="font-size:13px;color:var(--text);">Stop fisso che segue il prezzo ad ogni tick. Es: TS=20 → stop sempre a -20 punti dal prezzo corrente</div>
+      </div>
+      <!-- MODO A -->
+      <div style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:6px;padding:.85rem;margin-bottom:.75rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.2rem;">
+          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">DINAMICO · <strong>MODO A</strong> &nbsp;<span style="font-size:10px;color:var(--cyan);">(solo Break Even)</span></div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);">PRIORITÀ SU CLASSICO</span>
+        </div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.4rem;">(50 / 0 / 0)</div>
+        <div style="font-size:13px;color:var(--text);">Porta lo stop a pareggio dopo +50 punti di profitto.<br>Lo stop non si muove ulteriormente.</div>
+      </div>
+      <!-- MODO B -->
+      <div style="background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.2);border-radius:6px;padding:.85rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.2rem;">
+          <div style="font-family:var(--mono);font-size:13px;color:var(--green);">DINAMICO · <strong>MODO B</strong> &nbsp;<span style="font-size:10px;color:var(--green);">(Break Even + Movimento)</span></div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--red);color:var(--red);border-radius:4px;padding:1px 7px;background:var(--red-dim);">MAX PRIORITÀ</span>
+        </div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.4rem;">(50 / 20 / 20)</div>
+        <div style="font-size:13px;color:var(--text);">Pareggio a +50 punti → poi avanza ogni +20 punti di prezzo di +20 punti → protegge il profitto crescente.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- TARGET -->
+<section id="target">
+  <div class="section-header">
+    <div class="section-num">09</div>
+    <div class="section-title">TARGET PROFIT &amp; LOSS</div>
+    <div class="section-desc">Fermano l'intera strategia al raggiungimento dell'obiettivo giornaliero<br>richiedono Fascia Oraria attiva</div>
+  </div>
+  <div class="divider"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.5rem;">
+    <div class="hov-green" style="background:rgba(0,230,118,.04);border:1px solid rgba(0,230,118,.2);border-radius:8px;padding:1.5rem;">
+      <div style="font-family:var(--display);font-size:24px;color:var(--green);letter-spacing:3px;margin-bottom:.75rem;">💰 TARGET PROFIT</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:.75rem;">Il BOT calcola il profitto NETTO (guadagni - perdite - commissioni).<br>Quando raggiunge il valore impostato: chiude i trade aperti, mostra etichetta e ferma qualsiasi nuovo segnale fino al giorno successivo.</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--green);background:rgba(0,230,118,.06);border-radius:4px;padding:.5rem .75rem;">📌 Target = 500€ → alle 17:42 il netto supera 500€ → tutto si ferma per oggi</div>
+    </div>
+    <div class="hov-red" style="background:rgba(255,68,68,.04);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:1.5rem;">
+      <div style="font-family:var(--display);font-size:24px;color:var(--red);letter-spacing:3px;margin-bottom:.75rem;">💸 TARGET LOSS</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:.75rem;">Il BOT calcola la perdita NETTA della sessione.<br>Quando la perdita netta supera il valore: chiude i trade aperti, mostra etichetta e ferma qualsiasi nuovo segnale per proteggere il capitale.</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--red);background:rgba(255,68,68,.06);border-radius:4px;padding:.5rem .75rem;">📌 Target Loss = 300€ → alle 16:15 la perdita netta tocca -300€ → tutto si ferma per oggi</div>
+    </div>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;display:grid;gap:.5rem;">
+    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">⏰ Richiedono Fascia Oraria OBBLIGATORIAMENTE attiva · senza fascia il sistema si blocca con errore</div>
+    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">🔀 Se entrambi attivi → il sistema reagisce al PRIMO evento raggiunto (profit o loss)</div>
+    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">📅 Si resettano automaticamente ogni giorno alla mezzanotte</div>
+    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">🧮 Il calcolo è NETTO: profitti lordi - perdite lorde - commissioni totali della sessione</div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- GRAFICA -->
+<section id="grafica">
+  <div class="section-header">
+    <div class="section-num">10</div>
+    <div class="section-title">FUNZIONALITÀ GRAFICHE</div>
+    <div class="section-desc">Strumenti professionali integrati per l'operatività quotidiana</div>
+  </div>
+  <div class="divider"></div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+      <div style="font-size:22px;margin-bottom:.5rem;">📊</div>
+      <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.5rem;">GAP MERCATO CASH</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.7;">Rileva i Gap di apertura tra chiusura precedente e apertura cash (15:30 USA / 9:00 Europa).<br>Mostra distanza residua in live.<br>Si cancella automaticamente quando il Gap viene chiuso.</div>
+    </div>
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+      <div style="font-size:22px;margin-bottom:.5rem;">🌙</div>
+      <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.5rem;">GAP/LAP FUTURES</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.7;">Rileva i Gap notturni Futures (pausa 16:00→17:00 CT).<br>Se l'apertura differisce dalla chiusura → traccia LAP UP o LAP DOWN.<br>Aggiorna distanza residua in live finché non colmato.</div>
+    </div>
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+      <div style="font-size:22px;margin-bottom:.5rem;">📏</div>
+      <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.5rem;">LINEE MIN/MAX GIORNALIERO</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.7;">Linee dinamiche di massimo (rosso) e minimo (verde) della sessione corrente.<br>Distanza tra i due estremi in punti con freccia direzionale.<br>Visibili anche nei giorni passati per analisi statistica.</div>
+    </div>
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+      <div style="font-size:22px;margin-bottom:.5rem;">📋</div>
+      <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.5rem;">4 TABELLE DINAMICHE LIVE</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.5;"><strong style="color:var(--gold)">Trend:</strong> SMA200 / ST / EMA / PSaR / BRK / Forza<br><strong style="color:var(--gold)">Filtri:</strong> SMA e ST attivi (giallo/azzurro)<br><strong style="color:var(--gold)">Strategia:</strong> TP / SL / TS / Stop&amp;R / Target<br><strong style="color:var(--gold)">Segnali:</strong> Q / Profit / Loss / Netto €</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- ALERT -->
+<section id="alert">
+  <div class="section-header">
+    <div class="section-num">11</div>
+    <div class="section-title">ALERT &amp; WEBHOOK JSON</div>
+    <div class="section-desc">4 alert sonori + 12 alert tecnici automatici per bot e automazione</div>
+  </div>
+  <div class="divider"></div>
+  <div class="alert-section">
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;">🔔 4 ALERT SONORI</div>
+      <div class="alert-sounds">
+        <div class="alert-sound"><span class="alert-sound-icon">🟢</span><div><div class="alert-sound-name">ENTRY BUY</div><div class="alert-sound-desc">Segnale BUY accettato<br>trade long aperto</div></div></div>
+        <div class="alert-sound"><span class="alert-sound-icon">🔴</span><div><div class="alert-sound-name">ENTRY SELL</div><div class="alert-sound-desc">Segnale SELL accettato<br>trade short aperto</div></div></div>
+        <div class="alert-sound"><span class="alert-sound-icon">💰</span><div><div class="alert-sound-name">EXIT IN PROFIT</div><div class="alert-sound-desc">Qualsiasi chiusura in guadagno</div></div></div>
+        <div class="alert-sound"><span class="alert-sound-icon">💸</span><div><div class="alert-sound-name">EXIT IN LOSS</div><div class="alert-sound-desc">Qualsiasi chiusura in perdita</div></div></div>
+      </div>
+    </div>
+    <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;">⚡ 12 ALERT WEBHOOK JSON</div>
+      <div class="webhook-grid">
+        <div class="webhook-group">
+          <div class="webhook-group-header">ENTRY (2)</div>
+          <div class="webhook-items">
+            <span class="webhook-item" style="color:var(--green);border-color:rgba(0,230,118,.3)">📩 ENTRY BUY</span>
+            <span class="webhook-item" style="color:var(--red);border-color:rgba(255,68,68,.3)">📩 ENTRY SELL</span>
+          </div>
+        </div>
+        <div class="webhook-group">
+          <div class="webhook-group-header">EXIT PROFIT (5)</div>
+          <div class="webhook-items">
+            <span class="webhook-item">💰 EXIT x TP</span>
+            <span class="webhook-item">💰 EXIT x TS</span>
+            <span class="webhook-item">💰 EXIT x STOP &amp; REVERSE</span>
+            <span class="webhook-item">💰 EXIT x TARGET PROFIT</span>
+            <span class="webhook-item">💰 EXIT x FINE FASCIA</span>
+          </div>
+        </div>
+        <div class="webhook-group">
+          <div class="webhook-group-header">EXIT LOSS (5)</div>
+          <div class="webhook-items">
+            <span class="webhook-item">💸 EXIT x SL</span>
+            <span class="webhook-item">💸 EXIT x TS</span>
+            <span class="webhook-item">💸 EXIT x STOP &amp; REVERSE</span>
+            <span class="webhook-item">💸 EXIT x TARGET LOSS</span>
+            <span class="webhook-item">💸 EXIT x FINE FASCIA</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:.75rem;font-family:var(--mono);font-size:11px;color:var(--text-muted);background:var(--card);border-radius:5px;padding:.6rem .75rem;border:1px solid var(--border);">
+        🔄 Ogni alert JSON include: <span style="color:var(--cyan)">symbol · action · side · quantity · price</span><br>Pronto per integrazione con bot o servizi webhook
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- SIMULAZIONE & BACKTEST -->
+<section id="sim">
+  <div class="section-header">
+    <div class="section-num">12</div>
+    <div class="section-title">SIMULAZIONE &amp; BACKTEST STORICO</div>
+    <div class="section-desc">Analisi retroattiva precisa su qualsiasi giorno del passato<br>funzione esclusiva integrata negli input</div>
+  </div>
+  <div class="divider" style="background:linear-gradient(90deg,var(--cyan),transparent)"></div>
+
+  <div class="sim-card">
+    <div class="sim-header">
+      <div class="sim-icon">🔬</div>
+      <div>
+        <div class="sim-title">SIMULAZIONE GIORNO SPECIFICO</div>
+        <div class="sim-subtitle">Sezione 2<br>Input · Pine Script® v6</div>
+      </div>
+    </div>
+    <div class="sim-body">
+      <div class="sim-info-block" style="max-width:700px;margin:0 auto;">
+        <div class="sim-info-title">Come funziona</div>
+        <div class="sim-info-item"><span class="dot"></span><span>Attivando il toggle <strong style="color:var(--cyan)">Abilita Simulazione Giorno Specifico</strong>, il BOT filtra tutti i segnali mostrando SOLO quelli relativi alla data impostata.</span></div>
+        <div class="sim-info-item"><span class="dot"></span><span>È possibile specificare <strong style="color:var(--cyan)">giorno, mese e anno</strong><br>qualsiasi data dal 2000 al 2100.</span></div>
+        <div class="sim-info-item"><span class="dot"></span><span>Disattivando il toggle, il BOT <strong style="color:var(--green)">torna alla modalità normale</strong> (operatività in tempo reale).</span></div>
+        <div class="sim-info-item"><span class="dot"></span><span>Richiede la <strong style="color:var(--gold)">Fascia Oraria attiva</strong> per visualizzare correttamente le sessioni simulate.</span></div>
+
+        <div class="sim-states">
+          <div class="sim-state sim-on">
+            <div class="sim-state-label">✅ ATTIVA</div>
+            <div class="sim-state-text">Mostra segnali SOLO per il giorno selezionato<br>modalità backtest</div>
+          </div>
+          <div class="sim-state sim-off">
+            <div class="sim-state-label">❌ DISATTIVA</div>
+            <div class="sim-state-text">Torna alla modalità normale<br>operatività OGGI in tempo reale</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.25rem;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem;text-align:center;border:1px solid rgba(0,188,212,.35);border-radius:5px;padding:.35rem .8rem;background:rgba(0,188,212,.05);display:inline-block;width:100%;">▸ Parametri Input</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem;">INPUT</div>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.4rem;">abilitaFiltroData</div>
+            <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);">bool · default: false</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem;">INPUT</div>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.4rem;">giornoSim</div>
+            <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);">int · min: 1 · max: 31</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem;">INPUT</div>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.4rem;">meseSim</div>
+            <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);">int · min: 1 · max: 12</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem;">INPUT</div>
+            <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.4rem;">annoSim</div>
+            <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);">int · min: 2000 · max: 2100</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<!-- STRUMENTI -->
+<section id="strumenti">
+  <div class="section-header">
+    <div class="section-num">13</div>
+    <div class="section-title">CAMBIO STRUMENTO</div>
+    <div class="section-desc">Verifica sempre questi <span style="color:var(--red);font-weight:700;">6 parametri</span> prima di operare su un nuovo strumento finanziario<br><span style="font-size:12px;color:var(--text-muted);">Tick/PT · Pt/Tick · Valore PT (x Tab) · Valore PT (x TP/SL) · Commissione · Valuta</span></div>
+  </div>
+  <div class="divider"></div>
+  <div class="instruments-grid">
+    <div class="hov" style="border:1px solid rgba(0,188,212,0.5);border-radius:10px;padding:1.25rem;background:rgba(0,188,212,0.03);">
+      <div class="instr-label">⚡ FUTURES USA</div>
+      <table class="data-table" style="font-size:11.5px;">
+        <thead><tr><th>STRUMENTO</th><th>TICK/PT</th><th>PT/TICK</th><th style="color:var(--cyan);">VALORE PT (TAB)</th><th style="color:var(--cyan);">VALORE PT (TP/SL)</th><th>COMM. $</th><th>VALUTA</th></tr></thead>
+        <tbody>
+          <tr><td>Micro NQ (MNQ)</td><td class="td-green">4</td><td class="td-green">0.25</td><td class="td-gold">2 $</td><td class="td-gold">2 $</td><td style="color:#ff9800;">1.24 $</td><td style="color:var(--text-muted);">USD</td></tr>
+          <tr><td>E-mini NQ (NQ)</td><td class="td-green">4</td><td class="td-green">0.25</td><td class="td-gold">20 $</td><td class="td-gold">20 $</td><td style="color:#ff9800;">4.50 $</td><td style="color:var(--text-muted);">USD</td></tr>
+          <tr><td>Micro S&amp;P (MES)</td><td class="td-green">4</td><td class="td-green">0.25</td><td class="td-gold">5 $</td><td class="td-gold">5 $</td><td style="color:#ff9800;">1.24 $</td><td style="color:var(--text-muted);">USD</td></tr>
+          <tr><td>E-mini S&amp;P (ES)</td><td class="td-green">4</td><td class="td-green">0.25</td><td class="td-gold">50 $</td><td class="td-gold">50 $</td><td style="color:#ff9800;">4.50 $</td><td style="color:var(--text-muted);">USD</td></tr>
+          <tr><td>Crude Oil (CL)</td><td class="td-green">100</td><td class="td-green">0.01</td><td class="td-gold">1.000 $</td><td class="td-gold">1.000 $</td><td style="color:#ff9800;">4.46 $</td><td style="color:var(--text-muted);">USD</td></tr>
+          <tr><td>Gold (GC)</td><td class="td-green">10</td><td class="td-green">0.10</td><td class="td-gold">100 $</td><td class="td-gold">100 $</td><td style="color:#ff9800;">4.44 $</td><td style="color:var(--text-muted);">USD</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="hov" style="border:1px solid rgba(0,188,212,0.5);border-radius:10px;padding:1.25rem;background:rgba(0,188,212,0.03);">
+      <div class="instr-label">🇪🇺 FUTURES EUROPA</div>
+      <table class="data-table" style="font-size:11.5px;">
+        <thead><tr><th>STRUMENTO</th><th>PT/TICK</th><th>TICK SIZE</th><th style="color:var(--cyan);">VALORE PT (TAB)</th><th style="color:var(--cyan);">VALORE PT (TP/SL)</th><th>COMM. €</th><th>VALUTA</th></tr></thead>
+        <tbody>
+          <tr><td>DAX (FDAX)</td><td class="td-green">1</td><td class="td-green">0.5</td><td class="td-gold">25 €</td><td class="td-gold">25 €</td><td style="color:#ff9800;">3.74 €</td><td style="color:var(--text-muted);">EUR</td></tr>
+          <tr><td>Mini DAX</td><td class="td-green">1</td><td class="td-green">1</td><td class="td-gold">5 €</td><td class="td-gold">5 €</td><td style="color:#ff9800;">1.72 €</td><td style="color:var(--text-muted);">EUR</td></tr>
+          <tr><td>EuroStoxx 50</td><td class="td-green">1</td><td class="td-green">1</td><td class="td-gold">10 €</td><td class="td-gold">10 €</td><td style="color:#ff9800;">2.00 €</td><td style="color:var(--text-muted);">EUR</td></tr>
+          <tr><td>FMIB</td><td class="td-green">5</td><td class="td-green">5</td><td class="td-gold">5 €</td><td class="td-gold">5 €</td><td style="color:#ff9800;">2.00 €</td><td style="color:var(--text-muted);">EUR</td></tr>
+          <tr><td>Mini FMIB</td><td class="td-green">5</td><td class="td-green">5</td><td class="td-gold">1 €</td><td class="td-gold">1 €</td><td style="color:#ff9800;">1.72 €</td><td style="color:var(--text-muted);">EUR</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+<!-- MESSAGGI DI ERRORE -->
+<div class="section-sep"></div>
+
+<!-- FUSO ORARIO -->
+<section id="fuso">
+  <div class="section-header">
+    <div class="section-num">14</div>
+    <div class="section-title">FUSO ORARIO</div>
+    <div class="section-desc">Impostazione del fuso orario in base al broker e alla stagione<br>fondamentale per allineare correttamente la Fascia Oraria</div>
+  </div>
+  <div class="divider"></div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.75rem;font-size:14px;color:var(--text);line-height:1.7;">
+    Il parametro <strong style="color:var(--cyan)">Fuso Orario</strong> indica lo <strong style="color:var(--text-bright)">scarto in ore</strong> tra l'orario del broker e l'orario italiano. Impostarlo correttamente è essenziale: un valore errato causa uno spostamento della fascia operativa e genera segnali negli orari sbagliati. Il valore cambia in base al broker (<strong style="color:var(--gold)">CME Chicago</strong> o <strong style="color:var(--gold)">EUREX UTC</strong>) e alla stagione (ora legale / ora solare).
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+
+    <!-- FINESTRA CME -->
+    <div class="hov-green" style="background:var(--card);border:2px solid rgba(0,230,118,.3);border-radius:12px;overflow:hidden;">
+      <div style="background:rgba(0,230,118,.07);border-bottom:1px solid rgba(0,230,118,.2);padding:1.1rem 1.5rem;text-align:center;">
+        <div style="font-family:var(--display);font-size:22px;color:var(--green);letter-spacing:3px;margin-bottom:.2rem;">CME · CHICAGO</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;">🇺🇸 FUTURES USA — NQ · ES · CL · GC · MNQ · MES</div>
+      </div>
+      <div style="padding:1.5rem;">
+        <div style="background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.3);border-radius:8px;padding:.5rem;text-align:center;margin-bottom:.75rem;">
+          <div style="font-family:var(--display);font-size:38px;color:var(--green);line-height:1;">7</div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-top:.2rem;">VALORE STANDARD</div>
+          <div style="font-size:12px;color:var(--text);margin-top:.25rem;">Valore da usare come riferimento base</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.5rem;text-align:center;">
+            <div style="font-family:var(--display);font-size:30px;color:var(--gold);line-height:1;">6</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;margin-top:.2rem;">PRIMAVERA</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.1rem;">USA ora legale</div>
+            <div style="font-size:11px;color:var(--text);margin-top:.25rem;">Mar → Nov</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.5rem;text-align:center;">
+            <div style="font-family:var(--display);font-size:30px;color:var(--blue);line-height:1;">8</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:.1em;margin-top:.2rem;">AUTUNNO</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.1rem;">USA ora solare</div>
+            <div style="font-size:11px;color:var(--text);margin-top:.25rem;">Nov → Mar</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;font-family:var(--mono);font-size:11px;color:var(--text-muted);background:var(--bg3);border-radius:6px;padding:.6rem .9rem;text-align:center;">
+          🕐 Sessione operativa standard: <strong style="color:var(--green)">15:30 → 22:00</strong> ora italiana
+        </div>
+      </div>
+    </div>
+
+    <!-- FINESTRA EUREX -->
+    <div class="hov" style="background:var(--card);border:2px solid rgba(0,188,212,.3);border-radius:12px;overflow:hidden;">
+      <div style="background:rgba(0,188,212,.07);border-bottom:1px solid rgba(0,188,212,.2);padding:1.1rem 1.5rem;text-align:center;">
+        <div style="font-family:var(--display);font-size:22px;color:var(--cyan);letter-spacing:3px;margin-bottom:.2rem;">EUREX · UTC</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;">🇪🇺 FUTURES EUROPA — FDAX · Mini DAX · EuroStoxx · FMIB</div>
+      </div>
+      <div style="padding:1.5rem;">
+        <div style="margin-bottom:1rem;font-family:var(--mono);font-size:12px;color:var(--cyan);background:rgba(0,188,212,.06);border:1px solid rgba(0,188,212,.2);border-radius:8px;padding:.9rem;text-align:center;line-height:1.6;">
+          Il broker EUREX usa <strong style="color:var(--text-bright)">UTC</strong> come fuso base.<br>L'Italia si trova a UTC+1 (solare) o UTC+2 (legale).
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.9rem;text-align:center;">
+            <div style="font-family:var(--display);font-size:42px;color:var(--gold);line-height:1;">2</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;margin-top:.3rem;">ORA LEGALE</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.2rem;">Primavera / Estate</div>
+            <div style="font-size:11px;color:var(--text);margin-top:.4rem;">Mar → Ott</div>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.9rem;text-align:center;">
+            <div style="font-family:var(--display);font-size:42px;color:var(--blue);line-height:1;">1</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:.1em;margin-top:.3rem;">ORA SOLARE</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.2rem;">Autunno / Inverno</div>
+            <div style="font-size:11px;color:var(--text);margin-top:.4rem;">Ott → Mar</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;font-family:var(--mono);font-size:11px;color:var(--text-muted);background:var(--bg3);border-radius:6px;padding:.6rem .9rem;text-align:center;">
+          🕐 Sessione operativa standard: <strong style="color:var(--cyan)">08:00 → 17:30</strong> ora italiana
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:1.5rem;background:rgba(255,68,68,.05);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:1rem 1.5rem;font-family:var(--mono);font-size:12px;color:var(--text-muted);text-align:center;">
+    ⚠️ &nbsp;Fuso errato → la Fascia Oraria si sposta di conseguenza → segnali generati negli orari sbagliati<br>
+    <span style="color:var(--gold);">Verificare sempre prima di operare su un nuovo broker</span>
+  </div>
+</section>
+
+<div class="section-sep"></div>
+
+<section id="messaggi">
+  <div class="section-header">
+    <div class="section-num">15</div>
+    <div class="section-title">MESSAGGI DI ERRORE</div>
+    <div class="section-desc">Tutti i messaggi di avviso e correzione<br>il BOT mostra questi avvisi direttamente sul grafico TradingView</div>
+  </div>
+  <div class="divider" style="background:linear-gradient(90deg,var(--red),transparent)"></div>
+
+  <!-- CATEGORIA: CAMBIO MERCATO -->
+  <div style="margin-bottom:1.25rem;">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;">⚙️ Cambio Mercato / Strumento</div>
+    <div class="error-grid">
+    <div class="error-row">
+      <span class="error-cause">⛔ Futures EUREX rilevato con impostazioni CME (Mercato = USA o Fuso ≥ 6)</span>
+      <span class="error-fix">✅ Sez. 8: Mercato = Europa · Sez. 15: Fuso = 2</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ Futures CME rilevato con impostazioni EUREX (Mercato = Europa o Fuso ≤ 2)</span>
+      <span class="error-fix">✅ Sez. 8: Mercato = USA · Sez. 15: Fuso = 7</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ Commodity rilevata con Gap Mercato Cash attivo<br>il simbolo non ha mercato cash</span>
+      <span class="error-fix">✅ Sez. 8: Disattiva "Mostra Gap – Mercato Cash"</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ Strumento non riconosciuto<br>dati non compilati o ticker non confermato</span>
+      <span class="error-fix">✅ Compilare i parametri strumento e confermare il ticker</span>
+    </div>
+  </div>
+  </div>
+
+  <!-- CATEGORIA: SIMULAZIONE -->
+  <div style="margin-bottom:1.25rem;">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;">📅 Simulazione &amp; Backtest</div>
+    <div class="error-grid">
+    <div class="error-row">
+      <span class="error-cause">⛔ Giorno simulato non disponibile nel grafico (storico insufficiente / timeframe basso / giorno festivo)</span>
+      <span class="error-fix">✅ Prova un timeframe più alto o verifica il giorno</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ Mostra Fascia + Segnali su Tutti i Giorni attiva senza Fascia Oraria</span>
+      <span class="error-fix">✅ Abilitare la Fascia Oraria</span>
+    </div>
+  </div>
+  </div>
+
+  <!-- CATEGORIA: PROTEZIONE TRADE -->
+  <div style="margin-bottom:1.25rem;">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;">🛡️ Protezione Trade (Stop &amp; Profit)</div>
+    <div class="error-grid">
+    <div class="error-row">
+      <span class="error-cause">⛔ Nessun PROFIT impostato e nessuno STOP impostato<br>strategia priva di finalità 💀</span>
+      <span class="error-fix">✅ Imposta almeno un TP e uno SL / TS</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ Nessuno STOP impostato (SL e TS assenti)<br>TP presente ma trade non protetto</span>
+      <span class="error-fix">✅ Imposta Stop Loss o Trailing Stop</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ Nessun PROFIT impostato (TP e Target Profit assenti)<br>SL/TS presenti ma nessun obiettivo</span>
+      <span class="error-fix">✅ Imposta Take Profit o Target Profit</span>
+    </div>
+  </div>
+  </div>
+
+  <!-- CATEGORIA: TARGET PROFIT / LOSS -->
+  <div style="margin-bottom:1.25rem;">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;">💰 Target Profit / Target Loss</div>
+    <div class="error-grid">
+    <div class="error-row">
+      <span class="error-cause">⛔ Target Profit + Target Loss attivi senza Fascia Oraria</span>
+      <span class="error-fix">✅ Attivare la Fascia Oraria</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ Target Profit attivo senza Fascia Oraria</span>
+      <span class="error-fix">✅ Attivare la Fascia Oraria</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ Target Loss attivo senza Fascia Oraria</span>
+      <span class="error-fix">✅ Attivare la Fascia Oraria</span>
+    </div>
+  </div>
+  </div>
+
+  <!-- CATEGORIA: TP LIMIT -->
+  <div style="margin-bottom:1.25rem;">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;">🎯 TP Limit (Prezzo Assoluto)</div>
+    <div class="error-grid">
+    <div class="error-row">
+      <span class="error-cause">⛔ TP Limit attivo senza Fascia Oraria</span>
+      <span class="error-fix">✅ Attivare la Fascia Oraria</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ TP Limit attivo con BUY &amp; SELL<br>modalità incompatibile</span>
+      <span class="error-fix">✅ Selezionare solo BUY oppure solo SELL</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ TP Limit attivo ma nessun prezzo inserito nel campo</span>
+      <span class="error-fix">✅ Inserire un prezzo nel campo TP Limit</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ BUY + prezzo TP Limit ≤ prezzo attuale<br>profitto impossibile</span>
+      <span class="error-fix">✅ Inserire un prezzo SUPERIORE al corrente</span>
+    </div>
+    <div class="error-row">
+      <span class="error-cause">⛔ SELL + prezzo TP Limit ≥ prezzo attuale<br>profitto impossibile</span>
+      <span class="error-fix">✅ Inserire un prezzo INFERIORE al corrente</span>
+    </div>
+  </div>
+  </div>
+
+  <div style="background:rgba(255,213,79,.05);border:1px solid rgba(255,213,79,.2);border-radius:8px;padding:1rem 1.25rem;font-family:var(--mono);font-size:12px;color:var(--gold);text-align:center;">
+    ⚠️ Tutti i messaggi di errore vengono visualizzati direttamente sul grafico TradingView<br><strong>A CENTRO sinistra</strong><br>con sfondo rosso e testo bianco
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="font-family:var(--display);font-size:28px;color:var(--green);letter-spacing:6px;margin-bottom:.5rem;">BOT ALGO</div>
+  <div>Pine Script® v6 · TradingView · <strong>Multi-Strategia</strong></div>
+  <div style="margin-top:.5rem;color:rgba(255,255,255,0.75);font-size:10px;">Futures · Azioni · Crypto · Forex · Commodities</div>
+</footer>
+
+<!-- SCROLL TOP -->
+<a href="#hero" class="scroll-top" id="scrollTop">↑</a>
+
+<script>
+  // scroll top visibility + sound
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollTop').classList.toggle('visible', window.scrollY > 400);
+  });
+  document.getElementById('scrollTop').addEventListener('click', () => { playNavSound(); });
+
+  // nav active state + clicca-btn
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a[href^="#"]');
+  const clickaBtn = document.getElementById('clicca-btn');
+
+  function setClickaActive(active) {
+    if (active) {
+      clickaBtn.classList.add('clicca-active');
+    } else {
+      clickaBtn.classList.remove('clicca-active');
+    }
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('nav-active'));
+        const active = document.querySelector(`nav a[href="#${e.target.id}"]`);
+        if (active) {
+          active.classList.add('nav-active');
+          setClickaActive(false);
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+
+  // Hero observer — when hero is visible, light up clicka-btn and turn off nav
+  const heroEl = document.getElementById('hero');
+  if (heroEl) {
+    const heroObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('nav-active'));
+          setClickaActive(true);
+        }
+      });
+    }, { threshold: 0.4 });
+    heroObserver.observe(heroEl);
+  }
+
+  // nav click sound (Web Audio API)
+  function playNavSound() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const o1 = ctx.createOscillator();
+      const o2 = ctx.createOscillator();
+      const gain = ctx.createGain();
+      o1.connect(gain); o2.connect(gain); gain.connect(ctx.destination);
+      o1.type = 'sine'; o1.frequency.setValueAtTime(880, ctx.currentTime);
+      o1.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.08);
+      o2.type = 'sine'; o2.frequency.setValueAtTime(1100, ctx.currentTime + 0.04);
+      o2.frequency.exponentialRampToValueAtTime(1600, ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+      o1.start(ctx.currentTime); o1.stop(ctx.currentTime + 0.18);
+      o2.start(ctx.currentTime + 0.04); o2.stop(ctx.currentTime + 0.18);
+    } catch(e) {}
+  }
+
+  // smart scroll: click nav → section fits entirely in viewport
+  const NAV_H = 52;
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      playNavSound();
+      const id = link.getAttribute('href').slice(1);
+      const sec = document.getElementById(id);
+      if (!sec) return;
+      const vh = window.innerHeight;
+      const secH = sec.getBoundingClientRect().height;
+      let scrollTo;
+      if (secH <= vh - NAV_H) {
+        // section fits: center it vertically below nav
+        const secTop = sec.getBoundingClientRect().top + window.scrollY;
+        const offset = Math.max(0, (vh - NAV_H - secH) / 2);
+        scrollTo = secTop - NAV_H - offset;
+      } else {
+        // section taller than viewport: just align top below nav
+        scrollTo = sec.getBoundingClientRect().top + window.scrollY - NAV_H - 8;
+      }
+      window.scrollTo({ top: scrollTo, behavior: 'smooth' });
+    });
+  });
+
+  // card entrance animation
+  const cards = document.querySelectorAll('.signal-card, .tp-card, .filter-card, .sim-card, .flow-step, .pir-card, .tmode-card');
+  const cardObserver = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        cardObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  cards.forEach((c, i) => {
+    c.style.opacity = '0';
+    c.style.transform = 'translateY(18px)';
+    c.style.transition = `opacity .4s ${i * 0.06}s ease, transform .4s ${i * 0.06}s ease`;
+    cardObserver.observe(c);
+  });
+</script>
+</body>
+</html>
