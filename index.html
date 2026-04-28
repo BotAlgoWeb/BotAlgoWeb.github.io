@@ -60,7 +60,8 @@ nav {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 1rem;
   height: 52px;
-  overflow-x: auto;
+  overflow-x: visible;
+  overflow: visible;
   white-space: nowrap;
 }
 nav .nav-links {
@@ -127,6 +128,14 @@ nav a.nav-active {
   background: rgba(200,148,10,0.05);
   white-space: nowrap;
   flex-shrink: 0;
+  cursor: default;
+  transition: border-color .25s, box-shadow .25s, background .25s, text-shadow .25s;
+}
+.nav-logo:hover {
+  border-color: rgba(255,215,0,0.85);
+  background: rgba(200,148,10,0.14);
+  box-shadow: 0 0 20px rgba(255,215,0,.25);
+  text-shadow: 0 0 18px rgba(255,215,0,0.9);
 }
 .nav-badge {
   font-family: var(--mono);
@@ -577,7 +586,8 @@ section {
   font-family: var(--mono);
   font-size: 12px;
   line-height: 1.7;
-  overflow-x: auto;
+  overflow-x: visible;
+  overflow: visible;
 }
 .code-comment { color: #3a6a7a; }
 .code-keyword { color: #ab47bc; }
@@ -620,6 +630,11 @@ section {
   border-radius: 6px;
   padding: .75rem 1rem;
   display: flex; gap: .75rem; align-items: center;
+  transition: border-color .22s, box-shadow .22s;
+}
+.alert-sound:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 14px rgba(0,188,212,.18);
 }
 .alert-sound-icon { font-size: 18px; }
 .alert-sound-name { font-family: var(--mono); font-size: 12px; color: var(--cyan); }
@@ -630,6 +645,11 @@ section {
   border: 1px solid var(--border);
   border-radius: 6px;
   overflow: hidden;
+  transition: border-color .22s, box-shadow .22s;
+}
+.webhook-group:hover {
+  border-color: var(--cyan);
+  box-shadow: 0 0 14px rgba(0,188,212,.15);
 }
 .webhook-group-header {
   background: var(--bg3);
@@ -813,6 +833,75 @@ footer strong { color: var(--green); }
 .ticker-red { color: var(--red); }
 @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
+.attiva-bot-btn {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: #f0fff0;
+  background: #007a30;
+  border: 3px solid #ffd700;
+  border-radius: 7px;
+  padding: 11px 34px;
+  text-decoration: none;
+  transition: background .25s, box-shadow .25s, transform .18s, border-color .25s, color .18s;
+  box-shadow: 0 0 14px rgba(0,122,48,.5), 0 0 0 1px rgba(255,215,0,.25);
+}
+.attiva-bot-btn:hover {
+  background: #00e060;
+  color: #050505;
+  border-color: #ffee44;
+  box-shadow: 0 0 38px rgba(0,224,96,.65), 0 0 18px rgba(255,215,0,.4);
+  transform: scale(1.05);
+}
+
+@keyframes bounce-arrow {
+  0%,100% { transform: translateY(0); opacity:.7; }
+  50%      { transform: translateY(5px); opacity:1; }
+}
+
+/* ── DROPDOWN MENU ── */
+.nav-dropdown { position:relative; }
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 8px;
+  min-width: 220px;
+  z-index: 9999;
+}
+.nav-dropdown-menu-inner {
+  background: #0d1117;
+  border: 1px solid rgba(200,148,10,0.5);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.6), 0 0 20px rgba(200,148,10,.1);
+  overflow: hidden;
+  animation: dropdown-in .18s ease;
+}
+@keyframes dropdown-in {
+  from { opacity:0; transform:translateY(-6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+.nav-dropdown-item {
+  display: block;
+  padding: 11px 18px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: .08em;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  transition: background .18s, color .18s;
+}
+.nav-dropdown-item:last-child { border-bottom: none; }
+.nav-dropdown-item:hover {
+  background: rgba(200,148,10,.12);
+  color: #ffd700;
+}
+
 /* ── GLOBAL HOVER GLOW EFFECTS ── */
 .flow-step {
   border: 1px solid transparent !important;
@@ -845,13 +934,683 @@ footer strong { color: var(--green); }
 .hov-red:hover { border-color: rgba(255,68,68,0.7) !important; box-shadow: 0 0 20px rgba(255,68,68,.15) !important; }
 .hov-gold { transition: border-color .25s, box-shadow .25s !important; }
 .hov-gold:hover { border-color: rgba(200,148,10,0.8) !important; box-shadow: 0 0 20px rgba(200,148,10,.18) !important; }
+
+/* ── ABBONAMENTO STYLES ── */
+
+:root {
+  --gold: #c8940a;
+  --gold-light: #ffd700;
+  --gold-dark: #8a6200;
+  --cyan: #00d4ff;
+  --cyan-dim: #0088aa;
+  --bg-deep: #020810;
+  --bg-dark: #050d1a;
+  --bg-mid: #0a1628;
+  --bg-card: #0d1e35;
+  --border: rgba(0,180,255,0.2);
+  --border-gold: rgba(200,148,10,0.3);
+  --text-primary: #f0f0f0;
+  --text-muted: #8899aa;
+  --green: #00ff88;
+  --red: #ff4444;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  overflow-x: hidden;
+}
+
+/* LANG TOGGLE */
+.lang-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px 8px;
+  gap: 8px;
+  background: transparent;
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+.lang-btn.active {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0,212,255,0.08);
+}
+.lang-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 24px 60px;
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(0,100,200,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(200,148,10,0.08) 0%, transparent 50%),
+    var(--bg-deep);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 55%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 15%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 85%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 80%, rgba(255,255,255,0.15) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 35%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.15) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.abb-badge {
+  display: inline-block;
+  background: rgba(0,212,255,0.1);
+  border: 1px solid rgba(0,212,255,0.3);
+  color: var(--cyan);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  padding: 10px 28px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 900;
+  background: linear-gradient(180deg, #ffd700 0%, #c8940a 50%, #8a6200 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.05;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 30px rgba(200,148,10,0.3));
+}
+
+.hero-subtitle {
+  font-size: clamp(16px, 2.5vw, 22px);
+  color: var(--cyan);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.hero-desc {
+  font-size: clamp(15px, 1.8vw, 18px);
+  color: var(--text-muted);
+  max-width: 640px;
+  line-height: 1.7;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  margin: 0 auto 40px auto;
+  text-align: center;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+
+.tag {
+  background: rgba(0,212,255,0.06);
+  border: 1px solid rgba(0,212,255,0.2);
+  color: #aaccdd;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.cta-wrap {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #c8940a, #ffd700, #c8940a);
+  color: #050d1a;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 16px 36px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 2px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s;
+  box-shadow: 0 0 20px rgba(200,148,10,0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(200,148,10,0.5);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 15px 32px;
+  border-radius: 6px;
+  border: 1px solid var(--cyan);
+  cursor: pointer;
+  letter-spacing: 2px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s;
+}
+.btn-secondary:hover {
+  background: rgba(0,212,255,0.1);
+  transform: translateY(-2px);
+}
+
+/* SECTION */
+section {
+  padding: 80px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(24px, 4vw, 38px);
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(180deg, #ffd700, #c8940a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto 56px;
+  line-height: 1.7;
+}
+
+/* PIPELINE */
+.pipeline {
+  background: linear-gradient(135deg, rgba(5,13,26,0.8), rgba(13,30,53,0.8));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  margin-bottom: 40px;
+}
+
+.pipeline-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.pipe-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 16px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.pipe-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-gold);
+  background: rgba(200,148,10,0.08);
+}
+
+.pipe-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-light);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.pipe-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.4;
+}
+
+.pipe-arrow {
+  color: var(--cyan);
+  font-size: 20px;
+  padding: 0 4px;
+  opacity: 0.6;
+}
+
+/* PRODUCTS GRID */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.product-card {
+  background: linear-gradient(160deg, var(--bg-card), var(--bg-mid));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px 24px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+}
+
+.product-card.featured {
+  border-color: rgba(200,148,10,0.4);
+}
+
+.product-card.featured::before {
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0,212,255,0.4);
+  box-shadow: 0 8px 30px rgba(0,100,200,0.15);
+}
+
+.product-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.product-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.product-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.product-includes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.product-includes li {
+  font-size: 13px;
+  color: #aabbcc;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.product-includes li::before {
+  content: '→';
+  color: var(--cyan);
+  font-size: 12px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+/* PRICING */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.price-card {
+  background: linear-gradient(160deg, var(--bg-card), var(--bg-mid));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px 28px;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.price-card.best {
+  border-color: rgba(200,148,10,0.5);
+  background: linear-gradient(160deg, #0f1e38, #0a1628);
+  box-shadow: 0 0 40px rgba(200,148,10,0.1);
+}
+
+.best-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #c8940a, #ffd700);
+  color: #050d1a;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 16px;
+  border-radius: 20px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.price-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cyan);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.price-amount {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(180deg, #ffd700, #c8940a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.price-currency {
+  font-size: 20px;
+  vertical-align: super;
+}
+
+.price-period {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  font-family: 'Inter', sans-serif;
+}
+
+.price-features {
+  list-style: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.price-features li {
+  font-size: 14px;
+  color: #aabbcc;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.4;
+}
+
+.check { color: var(--green); font-size: 14px; flex-shrink: 0; }
+
+.price-cta {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 6px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.price-cta.gold {
+  background: linear-gradient(135deg, #c8940a, #ffd700, #c8940a);
+  color: #050d1a;
+  box-shadow: 0 0 20px rgba(200,148,10,0.3);
+}
+.price-cta.gold:hover { box-shadow: 0 0 35px rgba(200,148,10,0.5); transform: translateY(-2px); }
+
+.price-cta.outline {
+  background: transparent;
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+}
+.price-cta.outline:hover { background: rgba(0,212,255,0.1); transform: translateY(-2px); }
+
+/* FUTURES */
+.futures-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 200px));
+  gap: 12px;
+  margin-top: 32px;
+  justify-content: center;
+}
+
+.future-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.future-item:hover {
+  border-color: rgba(200,148,10,0.4);
+  background: rgba(200,148,10,0.05);
+}
+
+.future-flag { font-size: 22px; margin-bottom: 6px; }
+
+.future-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-light);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.future-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+}
+
+/* SUPPORT */
+.support-card {
+  background: linear-gradient(160deg, var(--bg-card), var(--bg-mid));
+  border: 1px solid rgba(0,255,136,0.2);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+}
+
+.support-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 16px;
+}
+
+.support-desc {
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto 32px;
+}
+
+.contact-links {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0,255,136,0.08);
+  border: 1px solid rgba(0,255,136,0.25);
+  color: var(--green);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+.contact-btn:hover {
+  background: rgba(0,255,136,0.15);
+  transform: translateY(-2px);
+}
+
+/* DIVIDER */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 0 auto;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 40px 24px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  border-top: 1px solid var(--border);
+}
+
+footer a { color: var(--cyan); text-decoration: none; }
+
+/* LANG CONTENT */
+.it-content { display: block; }
+.en-content { display: none; }
+body.en .it-content { display: none; }
+body.en .en-content { display: block; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* GLOW LINE */
+.glow-line {
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+  margin: 0 auto 48px;
+}
+
 </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav>
-  <span class="nav-logo">BOT ALGO</span>
+  <div class="nav-dropdown">
+    <span class="nav-logo">BOT ALGO &nbsp;▾</span>
+    <div class="nav-dropdown-menu">
+      <div class="nav-dropdown-menu-inner">
+        <a href="#pipeline"   class="nav-dropdown-item" onclick="document.getElementById('pipeline').scrollIntoView({behavior:'smooth'});return false;">📊 &nbsp;La Pipeline Completa</a>
+        <a href="#abb-strumenti" class="nav-dropdown-item" onclick="document.getElementById('abb-strumenti').scrollIntoView({behavior:'smooth'});return false;">🛠️ &nbsp;4 Strumenti Professionali</a>
+        <a href="#futures"    class="nav-dropdown-item" onclick="document.getElementById('futures').scrollIntoView({behavior:'smooth'});return false;">⚡ &nbsp;8 Futures Inclusi</a>
+        <a href="#piani"      class="nav-dropdown-item" onclick="document.getElementById('piani').scrollIntoView({behavior:'smooth'});return false;">💎 &nbsp;Scegli il Tuo Piano</a>
+        <a href="#supporto"   class="nav-dropdown-item" onclick="document.getElementById('supporto').scrollIntoView({behavior:'smooth'});return false;">🎧 &nbsp;Supporto Illimitato</a>
+      </div>
+    </div>
+  </div>
   <div class="nav-links">
     <a href="#flusso">FLUSSO</a>
     <a href="#modalita">MODALITÀ</a>
@@ -873,27 +1632,37 @@ footer strong { color: var(--green); }
     <span style="color:#e8ff00;font-size:15px;line-height:1;">←</span>
     <span style="font-family:var(--mono);font-size:10px;color:#e8ff00;letter-spacing:.08em;white-space:nowrap;">clicca x selezionare</span>
   </div>
+  <div style="display:flex;gap:5px;margin-left:8px;flex-shrink:0;">
+    <button onclick="setLang('it')" id="nav-lang-it"
+      style="background:transparent;border:1px solid rgba(0,188,212,.4);color:var(--cyan);font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.05em;"
+      onmouseenter="this.style.background='rgba(0,188,212,.15)'" onmouseleave="this.style.background='transparent'">🇮🇹 IT</button>
+    <button onclick="setLang('en')" id="nav-lang-en"
+      style="background:transparent;border:1px solid rgba(0,188,212,.2);color:var(--text-muted);font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.05em;"
+      onmouseenter="this.style.background='rgba(0,188,212,.15)'" onmouseleave="this.style.background='transparent'">🇬🇧 EN</button>
+  </div>
 </nav>
 
 <!-- TICKER -->
 <div class="ticker-bar" style="margin-top:52px">
   <div class="ticker-inner">
+    <span>📊 <span class="ticker-green">2 MODALITÀ</span> — Scalping · Day Trading · ottimizzate per ogni stile operativo</span>
     <span>⚡ <span class="ticker-green">4 SEGNALI INDIPENDENTI</span> — SuperTrend · EMA Cross · Parabolic SaR · Trendline Breakout</span>
     <span>🔍 <span class="ticker-green">FILTRI SMART</span> — SMA200 + SuperTrend filtrano i segnali falsi e operano solo nel trend principale</span>
     <span>🎯 <span class="ticker-green">TAKE PROFIT TRIPLO</span> — TP a Punti · TP a Valore · TP Limit su prezzo assoluto</span>
     <span>🛡️ <span class="ticker-green">STOP AVANZATO</span> — Stop Loss · Trailing Stop Classico · Trailing Dinamico con Break Even</span>
     <span>💰 <span class="ticker-green">TARGET PROFIT / LOSS</span> — Ferma automaticamente l'operatività al raggiungimento dell'obiettivo giornaliero</span>
-    <span>📅 <span class="ticker-green">BACKTEST STORICO ILLIMITATO</span> — Simula qualsiasi giorno dal 2000 al 2100 direttamente dagli input</span>
     <span>🔔 <span class="ticker-green">16 ALERT WEBHOOK JSON</span> — Pronti per bot e automazioni: entry, exit profit, exit loss</span>
-    <span>📊 <span class="ticker-green">MULTI-MERCATO</span> — Futures USA · Futures Europa · Azioni · Crypto · Forex · Indici · Commodities</span>
+    <span>📅 <span class="ticker-green">BACKTEST STORICO ILLIMITATO</span> — Simula qualsiasi giorno dal 2000 al 2100 direttamente dagli input</span>
+    <span>📈 <span class="ticker-green">MULTI-MERCATO</span> — Futures USA · Futures Europa · Azioni · Crypto · Forex · Indici · Commodities</span>
+    <span>📊 <span class="ticker-green">2 MODALITÀ</span> — Scalping · Day Trading · ottimizzate per ogni stile operativo</span>
     <span>⚡ <span class="ticker-green">4 SEGNALI INDIPENDENTI</span> — SuperTrend · EMA Cross · Parabolic SaR · Trendline Breakout</span>
     <span>🔍 <span class="ticker-green">FILTRI SMART</span> — SMA200 + SuperTrend filtrano i segnali falsi e operano solo nel trend principale</span>
     <span>🎯 <span class="ticker-green">TAKE PROFIT TRIPLO</span> — TP a Punti · TP a Valore · TP Limit su prezzo assoluto</span>
     <span>🛡️ <span class="ticker-green">STOP AVANZATO</span> — Stop Loss · Trailing Stop Classico · Trailing Dinamico con Break Even</span>
     <span>💰 <span class="ticker-green">TARGET PROFIT / LOSS</span> — Ferma automaticamente l'operatività al raggiungimento dell'obiettivo giornaliero</span>
-    <span>📅 <span class="ticker-green">BACKTEST STORICO ILLIMITATO</span> — Simula qualsiasi giorno dal 2000 al 2100 direttamente dagli input</span>
     <span>🔔 <span class="ticker-green">16 ALERT WEBHOOK JSON</span> — Pronti per bot e automazioni: entry, exit profit, exit loss</span>
-    <span>📊 <span class="ticker-green">MULTI-MERCATO</span> — Futures USA · Futures Europa · Azioni · Crypto · Forex · Indici · Commodities</span>
+    <span>📅 <span class="ticker-green">BACKTEST STORICO ILLIMITATO</span> — Simula qualsiasi giorno dal 2000 al 2100 direttamente dagli input</span>
+    <span>📈 <span class="ticker-green">MULTI-MERCATO</span> — Futures USA · Futures Europa · Azioni · Crypto · Forex · Indici · Commodities</span>
   </div>
 </div>
 
@@ -904,6 +1673,13 @@ footer strong { color: var(--green); }
   <div class="hero-title" style="margin-bottom:1.5rem;text-shadow:0 0 60px rgba(200,148,10,0.5),0 0 120px rgba(200,148,10,0.2);"><span style="color:#c8940a">BOT</span><span style="color:#c8940a"> ALGO</span></div>
   <div class="hero-tag">▸ TradingView · Pine Script® v6 · Algoritmo Avanzato</div>
   <div class="hero-sub">Sistema di Trading Automatico Multi-Strategia</div>
+
+  <div style="margin-top:1.8rem;margin-bottom:2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;">
+    <div style="color:var(--green);font-size:16px;line-height:1;animation:bounce-arrow 1.4s ease-in-out infinite;">▼</div>
+    <a href="#abbonamenti" class="attiva-bot-btn">
+      ⚡ &nbsp;ATTIVA IL BOT
+    </a>
+  </div>
   <div class="hero-badges">
     <div class="badge"><span class="badge-num">2</span><span class="badge-label">📊 MODALITÀ</span></div>
     <div class="badge"><span class="badge-num">4</span><span class="badge-label">⚡ SEGNALI</span></div>
@@ -1312,14 +2088,14 @@ footer strong { color: var(--green); }
     <!-- STOP LOSS -->
     <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
       <div style="font-family:var(--mono);font-size:14px;color:var(--red);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);letter-spacing:.1em;">💸 STOP LOSS</div>
-      <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;">
+      <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.7)';this.style.boxShadow='0 0 12px rgba(0,188,212,.15)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.25)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
           <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">A PUNTI</div>
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
         </div>
         <div style="font-size:13px;color:var(--text);">Chiude quando la perdita raggiunge N punti. Es: SL=20 → chiude a -20 punti</div>
       </div>
-      <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;">
+      <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.7)';this.style.boxShadow='0 0 12px rgba(0,188,212,.15)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.25)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
           <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">A VALORE $/€</div>
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);">PRIORITÀ SU SL PUNTI</span>
@@ -1331,7 +2107,7 @@ footer strong { color: var(--green); }
     <div class="hov-gold" style="background:var(--card);border:1px solid rgba(255,140,0,.35);border-radius:8px;padding:1.5rem;">
       <div style="font-family:var(--mono);font-size:14px;color:#ff8c00;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(255,140,0,.25);letter-spacing:.1em;">🛡️ TRAILING STOP</div>
       <!-- CLASSICO -->
-      <div style="border:1px solid rgba(255,140,0,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;">
+      <div style="border:1px solid rgba(255,140,0,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(255,140,0,.75)';this.style.boxShadow='0 0 12px rgba(255,140,0,.15)'" onmouseleave="this.style.borderColor='rgba(255,140,0,.25)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
           <div style="font-family:var(--mono);font-size:13px;color:#ff8c00;">CLASSICO &nbsp;<span style="font-size:10px;color:var(--text-muted);">Punti Fissi</span></div>
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
@@ -1339,7 +2115,7 @@ footer strong { color: var(--green); }
         <div style="font-size:13px;color:var(--text);">Stop fisso che segue il prezzo ad ogni tick. Es: TS=20 → stop sempre a -20 punti dal prezzo corrente</div>
       </div>
       <!-- MODO A -->
-      <div style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:6px;padding:.85rem;margin-bottom:.75rem;">
+      <div style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:6px;padding:.85rem;margin-bottom:.75rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.7)';this.style.boxShadow='0 0 12px rgba(0,188,212,.15)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.2)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.2rem;">
           <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">DINAMICO · <strong>MODO A</strong> &nbsp;<span style="font-size:10px;color:var(--cyan);">(solo Break Even)</span></div>
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);">PRIORITÀ SU CLASSICO</span>
@@ -1348,7 +2124,7 @@ footer strong { color: var(--green); }
         <div style="font-size:13px;color:var(--text);">Porta lo stop a pareggio dopo +50 punti di profitto.<br>Lo stop non si muove ulteriormente.</div>
       </div>
       <!-- MODO B -->
-      <div style="background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.2);border-radius:6px;padding:.85rem;">
+      <div style="background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.2);border-radius:6px;padding:.85rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,230,118,.7)';this.style.boxShadow='0 0 12px rgba(0,230,118,.15)'" onmouseleave="this.style.borderColor='rgba(0,230,118,.2)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.2rem;">
           <div style="font-family:var(--mono);font-size:13px;color:var(--green);">DINAMICO · <strong>MODO B</strong> &nbsp;<span style="font-size:10px;color:var(--green);">(Break Even + Movimento)</span></div>
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--red);color:var(--red);border-radius:4px;padding:1px 7px;background:var(--red-dim);">MAX PRIORITÀ</span>
@@ -1918,5 +2694,550 @@ footer strong { color: var(--green); }
     cardObserver.observe(c);
   });
 </script>
+
+
+<!-- ══ ABBONAMENTI ══ -->
+<div id="abbonamenti">
+<!-- LANG BAR -->
+<div class="lang-bar" style="display:none;">
+  <button class="lang-btn active" onclick="setLang('it')">🇮🇹 IT</button>
+  <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+
+  <!-- ITALIANO -->
+  <div class="it-content">
+    <div class="abb-badge">Sistema di Trading Algoritmico Avanzato</div>
+    <h1 class="hero-title">BOT TRADING ALGO</h1>
+    <div class="hero-subtitle">Setup Manager — Pipeline Completa</div>
+    <p class="hero-desc">
+      Il sistema professionale che collega TradingView, Python e Quantower<br>per eseguire operazioni automatiche sul mercato reale.<br>Ottimizza ogni giorno le impostazioni del bot con l'intelligenza artificiale.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">TradingView</span>
+      <span class="tag">Python Bridge</span>
+      <span class="tag">Quantower</span>
+      <span class="tag">Claude AI</span>
+      <span class="tag">8 Futures</span>
+      <span class="tag">Supporto Illimitato</span>
+    </div>
+    <div class="cta-wrap">
+      <a href="https://lemonsqueezy.com" onclick="playSound('cta')" class="btn-primary">ABBONATI SU LEMON SQUEEZY</a>
+      <a href="#prodotti" onclick="playSound('cta')" class="btn-secondary">SCOPRI DI PIÙ</a>
+    </div>
+  </div>
+
+  <!-- ENGLISH -->
+  <div class="en-content">
+    <div class="abb-badge">Advanced Algorithmic Trading System</div>
+    <h1 class="hero-title">BOT TRADING ALGO</h1>
+    <div class="hero-subtitle">Setup Manager — Full Pipeline</div>
+    <p class="hero-desc">
+      The professional system that connects TradingView, Python and Quantower<br>to execute automatic trades on real markets.<br>Optimize your bot settings every day with artificial intelligence.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">TradingView</span>
+      <span class="tag">Python Bridge</span>
+      <span class="tag">Quantower</span>
+      <span class="tag">Claude AI</span>
+      <span class="tag">8 Futures</span>
+      <span class="tag">Unlimited Support</span>
+    </div>
+    <div class="cta-wrap">
+      <a href="https://lemonsqueezy.com" onclick="playSound('cta')" class="btn-primary">SUBSCRIBE ON LEMON SQUEEZY</a>
+      <a href="#prodotti" onclick="playSound('cta')" class="btn-secondary">LEARN MORE</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- PIPELINE -->
+<div id="pipeline" style="background: linear-gradient(180deg, var(--bg-deep), var(--bg-dark)); padding: 60px 24px;">
+<section style="padding: 0;">
+
+  <div class="it-content">
+    <div class="section-label">Come Funziona</div>
+    <h2 class="section-title">La Pipeline Completa</h2>
+    <p class="section-sub">Quattro componenti integrati che lavorano insieme 24/7<br>per eseguire le tue strategie sul mercato reale.</p>
+  </div>
+  <div class="en-content">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">The Full Pipeline</h2>
+    <p class="section-sub">Four integrated components working together 24/7<br>to execute your strategies on real markets.</p>
+  </div>
+
+  <div class="pipeline">
+    <div class="pipeline-steps">
+      <div class="pipe-step">
+        <div class="pipe-icon">📊</div>
+        <div class="pipe-name">BOT ALGO</div>
+        <div class="pipe-desc it-content">Pine Script su TradingView<br>genera segnali</div>
+        <div class="pipe-desc en-content">Pine Script on TradingView generates signals</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-icon">🐍</div>
+        <div class="pipe-name">PYTHON BRIDGE</div>
+        <div class="pipe-desc it-content">Converte alert JSON in file TXT</div>
+        <div class="pipe-desc en-content">Converts JSON alerts to TXT files</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-icon">⚡</div>
+        <div class="pipe-name">QUANTOWER</div>
+        <div class="pipe-desc it-content">Legge i file e invia ordini reali</div>
+        <div class="pipe-desc en-content">Reads files and sends real orders</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-icon">🤖</div>
+        <div class="pipe-name">SETUP MANAGER</div>
+        <div class="pipe-desc it-content">AI ottimizza le impostazioni<br>ogni giorno</div>
+        <div class="pipe-desc en-content">AI optimizes settings every day</div>
+      </div>
+    </div>
+  </div>
+
+</section>
+</div>
+
+<!-- PRODUCTS -->
+<div style="padding: 60px 24px;" id="prodotti"><span id="abb-strumenti"></span>
+<section style="padding: 0;">
+
+  <div class="it-content">
+    <div class="section-label">I Componenti</div>
+    <h2 class="section-title">4 Strumenti Professionali</h2>
+    <p class="section-sub">Ogni componente è progettato per funzionare in modo standalone<br>o come parte del sistema completo.</p>
+  </div>
+  <div class="en-content">
+    <div class="section-label">The Components</div>
+    <h2 class="section-title">4 Professional Tools</h2>
+    <p class="section-sub">Each component is designed to work standalone<br>or as part of the complete system.</p>
+  </div>
+
+  <div class="products-grid">
+
+    <div class="product-card">
+      <div class="product-num">01 / 04</div>
+      <div class="product-name">BOT ALGO<br>TradingView</div>
+      <div class="product-desc"><span class="it-content">Il motore algoritmico che genera segnali di trading su TradingView con precisione millimetrica.</span><span class="en-content">The algorithmic engine that generates trading signals on TradingView with pinpoint precision.</span></div>
+      <ul class="product-includes">
+        <li><span class="it-content">Codice Pine Script completo</span><span class="en-content">Complete Pine Script code</span></li>
+        <li><span class="it-content">Segnali BUY/SELL automatici</span><span class="en-content">Automatic BUY/SELL signals</span></li>
+        <li><span class="it-content">Alert JSON configurati</span><span class="en-content">Pre-configured JSON alerts</span></li>
+        <li><span class="it-content">Fascia oraria configurabile (es. 09:00–17:30 per filtrare sessioni)</span><span class="en-content">Configurable time window (e.g. 09:00–17:30 to filter trading sessions)</span></li>
+        <li><span class="it-content">Filtro segnali integrato: evita entrate in mercati laterali o a basso volume</span><span class="en-content">Built-in signal filter: avoids entries in sideways or low-volume markets</span></li>
+        <li><span class="it-content">Mediazione e Piramidazione personalizzabili: definisci il numero di quantità che devono entrare in un trade per costruire posizioni graduali in tendenza</span><span class="en-content">Averaging and Pyramiding customizable: define the number of quantities entering a trade to build gradual trend positions</span></li>
+      </ul>
+    </div>
+
+    <div class="product-card">
+      <div class="product-num">02 / 04</div>
+      <div class="product-name">PYTHON BRIDGE<br>TV → Quantower</div>
+      <div class="product-desc"><span class="it-content">Trasforma automaticamente gli alert JSON di TradingView in file TXT pronti per Quantower.</span><span class="en-content">Automatically transforms TradingView JSON alerts into TXT files ready for Quantower.</span></div>
+      <ul class="product-includes">
+        <li><span class="it-content">Script Python pronto all'uso</span><span class="en-content">Ready-to-use Python script</span></li>
+        <li><span class="it-content">Conversione JSON → TXT</span><span class="en-content">JSON → TXT conversion</span></li>
+        <li><span class="it-content">Cartella condivisa automatica</span><span class="en-content">Automatic shared folder</span></li>
+        <li><span class="it-content">Possibilità di rollare lo strumento: cambia il future attivo senza fermare lo script</span><span class="en-content">Instrument roll feature: switch the active future without stopping the script</span></li>
+        <li><span class="it-content">Modifica quantità al volo: aggiorna i lotti per ogni segnale direttamente dal file di config</span><span class="en-content">Live quantity editing: update lots per signal directly from the config file</span></li>
+        <li><span class="it-content">Visualizzazione ordini inviati: log in tempo reale con timestamp, direzione e stato esecuzione</span><span class="en-content">Sent orders view: real-time log with timestamp, direction and execution status</span></li>
+      </ul>
+    </div>
+
+    <div class="product-card">
+      <div class="product-num">03 / 04</div>
+      <div class="product-name">QUANTOWER BRIDGE<br>Esecuzione Reale</div>
+      <div class="product-desc"><span class="it-content">Legge i file TXT e invia ordini esecutivi reali al mercato tramite Quantower 24/7.</span><span class="en-content">Reads TXT files and sends real executive orders to the market via Quantower 24/7.</span></div>
+      <ul class="product-includes">
+        <li><span class="it-content">Configurazione Quantower</span><span class="en-content">Quantower configuration</span></li>
+        <li><span class="it-content">Esecuzione ordini live</span><span class="en-content">Live order execution</span></li>
+        <li><span class="it-content">Compatibile tutti i broker</span><span class="en-content">Compatible with all brokers</span></li>
+        <li><span class="it-content">GUI integrata per monitorare ordini inviati e ricevuti in tempo reale</span><span class="en-content">Built-in GUI to monitor sent and received orders in real time</span></li>
+        <li><span class="it-content">Modalità simulazione e modalità live selezionabili dal pannello di controllo</span><span class="en-content">Simulation and live modes selectable from the control panel</span></li>
+        <li><span class="it-content">Contatore ordini accettati e falliti con riepilogo sessione sempre visibile</span><span class="en-content">Accepted and failed order counter with always-visible session summary</span></li>
+      </ul>
+    </div>
+
+    <div class="product-card featured">
+      <div class="product-num">04 / 04 ⭐</div>
+      <div class="product-name">SETUP MANAGER<br>+ Claude AI</div>
+      <div class="product-desc"><span class="it-content">Gestisce lo storico delle sessioni e usa Claude AI per ottimizzare le impostazioni ogni giorno.</span><span class="en-content">Manages session history and uses Claude AI to optimize bot settings every single day.</span></div>
+      <ul class="product-includes">
+        <li><span class="it-content">App desktop Windows</span><span class="en-content">Windows desktop app</span></li>
+        <li><span class="it-content">Analisi AI giornaliera</span><span class="en-content">Daily AI analysis</span></li>
+        <li><span class="it-content">8 PDF Stagionalità Futures</span><span class="en-content">8 Futures Seasonality PDFs</span></li>
+        <li><span class="it-content">Guida passo-passo all'impostazione del bot con assistenza Claude AI su più asset e più timeframe</span><span class="en-content">Step-by-step bot setup guide with Claude AI assistance across multiple assets and timeframes</span></li>
+        <li><span class="it-content">Ottimizzazione automatica dei parametri su asset multipli contemporaneamente (es. NQ, ES, DAX, BTC)</span><span class="en-content">Automatic parameter optimization across multiple assets simultaneously (e.g. NQ, ES, DAX, BTC)</span></li>
+        <li><span class="it-content">Suggerimenti AI contestuali basati su stagionalità, volatilità e risultati storici delle sessioni precedenti</span><span class="en-content">Contextual AI suggestions based on seasonality, volatility and historical session results</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+</div>
+
+<!-- FUTURES -->
+<div id="futures" style="background: linear-gradient(180deg, var(--bg-dark), var(--bg-deep)); padding: 60px 24px;">
+<section style="padding: 0;">
+
+  <div class="it-content">
+    <div class="section-label">Mercati Coperti</div>
+    <h2 class="section-title">8 Futures Inclusi</h2>
+    <p class="section-sub">PDF di stagionalità storica per ogni strumento,<br>fondamentali per impostare il bot con il contesto di mercato corretto.</p>
+  </div>
+  <div class="en-content">
+    <div class="section-label">Markets Covered</div>
+    <h2 class="section-title">8 Futures Included</h2>
+    <p class="section-sub">Historical seasonality PDFs for each instrument,<br>essential for setting up the bot with the correct market context.</p>
+  </div>
+
+  <div class="futures-grid">
+    <div class="future-item">
+      <div class="future-flag">🇺🇸</div>
+      <div class="future-name">NASDAQ 100</div>
+      <div class="future-note">+ Micro MNQ</div>
+    </div>
+    <div class="future-item">
+      <div class="future-flag">🇺🇸</div>
+      <div class="future-name">S&P 500</div>
+      <div class="future-note">+ Micro MES</div>
+    </div>
+    <div class="future-item">
+      <div class="future-flag">🇺🇸</div>
+      <div class="future-name">RUSSELL 2000</div>
+      <div class="future-note">+ Micro M2K</div>
+    </div>
+    <div class="future-item">
+      <div class="future-flag">🇩🇪</div>
+      <div class="future-name">DAX</div>
+      <div class="future-note">Futures DE40</div>
+    </div>
+    <div class="future-item">
+      <div class="future-flag">🇪🇺</div>
+      <div class="future-name">EUROSTOXX 50</div>
+      <div class="future-note">Futures ESTX50</div>
+    </div>
+    <div class="future-item">
+      <div class="future-flag">🛢️</div>
+      <div class="future-name">WTI CRUDE OIL</div>
+      <div class="future-note">+ Micro MCL</div>
+    </div>
+    <div class="future-item">
+      <div class="future-flag">🥇</div>
+      <div class="future-name">GOLD</div>
+      <div class="future-note">+ Micro MGC</div>
+    </div>
+    <div class="future-item">
+      <div class="future-flag">₿</div>
+      <div class="future-name">BITCOIN</div>
+      <div class="future-note">Futures BTC</div>
+    </div>
+  </div>
+
+</section>
+</div>
+
+<!-- PRICING -->
+<div style="padding: 60px 24px;" id="prezzi"><span id="piani"></span>
+<section style="padding: 0;">
+
+  <div class="it-content">
+    <div class="section-label">Prezzi</div>
+    <h2 class="section-title">Scegli il Tuo Piano</h2>
+    <p class="section-sub">Acquista i singoli componenti o risparmia con il pacchetto completo.<br>Supporto illimitato incluso in tutti i piani.</p>
+  </div>
+  <div class="en-content">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Choose Your Plan</h2>
+    <p class="section-sub">Buy individual components or save with the complete bundle.<br>Unlimited support included in all plans.</p>
+  </div>
+
+  <!-- BILLING TOGGLE -->
+  <div style="display:flex; justify-content:center; align-items:center; gap:16px; margin-bottom:40px; flex-wrap:wrap;">
+    <span class="it-content" style="color:var(--text-muted); font-size:14px; font-weight:600; letter-spacing:1px;">MENSILE</span>
+    <span class="en-content" style="color:var(--text-muted); font-size:14px; font-weight:600; letter-spacing:1px;">MONTHLY</span>
+    <div id="billingToggle" onclick="toggleBilling()" style="width:52px; height:28px; background:rgba(0,212,255,0.15); border:1px solid var(--cyan); border-radius:14px; cursor:pointer; position:relative; transition:all 0.3s;">
+      <div id="toggleDot" style="position:absolute; top:3px; left:3px; width:20px; height:20px; background:var(--cyan); border-radius:50%; transition:all 0.3s;"></div>
+    </div>
+    <span class="it-content" style="color:var(--text-muted); font-size:14px; font-weight:600; letter-spacing:1px;">ANNUALE</span>
+    <span class="en-content" style="color:var(--text-muted); font-size:14px; font-weight:600; letter-spacing:1px;">ANNUAL</span>
+    <span id="saveBadge" style="display:none; background:rgba(0,255,136,0.15); border:1px solid rgba(0,255,136,0.4); color:var(--green); font-size:12px; font-weight:700; padding:4px 12px; border-radius:12px; letter-spacing:1px;">
+      <span class="it-content">2 MESI GRATIS</span><span class="en-content">2 MONTHS FREE</span>
+    </span>
+  </div>
+
+  <div class="pricing-grid" style="max-width:900px; margin:0 auto; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+
+    <!-- ABBONAMENTO BASE -->
+    <div class="price-card">
+      <div class="price-name it-content">Abbonamento Base</div>
+      <div class="price-name en-content">Base Plan</div>
+      <div id="price-base-monthly">
+        <div class="price-amount"><span class="price-currency">€</span>30</div>
+        <div class="price-period it-content">al mese</div>
+        <div class="price-period en-content">per month</div>
+      </div>
+      <div id="price-base-annual" style="display:none;">
+        <div class="price-amount"><span class="price-currency">€</span>300</div>
+        <div class="price-period it-content">all'anno &nbsp;<span style="color:var(--green); font-size:12px;">(2 mesi gratis)</span></div>
+        <div class="price-period en-content">per year &nbsp;<span style="color:var(--green); font-size:12px;">(2 months free)</span></div>
+      </div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> <span class="it-content">Bot principale su TradingView (Accesso su Invito)</span><span class="en-content">Main Bot on TradingView (Invite Only)</span></li>
+        <li><span class="check">✓</span> <span class="it-content">Software Setup Manager (AI + Stagionalità)</span><span class="en-content">Setup Manager Software (AI + Seasonality)</span></li>
+        <li><span class="check">✓</span> <span class="it-content">Aggiornamenti automatici in tempo reale</span><span class="en-content">Real-time automatic updates</span></li>
+        <li><span class="check">✓</span> <span class="it-content">Assistenza base inclusa</span><span class="en-content">Basic support included</span></li>
+        <li><span class="check">✓</span> <span class="it-content">Prova gratuita 30 giorni</span><span class="en-content">30-day free trial</span></li>
+      </ul>
+      <div style="margin-top:16px; padding:16px 18px; background:rgba(0,212,255,0.06); border-radius:8px; border-left:3px solid var(--cyan);">
+        <p style="font-size:14px; color:var(--text-muted); font-family:'Inter',sans-serif; line-height:1.7;">
+          <span class="it-content">👉 Per chi vuole trading <strong style="color:var(--gold-light);">semi-automatico</strong>:<br>configura il bot con la tua strategia,<br>e lui genera i segnali,<br>che poi esegui manualmente sul tuo broker.</span>
+          <span class="en-content">👉 For <strong style="color:var(--gold-light);">semi-automatic</strong> trading:<br>configure the bot with your strategy,<br>and it generates the signals,<br>which you then execute manually on your broker.</span>
+        </p>
+      </div>
+      <a id="cta-base" onclick="playSound('cta')" href="https://botalgo.lemonsqueezy.com/checkout/buy/c96310d7-f1e3-40ad-8c62-e800eacf4177" class="price-cta outline" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
+      <p style="text-align:center; margin-top:12px; font-size:15px; font-family:'Inter',sans-serif; font-weight:600;">🔄 <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener" onclick="playSound('cta')" style="color:var(--text-muted); text-decoration:underline; transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'"><span class="it-content">Disdici quando vuoi</span><span class="en-content">Cancel anytime</span></a></p>
+    </div>
+
+    <!-- ABBONAMENTO PRO -->
+    <div class="price-card best">
+      <div class="best-badge it-content">🏆 AUTOMAZIONE COMPLETA</div>
+      <div class="best-badge en-content">🏆 FULL AUTOMATION</div>
+      <div class="price-name it-content">Abbonamento PRO</div>
+      <div class="price-name en-content">PRO Plan</div>
+      <div id="price-pro-monthly">
+        <div class="price-amount"><span class="price-currency">€</span>40</div>
+        <div class="price-period it-content">al mese</div>
+        <div class="price-period en-content">per month</div>
+      </div>
+      <div id="price-pro-annual" style="display:none;">
+        <div class="price-amount"><span class="price-currency">€</span>400</div>
+        <div class="price-period it-content">all'anno &nbsp;<span style="color:var(--green); font-size:12px;">(2 mesi gratis)</span></div>
+        <div class="price-period en-content">per year &nbsp;<span style="color:var(--green); font-size:12px;">(2 months free)</span></div>
+      </div>
+      <ul class="price-features">
+        <li><span class="check">✓</span> <span class="it-content">Tutto del piano Base</span><span class="en-content">Everything in Base plan</span></li>
+        <li><span class="check">✓</span> <span class="it-content">Python Bridge — converte alert JSON → file .txt Quantower</span><span class="en-content">Python Bridge — converts JSON alerts → Quantower .txt</span></li>
+        <li><span class="check">✓</span> <span class="it-content">Quantower Bridge — esecuzione ordini reali 24/7</span><span class="en-content">Quantower Bridge — real order execution 24/7</span></li>
+        <li><span class="check">✓</span> <span class="it-content">Aggiornamenti automatici in tempo reale</span><span class="en-content">Real-time automatic updates</span></li>
+        <li><span class="check">✓</span> <span class="it-content">Supporto illimitato prioritario</span><span class="en-content">Priority unlimited support</span></li>
+        <li><span class="check">✓</span> <span class="it-content">Prova gratuita 30 giorni</span><span class="en-content">30-day free trial</span></li>
+      </ul>
+      <div style="margin-top:16px; padding:16px 18px; background:rgba(200,148,10,0.08); border-radius:8px; border-left:3px solid var(--gold);">
+        <div style="font-size:13px; color:var(--text-muted); font-family:'Inter',sans-serif; line-height:1.8;">
+          <span class="it-content">
+            <p style="margin-bottom:10px;">👉 Per chi vuole trading <strong style="color:var(--gold-light);">completamente automatico</strong>:<br>il bot opera direttamente sul mercato via Quantower.</p>
+            <p style="margin-bottom:6px;">🔸 <strong style="color:var(--gold-light);">Quantower</strong> non è incluso: il trader deve già possederlo un conto presso un broker compatibile con <strong style="color:var(--gold-light);">Quantower</strong>.</p>
+            <p>🔸 Il bot esegue gli ordini tramite la nostra GUI che legge i file <strong style="color:var(--gold-light);">.txt</strong> generati dal bridge Python.</p>
+          </span>
+          <span class="en-content">
+            <p style="margin-bottom:10px;">👉 For <strong style="color:var(--gold-light);">fully automatic</strong> trading:<br>the bot operates directly on the market via Quantower.</p>
+            <p style="margin-bottom:6px;">🔸 <strong style="color:var(--gold-light);">Quantower</strong> is not included: the trader must already own it and have an account with a broker compatible with <strong style="color:var(--gold-light);">Quantower</strong>.</p>
+            <p>🔸 The bot executes orders via our GUI that reads the <strong style="color:var(--gold-light);">.txt</strong> files generated by the Python bridge.</p>
+          </span>
+        </div>
+      </div>
+      <a id="cta-pro" onclick="playSound('cta')" href="https://botalgo.lemonsqueezy.com/checkout/buy/784f8d2f-03cc-4b71-8c35-07ab7700ba12" class="price-cta gold" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
+      <p style="text-align:center; margin-top:12px; font-size:15px; font-family:'Inter',sans-serif; font-weight:600;">🔄 <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener" onclick="playSound('cta')" style="color:var(--text-muted); text-decoration:underline; transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'"><span class="it-content">Disdici quando vuoi</span><span class="en-content">Cancel anytime</span></a></p>
+    </div>
+
+  </div>
+
+  <!-- RIEPILOGO TABLE -->
+  <div style="max-width:700px; margin:40px auto 0; overflow-x:auto;">
+    <table style="width:100%; border-collapse:collapse; font-family:'Inter',sans-serif; font-size:14px;">
+      <thead>
+        <tr style="border-bottom:1px solid var(--border);">
+          <th style="text-align:left; padding:12px 16px; color:var(--text-muted); font-weight:600; letter-spacing:1px;"><span class="it-content">PIANO</span><span class="en-content">PLAN</span></th>
+          <th style="text-align:center; padding:12px 16px; color:var(--text-muted); font-weight:600; letter-spacing:1px;"><span class="it-content">MENSILE</span><span class="en-content">MONTHLY</span></th>
+          <th style="text-align:center; padding:12px 16px; color:var(--text-muted); font-weight:600; letter-spacing:1px;"><span class="it-content">ANNUALE</span><span class="en-content">ANNUAL</span></th>
+          <th style="text-align:left; padding:12px 16px; color:var(--text-muted); font-weight:600; letter-spacing:1px;"><span class="it-content">INCLUDE</span><span class="en-content">INCLUDES</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(0,180,255,0.08);">
+          <td style="padding:12px 16px; color:var(--cyan); font-weight:700;">Base</td>
+          <td style="text-align:center; padding:12px 16px; color:var(--text-primary); font-weight:600;">€30</td>
+          <td style="text-align:center; padding:12px 16px; color:var(--green); font-weight:600;">€300</td>
+          <td style="padding:12px 16px; color:var(--text-muted); font-size:13px;"><span class="it-content">Bot TradingView + Setup Manager + Trial 30 gg</span><span class="en-content">Bot TradingView + Setup Manager + 30-day Trial</span></td>
+        </tr>
+        <tr>
+          <td style="padding:12px 16px; color:var(--gold-light); font-weight:700;">PRO</td>
+          <td style="text-align:center; padding:12px 16px; color:var(--text-primary); font-weight:600;">€40</td>
+          <td style="text-align:center; padding:12px 16px; color:var(--green); font-weight:600;">€400</td>
+          <td style="padding:12px 16px; color:var(--text-muted); font-size:13px;"><span class="it-content">Base + Python Bridge + Quantower Bridge + Trial 30 gg</span><span class="en-content">Base + Python Bridge + Quantower Bridge + 30-day Trial</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="text-align:center; color: var(--text-muted); font-size:13px; font-family:'Inter',sans-serif; margin-top:24px;">
+    <span class="it-content">💳 Pagamento sicuro via Lemon Squeezy — Carta di credito, PayPal</span>
+    <span class="en-content">💳 Secure payment via Lemon Squeezy — Credit card, PayPal</span>
+  </p>
+
+  <script>
+    var isAnnual = false;
+    var LINKS = {
+      base:    { monthly: 'https://botalgo.lemonsqueezy.com/checkout/buy/c96310d7-f1e3-40ad-8c62-e800eacf4177', annual: 'https://botalgo.lemonsqueezy.com/checkout/buy/90836b54-9de6-4172-acca-5b9a0117b6d2' },
+      pro:     { monthly: 'https://botalgo.lemonsqueezy.com/checkout/buy/784f8d2f-03cc-4b71-8c35-07ab7700ba12', annual: 'https://botalgo.lemonsqueezy.com/checkout/buy/22f6bfac-bace-4984-a039-53f6783d05cc' }
+    };
+    function toggleBilling() {
+      isAnnual = !isAnnual;
+      var dot = document.getElementById('toggleDot');
+      var badge = document.getElementById('saveBadge');
+      dot.style.left = isAnnual ? '28px' : '3px';
+      badge.style.display = isAnnual ? 'inline-block' : 'none';
+      document.getElementById('price-base-monthly').style.display = isAnnual ? 'none' : 'block';
+      document.getElementById('price-base-annual').style.display  = isAnnual ? 'block' : 'none';
+      document.getElementById('price-pro-monthly').style.display  = isAnnual ? 'none' : 'block';
+      document.getElementById('price-pro-annual').style.display   = isAnnual ? 'block' : 'none';
+      document.getElementById('cta-base').href = isAnnual ? LINKS.base.annual : LINKS.base.monthly;
+      document.getElementById('cta-pro').href  = isAnnual ? LINKS.pro.annual  : LINKS.pro.monthly;
+    }
+  </script>
+
+</section>
+</div>
+
+<!-- SUPPORT -->
+<div id="supporto" style="background: linear-gradient(180deg, var(--bg-dark), var(--bg-deep)); padding: 60px 24px;">
+<section style="padding: 0;">
+
+  <div class="support-card">
+
+    <div class="it-content">
+      <div class="support-title">Supporto Illimitato</div>
+      <p class="support-desc">
+        Non sei mai solo.<br>Ogni acquisto include supporto illimitato per tutto il tempo necessario.<br>installazione, configurazione, ottimizzazione.<br>Rispondo su Telegram e via email.
+      </p>
+    </div>
+
+    <div class="en-content">
+      <div class="support-title">Unlimited Support</div>
+      <p class="support-desc">
+        You're never alone.<br>Every purchase includes unlimited support for as long as needed.<br>installation, configuration, optimization.<br>I respond on Telegram and via email.
+      </p>
+    </div>
+
+    <div class="contact-links">
+      <a href="https://t.me/Bot_Algo_Channel" class="contact-btn" target="_blank" rel="noopener">
+        💬 Scrivimi su Telegram ➜ @Bot_Algo_Channel
+      </a>
+      <a href="mailto:traderman972@gmail.com" class="contact-btn">
+        📧 Scrivimi per email ➜ traderman972@gmail.com
+      </a>
+    </div>
+
+  </div>
+
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:8px;">
+    <span style="font-family:'Orbitron',sans-serif; color: var(--gold-light); font-size:14px; font-weight:700;">BOT TRADING ALGO</span>
+  </p>
+  <p style="margin-bottom:16px;">
+    <span class="it-content">Sistema Professionale di Trading Algoritmico — TradingView • Python • Quantower • Claude AI</span>
+    <span class="en-content">Professional Algorithmic Trading System — TradingView • Python • Quantower • Claude AI</span>
+  </p>
+  <p>
+    <a href="https://t.me/Bot_Algo_Channel" target="_blank" rel="noopener">@Bot_Algo_Channel</a> &nbsp;·&nbsp;
+    <a href="mailto:traderman972@gmail.com">traderman972@gmail.com</a>
+  </p>
+  <p style="margin-top:20px; font-size:15px; color:#ffffff; font-family:'Inter',sans-serif; font-weight:500;">
+    <span class="it-content"><span style="color:#ffd700;">⚠️</span> Il trading comporta rischi. Le performance passate non garantiscono risultati futuri.</span>
+    <span class="en-content"><span style="color:#ffd700;">⚠️</span> Trading involves risk. Past performance does not guarantee future results.</span>
+  </p>
+</footer>
+
+<script>
+// ── SOUND ENGINE ──
+function playSound(type) {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const gain = ctx.createGain();
+    gain.connect(ctx.destination);
+
+    if (type === 'nav') {
+      // doppio tono ascendente - cambio lingua / toggle
+      const o1 = ctx.createOscillator();
+      const o2 = ctx.createOscillator();
+      o1.connect(gain); o2.connect(gain);
+      o1.type = 'sine'; o1.frequency.setValueAtTime(880, ctx.currentTime);
+      o1.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.08);
+      o2.type = 'sine'; o2.frequency.setValueAtTime(1100, ctx.currentTime + 0.04);
+      o2.frequency.exponentialRampToValueAtTime(1600, ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+      o1.start(ctx.currentTime); o1.stop(ctx.currentTime + 0.18);
+      o2.start(ctx.currentTime + 0.04); o2.stop(ctx.currentTime + 0.18);
+
+    } else if (type === 'toggle') {
+      // click morbido - mensile/annuale
+      const o = ctx.createOscillator();
+      o.connect(gain);
+      o.type = 'sine'; o.frequency.setValueAtTime(600, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.06);
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.12);
+
+    } else if (type === 'cta') {
+      // tono triplo crescente - abbonati / scopri di più
+      [0, 0.07, 0.14].forEach((delay, i) => {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'sine';
+        o.frequency.setValueAtTime(700 + i * 200, ctx.currentTime + delay);
+        g.gain.setValueAtTime(0.12, ctx.currentTime + delay);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.1);
+        o.start(ctx.currentTime + delay); o.stop(ctx.currentTime + delay + 0.1);
+      });
+
+    } else if (type === 'contact') {
+      // tono soft singolo - contatti
+      const o = ctx.createOscillator();
+      o.connect(gain);
+      o.type = 'triangle'; o.frequency.setValueAtTime(1000, ctx.currentTime);
+      gain.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.15);
+    }
+  } catch(e) {}
+}
+
+function setLang(lang) {
+  playSound('nav');
+  document.body.classList.toggle('en', lang === 'en');
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+}
+
+// suono su tutti i btn-primary, btn-secondary, contact-btn
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+    btn.addEventListener('click', () => playSound('cta'));
+  });
+  document.querySelectorAll('.contact-btn').forEach(btn => {
+    btn.addEventListener('click', () => playSound('contact'));
+  });
+  // toggle mensile/annuale
+  const toggle = document.getElementById('billingToggle');
+  if (toggle) {
+    const origOnclick = toggle.getAttribute('onclick');
+    toggle.addEventListener('click', () => playSound('toggle'));
+  }
+});
+</script>
+</div>
+
 </body>
 </html>
