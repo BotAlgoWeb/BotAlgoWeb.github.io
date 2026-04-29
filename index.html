@@ -31,7 +31,7 @@
   --body: 'DM Sans', sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+html { scroll-padding-top: 0px; }
 body {
   background: var(--bg);
   color: var(--text);
@@ -162,6 +162,7 @@ nav a.nav-active {
 .hero-grid {
   position: absolute; inset: 0;
   opacity: 0;
+  pointer-events: none;
 }
 .hero-glow {
   position: absolute;
@@ -170,6 +171,7 @@ nav a.nav-active {
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   animation: pulse 4s ease-in-out infinite;
+  pointer-events: none;
 }
 @keyframes pulse { 0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)} }
 
@@ -305,9 +307,7 @@ section {
   text-align: center;
 }
 .divider {
-  height: 1px;
-  background: linear-gradient(90deg, var(--green), transparent);
-  margin-bottom: 1.6rem;
+  display: none;
 }
 
 /* ── FLOW STEPS ── */
@@ -833,7 +833,7 @@ footer strong { color: var(--green); }
 .ticker-red { color: var(--red); }
 @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-.attiva-bot-btn {
+.attiva-bot-btn { cursor:pointer; font-family:var(--mono); outline:none;
   display: inline-block;
   font-family: var(--mono);
   font-size: 13px;
@@ -957,7 +957,7 @@ footer strong { color: var(--green); }
 
 * { margin:0; padding:0; box-sizing:border-box; }
 
-html { scroll-behavior: smooth; }
+
 
 body {
   background: var(--bg-deep);
@@ -1093,6 +1093,14 @@ body {
   padding: 6px 16px;
   border-radius: 4px;
   letter-spacing: 1px;
+  transition: border-color .22s, box-shadow .22s, background .22s, color .22s;
+  cursor: default;
+}
+.tag:hover {
+  background: rgba(0,212,255,0.15);
+  border-color: rgba(0,212,255,0.7);
+  color: #00d4ff;
+  box-shadow: 0 0 14px rgba(0,212,255,0.2);
 }
 
 .cta-wrap {
@@ -1518,7 +1526,7 @@ section {
 }
 
 .support-desc {
-  color: var(--text-muted);
+  color: #ffffff;
   font-family: 'Inter', sans-serif;
   font-size: 16px;
   line-height: 1.7;
@@ -1575,10 +1583,15 @@ footer {
 footer a { color: var(--cyan); text-decoration: none; }
 
 /* LANG CONTENT */
-.it-content { display: block; }
+.it-content { display: inline; }
 .en-content { display: none; }
 body.en .it-content { display: none; }
-body.en .en-content { display: block; }
+body.en .en-content { display: inline; }
+/* Block-level translation for div containers */
+div.it-content { display: block; }
+div.en-content { display: none; }
+body.en div.it-content { display: none; }
+body.en div.en-content { display: block; }
 
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 6px; }
@@ -1603,11 +1616,11 @@ body.en .en-content { display: block; }
     <span class="nav-logo">BOT ALGO &nbsp;▾</span>
     <div class="nav-dropdown-menu">
       <div class="nav-dropdown-menu-inner">
-        <a href="#pipeline"   class="nav-dropdown-item" onclick="document.getElementById('pipeline').scrollIntoView({behavior:'smooth'});return false;">📊 &nbsp;La Pipeline Completa</a>
-        <a href="#abb-strumenti" class="nav-dropdown-item" onclick="document.getElementById('abb-strumenti').scrollIntoView({behavior:'smooth'});return false;">🛠️ &nbsp;4 Strumenti Professionali</a>
-        <a href="#futures"    class="nav-dropdown-item" onclick="document.getElementById('futures').scrollIntoView({behavior:'smooth'});return false;">⚡ &nbsp;8 Futures Inclusi</a>
-        <a href="#piani"      class="nav-dropdown-item" onclick="document.getElementById('piani').scrollIntoView({behavior:'smooth'});return false;">💎 &nbsp;Scegli il Tuo Piano</a>
-        <a href="#supporto"   class="nav-dropdown-item" onclick="document.getElementById('supporto').scrollIntoView({behavior:'smooth'});return false;">🎧 &nbsp;Supporto Illimitato</a>
+        <a href="#pipeline"   class="nav-dropdown-item" onclick="window.scrollTo({top:document.getElementById('pipeline').offsetTop-52});return false;">📊 &nbsp;La Pipeline Completa</a>
+        <a href="#abb-strumenti" class="nav-dropdown-item" onclick="window.scrollTo({top:document.getElementById('prodotti').offsetTop-52});return false;">🛠️ &nbsp;4 Strumenti Professionali</a>
+        <a href="#futures"    class="nav-dropdown-item" onclick="window.scrollTo({top:document.getElementById('futures').offsetTop-52});return false;">⚡ &nbsp;8 Futures Inclusi</a>
+        <a href="#piani"      class="nav-dropdown-item" onclick="window.scrollTo({top:document.getElementById('prezzi').offsetTop-52});return false;">💎 &nbsp;Scegli il Tuo Piano</a>
+        <a href="#supporto"   class="nav-dropdown-item" onclick="window.scrollTo({top:document.getElementById('supporto').offsetTop-52});return false;">🎧 &nbsp;Supporto Illimitato</a>
       </div>
     </div>
   </div>
@@ -1634,10 +1647,10 @@ body.en .en-content { display: block; }
   </div>
   <div style="display:flex;gap:5px;margin-left:8px;flex-shrink:0;">
     <button onclick="setLang('it')" id="nav-lang-it"
-      style="background:transparent;border:1px solid rgba(0,188,212,.4);color:var(--cyan);font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.05em;"
+      style="background:transparent;border:1px solid rgba(0,188,212,.7);color:#00d4ff;font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.05em;"
       onmouseenter="this.style.background='rgba(0,188,212,.15)'" onmouseleave="this.style.background='transparent'">🇮🇹 IT</button>
     <button onclick="setLang('en')" id="nav-lang-en"
-      style="background:transparent;border:1px solid rgba(0,188,212,.2);color:var(--text-muted);font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.05em;"
+      style="background:transparent;border:1px solid rgba(0,188,212,.2);color:rgba(160,160,160,.7);font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.05em;"
       onmouseenter="this.style.background='rgba(0,188,212,.15)'" onmouseleave="this.style.background='transparent'">🇬🇧 EN</button>
   </div>
 </nav>
@@ -1645,7 +1658,7 @@ body.en .en-content { display: block; }
 <!-- TICKER -->
 <div class="ticker-bar" style="margin-top:52px">
   <div class="ticker-inner">
-    <span>📊 <span class="ticker-green">2 MODALITÀ</span> — Scalping · Day Trading · ottimizzate per ogni stile operativo</span>
+    <span>📊 <span class="ticker-green">2 MODALITÀ</span> — <span class="it-content">Scalping · Day Trading</span><span class="en-content">Scalping · Day Trading</span> · ottimizzate per ogni stile operativo</span>
     <span>⚡ <span class="ticker-green">4 SEGNALI INDIPENDENTI</span> — SuperTrend · EMA Cross · Parabolic SaR · Trendline Breakout</span>
     <span>🔍 <span class="ticker-green">FILTRI SMART</span> — SMA200 + SuperTrend filtrano i segnali falsi e operano solo nel trend principale</span>
     <span>🎯 <span class="ticker-green">TAKE PROFIT TRIPLO</span> — TP a Punti · TP a Valore · TP Limit su prezzo assoluto</span>
@@ -1654,7 +1667,7 @@ body.en .en-content { display: block; }
     <span>🔔 <span class="ticker-green">16 ALERT WEBHOOK JSON</span> — Pronti per bot e automazioni: entry, exit profit, exit loss</span>
     <span>📅 <span class="ticker-green">BACKTEST STORICO ILLIMITATO</span> — Simula qualsiasi giorno dal 2000 al 2100 direttamente dagli input</span>
     <span>📈 <span class="ticker-green">MULTI-MERCATO</span> — Futures USA · Futures Europa · Azioni · Crypto · Forex · Indici · Commodities</span>
-    <span>📊 <span class="ticker-green">2 MODALITÀ</span> — Scalping · Day Trading · ottimizzate per ogni stile operativo</span>
+    <span>📊 <span class="ticker-green">2 MODALITÀ</span> — <span class="it-content">Scalping · Day Trading</span><span class="en-content">Scalping · Day Trading</span> · ottimizzate per ogni stile operativo</span>
     <span>⚡ <span class="ticker-green">4 SEGNALI INDIPENDENTI</span> — SuperTrend · EMA Cross · Parabolic SaR · Trendline Breakout</span>
     <span>🔍 <span class="ticker-green">FILTRI SMART</span> — SMA200 + SuperTrend filtrano i segnali falsi e operano solo nel trend principale</span>
     <span>🎯 <span class="ticker-green">TAKE PROFIT TRIPLO</span> — TP a Punti · TP a Valore · TP Limit su prezzo assoluto</span>
@@ -1671,14 +1684,14 @@ body.en .en-content { display: block; }
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
   <div class="hero-title" style="margin-bottom:1.5rem;text-shadow:0 0 60px rgba(200,148,10,0.5),0 0 120px rgba(200,148,10,0.2);"><span style="color:#c8940a">BOT</span><span style="color:#c8940a"> ALGO</span></div>
-  <div class="hero-tag">▸ TradingView · Pine Script® v6 · Algoritmo Avanzato</div>
-  <div class="hero-sub">Sistema di Trading Automatico Multi-Strategia</div>
+  <div class="hero-tag" data-it="▸ TradingView · Pine Script® v6 · Algoritmo Avanzato" data-en="▸ TradingView · Pine Script® v6 · Advanced Algorithm">▸ TradingView · Pine Script® v6 · Algoritmo Avanzato</div>
+  <div class="hero-sub" data-it="Sistema di Trading Automatico Multi-Strategia" data-en="Automated Multi-Strategy Trading System">Sistema di Trading Automatico Multi-Strategia</div>
 
-  <div style="margin-top:1.8rem;margin-bottom:2rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;">
+  <div style="margin-top:0.3rem;margin-bottom:1.2rem;display:flex;flex-direction:column;align-items:center;gap:.4rem;position:relative;z-index:10;">
     <div style="color:var(--green);font-size:16px;line-height:1;animation:bounce-arrow 1.4s ease-in-out infinite;">▼</div>
-    <a href="#abbonamenti" class="attiva-bot-btn">
-      ⚡ &nbsp;ATTIVA IL BOT
-    </a>
+    <button class="attiva-bot-btn" onclick="var el=document.getElementById('abbonamenti');window.scrollTo({top:el.offsetTop-52});">
+      🤖 &nbsp;ATTIVA IL BOT
+    </button>
   </div>
   <div class="hero-badges">
     <div class="badge"><span class="badge-num">2</span><span class="badge-label">📊 MODALITÀ</span></div>
@@ -1701,23 +1714,23 @@ body.en .en-content { display: block; }
 <section id="flusso">
   <div class="section-header">
     <div class="section-num">01</div>
-    <div class="section-title">FLUSSO OPERATIVO</div>
-    <div class="section-desc">Come vengono elaborati i segnali<br>dall'indicatore all'alert</div>
+    <div class="section-title" data-it="FLUSSO OPERATIVO" data-en="OPERATIONAL FLOW">FLUSSO OPERATIVO</div>
+    <div class="section-desc"><span class="it-content">Come vengono elaborati i segnali<br>dall'indicatore all'alert</span><span class="en-content">How signals are processed<br>from indicator to alert</span></div>
   </div>
   <div class="divider"></div>
   <div class="flow-steps">
-    <div class="flow-step"><span class="step-num">1</span><div class="step-icon">📊</div><div class="step-name">MODALITÀ</div><div class="step-detail">Scalping · Day Trading</div></div>
+    <div class="flow-step"><span class="step-num">1</span><div class="step-icon">📊</div><div class="step-name">MODALITÀ</div><div class="step-detail"><span class="it-content">Scalping · Day Trading</span><span class="en-content">Scalping · Day Trading</span></div></div>
     <div class="flow-step"><span class="step-num">2</span><div class="step-icon">⚡</div><div class="step-name">4 SEGNALI</div><div class="step-detail">ST · EMA · PSaR · BRK</div></div>
     <div class="flow-step"><span class="step-num">3</span><div class="step-icon">🔍</div><div class="step-name">FILTRI</div><div class="step-detail">Nessuno · SMA · ST · Entrambi</div></div>
-    <div class="flow-step"><span class="step-num">4</span><div class="step-icon">⏰</div><div class="step-name">FASCIA ORARIA</div><div class="step-detail">Orario di operatività</div></div>
+    <div class="flow-step"><span class="step-num">4</span><div class="step-icon">⏰</div><div class="step-name">FASCIA ORARIA</div><div class="step-detail"><span class="it-content">Orario di operatività</span><span class="en-content">Trading hours</span></div></div>
     <div class="flow-step"><span class="step-num">5</span><div class="step-icon">🚦</div><div class="step-name">SCELTA SEGNALI</div><div class="step-detail">BUY / SELL / BUY&amp;SELL</div></div>
-    <div class="flow-step"><span class="step-num">6</span><div class="step-icon">📥</div><div class="step-name">APERTURA TRADE</div><div class="step-detail">Prezzo · Qty · Mediazione</div></div>
-    <div class="flow-step"><span class="step-num">7</span><div class="step-icon">💰</div><div class="step-name">GESTIONE TRADE</div><div class="step-detail">TP · SL · TS · Target</div></div>
-    <div class="flow-step"><span class="step-num">8</span><div class="step-icon">📤</div><div class="step-name">CHIUSURA TRADE</div><div class="step-detail">P&amp;L · Commissioni</div></div>
-    <div class="flow-step"><span class="step-num">9</span><div class="step-icon">🔔</div><div class="step-name">ALERT JSON</div><div class="step-detail">Webhook · Bot</div></div>
-    <div class="flow-step"><span class="step-num">10</span><div class="step-icon">🔬</div><div class="step-name">SIM &amp; BACKTEST</div><div class="step-detail">Giorno Specifico · Storico</div></div>
-    <div class="flow-step"><span class="step-num">11</span><div class="step-icon">🛠️</div><div class="step-name">STRUMENTI</div><div class="step-detail">Futures USA · Europa · Fuso</div></div>
-    <div class="flow-step"><span class="step-num">12</span><div class="step-icon">⚠️</div><div class="step-name">MESSAGGI</div><div class="step-detail">Avvisi · Correzioni</div></div>
+    <div class="flow-step"><span class="step-num">6</span><div class="step-icon">📥</div><div class="step-name">APERTURA TRADE</div><div class="step-detail"><span class="it-content">Prezzo · Qty · Mediazione</span><span class="en-content">Price · Qty · Averaging</span></div></div>
+    <div class="flow-step"><span class="step-num">7</span><div class="step-icon">💰</div><div class="step-name">GESTIONE TRADE</div><div class="step-detail"><span class="it-content">TP · SL · TS · Target</span><span class="en-content">TP · SL · TS · Target</span></div></div>
+    <div class="flow-step"><span class="step-num">8</span><div class="step-icon">📤</div><div class="step-name">CHIUSURA TRADE</div><div class="step-detail"><span class="it-content">P&amp;L · Commissioni</span><span class="en-content">P&amp;L · Commissions</span></div></div>
+    <div class="flow-step"><span class="step-num">9</span><div class="step-icon">🔔</div><div class="step-name">ALERT JSON</div><div class="step-detail"><span class="it-content">Webhook · Bot</span><span class="en-content">Webhook · Bot</span></div></div>
+    <div class="flow-step"><span class="step-num">10</span><div class="step-icon">🔬</div><div class="step-name">SIM &amp; BACKTEST</div><div class="step-detail"><span class="it-content">Giorno Specifico · Storico</span><span class="en-content">Specific Day · Historical</span></div></div>
+    <div class="flow-step"><span class="step-num">11</span><div class="step-icon">🛠️</div><div class="step-name">STRUMENTI</div><div class="step-detail"><span class="it-content">Futures USA · Europa · Fuso</span><span class="en-content">Futures USA · Europe · Timezone</span></div></div>
+    <div class="flow-step"><span class="step-num">12</span><div class="step-icon">⚠️</div><div class="step-name">MESSAGGI</div><div class="step-detail"><span class="it-content">Avvisi · Correzioni</span><span class="en-content">Warnings · Corrections</span></div></div>
   </div>
   <div class="flow-warning" style="text-align:center;font-size:13px;padding:1rem 1.5rem;">⚠️&nbsp;&nbsp;<strong style="color:var(--gold)">4 MODALITÀ DI FILTRO</strong>&nbsp;(Passaggi 2 · 3 · 4): se non superati, il segnale viene scartato e nessun trade viene aperto</div>
 </section>
@@ -1728,8 +1741,8 @@ body.en .en-content { display: block; }
 <section id="modalita">
   <div class="section-header">
     <div class="section-num">02</div>
-    <div class="section-title">SCALPING vs DAY TRADING</div>
-    <div class="section-desc">La modalità cambia automaticamente in base ai parametri TP impostati</div>
+    <div class="section-title" data-it="SCALPING vs DAY TRADING" data-en="SCALPING vs DAY TRADING">SCALPING vs DAY TRADING</div>
+    <div class="section-desc"><span class="it-content">La modalità cambia automaticamente in base ai parametri TP impostati</span><span class="en-content">The mode changes automatically based on the TP parameters set</span></div>
   </div>
   <div class="divider"></div>
   <div class="trading-mode-grid">
@@ -1783,8 +1796,8 @@ body.en .en-content { display: block; }
 <section id="segnali">
   <div class="section-header">
     <div class="section-num">03</div>
-    <div class="section-title">4 SEGNALI</div>
-    <div class="section-desc">Quattro indicatori indipendenti<br>attivabili/disattivabili singolarmente</div>
+    <div class="section-title" data-it="4 SEGNALI" data-en="4 SIGNALS">4 SEGNALI</div>
+    <div class="section-desc"><span class="it-content">Quattro indicatori indipendenti<br>attivabili/disattivabili singolarmente</span><span class="en-content">Four independent indicators<br>individually activatable/deactivatable</span></div>
   </div>
   <div class="divider"></div>
   <div class="signal-grid">
@@ -1801,7 +1814,7 @@ body.en .en-content { display: block; }
       </div>
       <div class="signal-body">
         <div class="signal-params">ATR Length: 7 · ATR Multiplier: 4.0</div>
-        <div class="signal-desc">Segue il trend usando la volatilità ATR. BUY quando il prezzo supera la linea, SELL quando la buca al ribasso.</div>
+        <div class="signal-desc"><span class="it-content">Segue il trend usando la volatilità ATR. BUY quando il prezzo supera la linea, SELL quando la buca al ribasso.</span><span class="en-content">Follows the trend using ATR volatility. BUY when price breaks above the line, SELL when it breaks below.</span></div>
       </div>
     </div>
     <div class="signal-card">
@@ -1817,7 +1830,7 @@ body.en .en-content { display: block; }
       </div>
       <div class="signal-body">
         <div class="signal-params">EMA Veloce: 9 · EMA Lenta: 21</div>
-        <div class="signal-desc">Golden Cross → BUY quando EMA 9 incrocia sopra EMA 21. Death Cross → SELL quando EMA 9 incrocia sotto EMA 21.</div>
+        <div class="signal-desc"><span class="it-content">Golden Cross → BUY quando EMA 9 incrocia sopra EMA 21. Death Cross → SELL quando EMA 9 incrocia sotto EMA 21.</span><span class="en-content">Golden Cross → BUY when EMA 9 crosses above EMA 21. Death Cross → SELL when EMA 9 crosses below EMA 21.</span></div>
       </div>
     </div>
     <div class="signal-card">
@@ -1833,7 +1846,7 @@ body.en .en-content { display: block; }
       </div>
       <div class="signal-body">
         <div class="signal-params">Start: 0.02 · Increment: 0.02 · Max: 0.2</div>
-        <div class="signal-desc">Inversione di tendenza basata su punti parabolici. BUY quando il prezzo supera il punto SaR, SELL quando lo buca.</div>
+        <div class="signal-desc"><span class="it-content">Inversione di tendenza basata su punti parabolici. BUY quando il prezzo supera il punto SaR, SELL quando lo buca.</span><span class="en-content">Trend reversal based on parabolic points. BUY when price breaks above the SaR point, SELL when it breaks below.</span></div>
       </div>
     </div>
     <div class="signal-card">
@@ -1849,7 +1862,7 @@ body.en .en-content { display: block; }
       </div>
       <div class="signal-body">
         <div class="signal-params">Velocità Pivot: 8 (range 1-20)</div>
-        <div class="signal-desc">Rottura dei massimi/minimi pivot. BUY su breakout del massimo, SELL su rottura del minimo.</div>
+        <div class="signal-desc"><span class="it-content">Rottura dei massimi/minimi pivot. BUY su breakout del massimo, SELL su rottura del minimo.</span><span class="en-content">Breakout of pivot highs/lows. BUY on high breakout, SELL on low breakout.</span></div>
       </div>
     </div>
   </div>
@@ -1857,15 +1870,15 @@ body.en .en-content { display: block; }
     <div style="font-weight:700; color:var(--text); letter-spacing:.1em;">🚦 SCELTA SEGNALI</div>
     <div style="background:rgba(0,230,118,.08); border:1px solid rgba(0,230,118,.3); border-radius:6px; padding:.5rem 1.25rem; transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(0,230,118,0.85)';this.style.boxShadow='0 0 20px rgba(0,230,118,.22)'" onmouseleave="this.style.borderColor='rgba(0,230,118,.3)';this.style.boxShadow=''">
       <span style="color:var(--green); font-weight:700;">solo BUY ▲</span><br>
-      <span style="color:var(--text-muted); font-size:10px;">genera solo Long</span>
+      <span style="color:var(--text-muted); font-size:10px;"><span class="it-content">genera solo Long</span><span class="en-content">generates Long only</span></span>
     </div>
     <div style="background:rgba(255,68,68,.08); border:1px solid rgba(255,68,68,.3); border-radius:6px; padding:.5rem 1.25rem; transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(255,68,68,0.85)';this.style.boxShadow='0 0 20px rgba(255,68,68,.22)'" onmouseleave="this.style.borderColor='rgba(255,68,68,.3)';this.style.boxShadow=''">
       <span style="color:var(--red); font-weight:700;">solo SELL ▼</span><br>
-      <span style="color:var(--text-muted); font-size:10px;">genera solo Short</span>
+      <span style="color:var(--text-muted); font-size:10px;"><span class="it-content">genera solo Short</span><span class="en-content">generates Short only</span></span>
     </div>
     <div style="background:rgba(200,148,10,.08); border:1px solid rgba(200,148,10,.3); border-radius:6px; padding:.5rem 1.25rem; transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(200,148,10,0.85)';this.style.boxShadow='0 0 20px rgba(200,148,10,.22)'" onmouseleave="this.style.borderColor='rgba(200,148,10,.3)';this.style.boxShadow=''">
       <span style="color:var(--gold); font-weight:700;">BUY &amp; SELL ▲▼</span><br>
-      <span style="color:var(--text-muted); font-size:10px;">Stop &amp; Reverse automatico</span>
+      <span style="color:var(--text-muted); font-size:10px;"><span class="it-content">Stop &amp; Reverse automatico</span><span class="en-content">Automatic Stop &amp; Reverse</span></span>
     </div>
   </div>
 </section>
@@ -1876,8 +1889,8 @@ body.en .en-content { display: block; }
 <section id="filtri">
   <div class="section-header">
     <div class="section-num">04</div>
-    <div class="section-title">SISTEMA FILTRI</div>
-    <div class="section-desc">SMA 200 + SuperTrend<br>riducono i segnali falsi ammettendo entry solo nella direzione del trend principale</div>
+    <div class="section-title" data-it="SISTEMA FILTRI" data-en="FILTER SYSTEM">SISTEMA FILTRI</div>
+    <div class="section-desc"><span class="it-content">SMA 200 + SuperTrend<br>riducono i segnali falsi ammettendo entry solo nella direzione del trend principale</span><span class="en-content">SMA 200 + SuperTrend<br>reduce false signals by allowing entries only in the main trend direction</span></div>
   </div>
   <div class="divider"></div>
 
@@ -1885,7 +1898,7 @@ body.en .en-content { display: block; }
   <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:.7rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.45)';this.style.boxShadow='0 0 20px rgba(255,255,255,.07)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.1)';this.style.boxShadow=''">
     <span style="font-family:var(--mono);font-size:11px;color:var(--text-bright);letter-spacing:.15em;white-space:nowrap;">⭕ NESSUN FILTRO</span>
     <div style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:5px;padding:.4rem .8rem;font-size:12px;color:var(--text-bright);line-height:1.6;">
-      Tutti i segnali vengono accettati senza condizioni.<br>Operatività massima, nessun filtro di trend.
+      <span class="it-content">Tutti i segnali vengono accettati senza condizioni.<br>Operatività massima, nessun filtro di trend.</span><span class="en-content">All signals are accepted without conditions.<br>Maximum activity, no trend filter.</span>
     </div>
   </div>
 
@@ -1896,36 +1909,36 @@ body.en .en-content { display: block; }
     <div class="filter-card" style="position:relative;">
       <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(0,188,212,0.18);line-height:1;letter-spacing:1px;">1</div>
       <div class="filter-title">📈 SOLO SMA 200</div>
-      <div class="filter-rule"><span class="arrow-up">▲</span> BUY se prezzo &gt; SMA 200</div>
-      <div class="filter-rule"><span class="arrow-dn">▼</span> SELL se prezzo &lt; SMA 200</div>
-      <div class="filter-note" style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:5px;padding:.45rem .7rem;">Filtro semplice e rapido.<br>Nessuna attesa di conferma.</div>
+      <div class="filter-rule"><span class="arrow-up">▲</span> <span class="it-content">BUY se prezzo &gt; SMA 200</span><span class="en-content">BUY if price &gt; SMA 200</span></div>
+      <div class="filter-rule"><span class="arrow-dn">▼</span> <span class="it-content">SELL se prezzo &lt; SMA 200</span><span class="en-content">SELL if price &lt; SMA 200</span></div>
+      <div class="filter-note" style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:5px;padding:.45rem .7rem;"><span class="it-content">Filtro semplice e rapido.<br>Nessuna attesa di conferma.</span><span class="en-content">Simple and fast filter.<br>No confirmation wait.</span></div>
     </div>
 
     <!-- 2 - SUPERTREND -->
     <div class="filter-card" style="position:relative;">
       <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(0,188,212,0.18);line-height:1;letter-spacing:1px;">2</div>
       <div class="filter-title">🔁 SOLO SUPERTREND</div>
-      <div class="filter-rule"><span class="arrow-up">▲</span> BUY se SuperTrend rialzista</div>
-      <div class="filter-rule"><span class="arrow-dn">▼</span> SELL se SuperTrend ribassista</div>
-      <div class="filter-note" style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:5px;padding:.45rem .7rem;">Filtro dinamico basato su ATR.<br>Si adatta alla volatilità.</div>
+      <div class="filter-rule"><span class="arrow-up">▲</span> <span class="it-content">BUY se SuperTrend rialzista</span><span class="en-content">BUY if SuperTrend bullish</span></div>
+      <div class="filter-rule"><span class="arrow-dn">▼</span> <span class="it-content">SELL se SuperTrend ribassista</span><span class="en-content">SELL if SuperTrend bearish</span></div>
+      <div class="filter-note" style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:5px;padding:.45rem .7rem;"><span class="it-content">Filtro dinamico basato su ATR.<br>Si adatta alla volatilità.</span><span class="en-content">Dynamic filter based on ATR.<br>Adapts to volatility.</span></div>
     </div>
 
     <!-- 3 - ENTRAMBI FLESSIBILE -->
     <div class="filter-card filter-gold" style="position:relative;background:#1a1700;border-color:#5a4800;">
       <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(200,148,10,0.22);line-height:1;letter-spacing:1px;">3</div>
       <div class="filter-title" style="color:var(--gold);">🟡 ENTRAMBI — FLESSIBILE</div>
-      <div class="filter-rule"><span class="arrow-up">▲</span> BUY se SMA + ST entrambi favorevoli</div>
-      <div class="filter-rule"><span class="arrow-dn">▼</span> SELL se SMA + ST entrambi contrari</div>
-      <div class="filter-note" style="color:#d4b020;background:rgba(200,148,10,.07);border:1px solid rgba(200,148,10,.25);border-radius:5px;padding:.45rem .7rem;">Controlla lo stato in qualsiasi momento.<br>Più reattivo, meno attesa.<br>Entry appena entrambi si allineano.</div>
+      <div class="filter-rule"><span class="arrow-up">▲</span> <span class="it-content">BUY se SMA + ST entrambi favorevoli</span><span class="en-content">BUY if SMA + ST both favorable</span></div>
+      <div class="filter-rule"><span class="arrow-dn">▼</span> <span class="it-content">SELL se SMA + ST entrambi contrari</span><span class="en-content">SELL if SMA + ST both against</span></div>
+      <div class="filter-note" style="color:#d4b020;background:rgba(200,148,10,.07);border:1px solid rgba(200,148,10,.25);border-radius:5px;padding:.45rem .7rem;"><span class="it-content">Controlla lo stato in qualsiasi momento.<br>Più reattivo, meno attesa.<br>Entry appena entrambi si allineano.</span><span class="en-content">Checks state at any time.<br>More reactive, less waiting.<br>Entry as soon as both align.</span></div>
     </div>
 
     <!-- 4 - ENTRAMBI RIGIDA -->
     <div class="filter-card filter-blue" style="position:relative;background:#001620;border-color:#004a6a;">
       <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(66,165,245,0.22);line-height:1;letter-spacing:1px;">4</div>
       <div class="filter-title" style="color:var(--blue);">🔵 ENTRAMBI — RIGIDA</div>
-      <div class="filter-rule"><span class="arrow-up">▲</span> BUY: ST cambia → rialzista con prezzo &gt; SMA</div>
-      <div class="filter-rule"><span class="arrow-dn">▼</span> SELL: ST cambia → ribassista con prezzo &lt; SMA</div>
-      <div class="filter-note" style="color:#88cce4;background:rgba(66,165,245,.06);border:1px solid rgba(66,165,245,.2);border-radius:5px;padding:.45rem .7rem;">Attende il cambio di stato del SuperTrend.<br>Meno segnali, massima affidabilità.</div>
+      <div class="filter-rule"><span class="arrow-up">▲</span> <span class="it-content">BUY: ST cambia → rialzista con prezzo &gt; SMA</span><span class="en-content">BUY: ST changes → bullish with price &gt; SMA</span></div>
+      <div class="filter-rule"><span class="arrow-dn">▼</span> <span class="it-content">SELL: ST cambia → ribassista con prezzo &lt; SMA</span><span class="en-content">SELL: ST changes → bearish with price &lt; SMA</span></div>
+      <div class="filter-note" style="color:#88cce4;background:rgba(66,165,245,.06);border:1px solid rgba(66,165,245,.2);border-radius:5px;padding:.45rem .7rem;"><span class="it-content">Attende il cambio di stato del SuperTrend.<br>Meno segnali, massima affidabilità.</span><span class="en-content">Waits for SuperTrend state change.<br>Fewer signals, maximum reliability.</span></div>
     </div>
 
   </div>
@@ -1937,8 +1950,8 @@ body.en .en-content { display: block; }
 <section id="fascia">
   <div class="section-header">
     <div class="section-num">05</div>
-    <div class="section-title">FASCIA ORARIA</div>
-    <div class="section-desc">Limita l'operatività a una finestra temporale precisa<br>obbligatoria per Target Profit/Loss, TP Limit e Mostra Fascia + Segnali</div>
+    <div class="section-title" data-it="FASCIA ORARIA" data-en="TIME WINDOW">FASCIA ORARIA</div>
+    <div class="section-desc"><span class="it-content">Limita l'operatività a una finestra temporale precisa<br>obbligatoria per Target Profit/Loss, TP Limit e Mostra Fascia + Segnali</span><span class="en-content">Limits operations to a precise time window<br>mandatory for Target Profit/Loss, TP Limit and Show Band + Signals</span></div>
   </div>
   <div class="divider"></div>
 
@@ -1963,17 +1976,17 @@ body.en .en-content { display: block; }
     <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
       <div style="font-size:28px;margin-bottom:.5rem;">⏰</div>
       <div style="font-family:var(--mono);font-size:12px;color:var(--cyan);margin-bottom:.4rem;letter-spacing:.1em;">ORA INIZIO</div>
-      <div style="font-size:13px;color:var(--text);line-height:1.5;">Il BOT attende questo orario prima di generare qualsiasi segnale. Prima di questo momento: nessuna operazione.</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.5;"><span class="it-content">Il BOT attende questo orario prima di generare qualsiasi segnale. Prima di questo momento: nessuna operazione.</span><span class="en-content">The BOT waits for this time before generating any signal. Before this moment: no operations.</span></div>
     </div>
     <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
       <div style="font-size:28px;margin-bottom:.5rem;">🔔</div>
       <div style="font-family:var(--mono);font-size:12px;color:var(--cyan);margin-bottom:.4rem;letter-spacing:.1em;">ORA FINE</div>
-      <div style="font-size:13px;color:var(--text);line-height:1.5;">Alla scadenza tutti i segnali si bloccano.<br>I trade aperti vengono chiusi automaticamente con registrazione P&amp;L.</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.5;"><span class="it-content">Alla scadenza tutti i segnali si bloccano.<br>I trade aperti vengono chiusi automaticamente con registrazione P&amp;L.</span><span class="en-content">At expiry all signals are blocked.<br>Open trades are closed automatically with P&amp;L recording.</span></div>
     </div>
     <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;">
       <div style="font-size:28px;margin-bottom:.5rem;">📅</div>
       <div style="font-family:var(--mono);font-size:12px;color:var(--cyan);margin-bottom:.4rem;letter-spacing:.1em;">RESET GIORNALIERO</div>
-      <div style="font-size:13px;color:var(--text);line-height:1.5;">Ogni giorno a mezzanotte tutti i contatori e lo stato della fascia si resettano automaticamente per la nuova sessione.</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.5;"><span class="it-content">Ogni giorno a mezzanotte tutti i contatori e lo stato della fascia si resettano automaticamente per la nuova sessione.</span><span class="en-content">Every day at midnight all counters and the window state reset automatically for the new session.</span></div>
     </div>
   </div>
 
@@ -1988,8 +2001,8 @@ body.en .en-content { display: block; }
 <section id="entry">
   <div class="section-header">
     <div class="section-num">06</div>
-    <div class="section-title">MAX SEGNALI · MEDIAZIONE · PIRAMIDAZIONE</div>
-    <div class="section-desc">Controllo avanzato del numero di ingressi per singolo trade</div>
+    <div class="section-title" data-it="MAX SEGNALI · MEDIAZIONE · PIRAMIDAZIONE" data-en="MAX SIGNALS · AVERAGING · PYRAMIDING">MAX SEGNALI · MEDIAZIONE · PIRAMIDAZIONE</div>
+    <div class="section-desc"><span class="it-content">Controllo avanzato del numero di ingressi per singolo trade</span><span class="en-content">Advanced control of the number of entries per single trade</span></div>
   </div>
   <div class="divider"></div>
   <div class="info-row">
@@ -2027,8 +2040,8 @@ body.en .en-content { display: block; }
 <section id="tp">
   <div class="section-header">
     <div class="section-num">07</div>
-    <div class="section-title">TAKE PROFIT</div>
-    <div class="section-desc">3 Tipologie di uscita<br>Priorità: TP Limit &gt; TP a Valore &gt; TP a Punti</div>
+    <div class="section-title" data-it="TAKE PROFIT" data-en="TAKE PROFIT">TAKE PROFIT</div>
+    <div class="section-desc"><span class="it-content">3 Tipologie di uscita<br>Priorità: TP Limit &gt; TP a Valore &gt; TP a Punti</span><span class="en-content">3 Exit types<br>Priority: TP Limit &gt; TP by Value &gt; TP by Points</span></div>
   </div>
   <div class="divider"></div>
   <div class="tp-grid">
@@ -2041,7 +2054,7 @@ body.en .en-content { display: block; }
         <span class="tp-priority" style="border-color:var(--text-muted);color:var(--text-muted);background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
       </div>
       <div class="tp-body">
-        <div class="tp-desc">Chiude il trade quando il profitto raggiunge il numero di punti impostato.</div>
+        <div class="tp-desc"><span class="it-content">Chiude il trade quando il profitto raggiunge il numero di punti impostato.</span><span class="en-content">Closes the trade when profit reaches the set number of points.</span></div>
         <div class="tp-example">📌 TP = 20 → chiude a +20 punti dal prezzo di ingresso</div>
       </div>
     </div>
@@ -2049,12 +2062,12 @@ body.en .en-content { display: block; }
       <div class="tp-head">
         <div class="tp-icon">💵</div>
         <div class="tp-title-block">
-          <div class="tp-name">TP A VALORE $/€</div>
+          <div class="tp-name">TP A VALORE<br><span style="font-size:11px;">$/€</span></div>
         </div>
         <span class="tp-priority">HA PRIORITÀ SU TP A PUNTI</span>
       </div>
       <div class="tp-body">
-        <div class="tp-desc">Chiude quando il P&amp;L monetario raggiunge l'importo impostato.</div>
+        <div class="tp-desc"><span class="it-content">Chiude quando il P&amp;L monetario raggiunge l'importo impostato.</span><span class="en-content">Closes when monetary P&amp;L reaches the set amount.</span></div>
         <div class="tp-example">📌 TP = 50€ → chiude a +50€ dal prezzo di ingresso</div>
       </div>
     </div>
@@ -2067,7 +2080,7 @@ body.en .en-content { display: block; }
         <span class="tp-priority" style="border-color:var(--red);color:var(--red);background:var(--red-dim);">MAX PRIORITÀ</span>
       </div>
       <div class="tp-body">
-        <div class="tp-desc">Chiude quando il prezzo raggiunge un livello assoluto prefissato. Una volta raggiunto →<br>il trading si <strong style="color:var(--red)">FERMA</strong> per il resto della giornata.</div>
+        <div class="tp-desc">Chiude quando il prezzo raggiunge un livello assoluto prefissato. Una volta raggiunto →<br>il trading <strong style="color:var(--red)">si FERMA</strong> per il resto della giornata.</div>
         <div class="tp-example">📌 solo BUY + TP Limit = 21.500 → chiude quando prezzo tocca 21.500</div>
       </div>
     </div>
@@ -2080,8 +2093,8 @@ body.en .en-content { display: block; }
 <section id="slts">
   <div class="section-header">
     <div class="section-num">08</div>
-    <div class="section-title">STOP LOSS &amp; TRAILING STOP</div>
-    <div class="section-desc">Priorità a cascata: Trailing Dinamico &gt; Trailing Classico &gt; SL Valore &gt; SL Punti</div>
+    <div class="section-title" data-it="STOP LOSS &amp; TRAILING STOP" data-en="STOP LOSS &amp; TRAILING STOP">STOP LOSS &amp; TRAILING STOP</div>
+    <div class="section-desc"><span class="it-content">Priorità a cascata: Trailing Dinamico &gt; Trailing Classico &gt; SL Valore &gt; SL Punti</span><span class="en-content">Cascading priority: Dynamic Trailing &gt; Classic Trailing &gt; SL Value &gt; SL Points</span></div>
   </div>
   <div class="divider"></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
@@ -2093,14 +2106,14 @@ body.en .en-content { display: block; }
           <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">A PUNTI</div>
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
         </div>
-        <div style="font-size:13px;color:var(--text);">Chiude quando la perdita raggiunge N punti. Es: SL=20 → chiude a -20 punti</div>
+        <div style="font-size:13px;color:var(--text);"><span class="it-content">Chiude quando la perdita raggiunge N punti. Es: SL=20 → chiude a -20 punti</span><span class="en-content">Closes when loss reaches N points. Ex: SL=20 → closes at -20 points</span></div>
       </div>
       <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.7)';this.style.boxShadow='0 0 12px rgba(0,188,212,.15)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.25)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
           <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">A VALORE $/€</div>
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);">PRIORITÀ SU SL PUNTI</span>
         </div>
-        <div style="font-size:13px;color:var(--text);">Chiude quando la perdita raggiunge l'importo. Es: SL=100€ → chiude a -100€</div>
+        <div style="font-size:13px;color:var(--text);"><span class="it-content">Chiude quando la perdita raggiunge l'importo. Es: SL=100€ → chiude a -100€</span><span class="en-content">Closes when loss reaches the amount. Ex: SL=100€ → closes at -100€</span></div>
       </div>
     </div>
     <!-- TRAILING STOP -->
@@ -2112,7 +2125,7 @@ body.en .en-content { display: block; }
           <div style="font-family:var(--mono);font-size:13px;color:#ff8c00;">CLASSICO &nbsp;<span style="font-size:10px;color:var(--text-muted);">Punti Fissi</span></div>
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
         </div>
-        <div style="font-size:13px;color:var(--text);">Stop fisso che segue il prezzo ad ogni tick. Es: TS=20 → stop sempre a -20 punti dal prezzo corrente</div>
+        <div style="font-size:13px;color:var(--text);"><span class="it-content">Stop fisso che segue il prezzo ad ogni tick. Es: TS=20 → stop sempre a -20 punti dal prezzo corrente</span><span class="en-content">Fixed stop that follows price at each tick. Ex: TS=20 → stop always at -20 points from current price</span></div>
       </div>
       <!-- MODO A -->
       <div style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:6px;padding:.85rem;margin-bottom:.75rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.7)';this.style.boxShadow='0 0 12px rgba(0,188,212,.15)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.2)';this.style.boxShadow=''">
@@ -2121,7 +2134,7 @@ body.en .en-content { display: block; }
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);">PRIORITÀ SU CLASSICO</span>
         </div>
         <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.4rem;">(50 / 0 / 0)</div>
-        <div style="font-size:13px;color:var(--text);">Porta lo stop a pareggio dopo +50 punti di profitto.<br>Lo stop non si muove ulteriormente.</div>
+        <div style="font-size:13px;color:var(--text);"><span class="it-content">Porta lo stop a pareggio dopo +50 punti di profitto.<br>Lo stop non si muove ulteriormente.</span><span class="en-content">Brings stop to breakeven after +50 points of profit.<br>The stop does not move further.</span></div>
       </div>
       <!-- MODO B -->
       <div style="background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.2);border-radius:6px;padding:.85rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,230,118,.7)';this.style.boxShadow='0 0 12px rgba(0,230,118,.15)'" onmouseleave="this.style.borderColor='rgba(0,230,118,.2)';this.style.boxShadow=''">
@@ -2130,7 +2143,7 @@ body.en .en-content { display: block; }
           <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--red);color:var(--red);border-radius:4px;padding:1px 7px;background:var(--red-dim);">MAX PRIORITÀ</span>
         </div>
         <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.4rem;">(50 / 20 / 20)</div>
-        <div style="font-size:13px;color:var(--text);">Pareggio a +50 punti → poi avanza ogni +20 punti di prezzo di +20 punti → protegge il profitto crescente.</div>
+        <div style="font-size:13px;color:var(--text);"><span class="it-content">Pareggio a +50 punti → poi avanza ogni +20 punti di prezzo di +20 punti → protegge il profitto crescente.</span><span class="en-content">Breakeven at +50 points → then advances every +20 price points by +20 points → protects growing profit.</span></div>
       </div>
     </div>
   </div>
@@ -2142,19 +2155,19 @@ body.en .en-content { display: block; }
 <section id="target">
   <div class="section-header">
     <div class="section-num">09</div>
-    <div class="section-title">TARGET PROFIT &amp; LOSS</div>
-    <div class="section-desc">Fermano l'intera strategia al raggiungimento dell'obiettivo giornaliero<br>richiedono Fascia Oraria attiva</div>
+    <div class="section-title" data-it="TARGET PROFIT &amp; LOSS" data-en="TARGET PROFIT &amp; LOSS">TARGET PROFIT &amp; LOSS</div>
+    <div class="section-desc"><span class="it-content">Fermano l'intera strategia al raggiungimento dell'obiettivo giornaliero<br>richiedono Fascia Oraria attiva</span><span class="en-content">Stop the entire strategy when the daily target is reached<br>require active Time Window</span></div>
   </div>
   <div class="divider"></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.5rem;">
     <div class="hov-green" style="background:rgba(0,230,118,.04);border:1px solid rgba(0,230,118,.2);border-radius:8px;padding:1.5rem;">
       <div style="font-family:var(--display);font-size:24px;color:var(--green);letter-spacing:3px;margin-bottom:.75rem;">💰 TARGET PROFIT</div>
-      <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:.75rem;">Il BOT calcola il profitto NETTO (guadagni - perdite - commissioni).<br>Quando raggiunge il valore impostato: chiude i trade aperti, mostra etichetta e ferma qualsiasi nuovo segnale fino al giorno successivo.</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:.75rem;"><span class="it-content">Il BOT calcola il profitto NETTO (guadagni - perdite - commissioni).<br>Quando raggiunge il valore impostato: chiude i trade aperti, mostra etichetta e ferma qualsiasi nuovo segnale fino al giorno successivo.</span><span class="en-content">The BOT calculates NET profit (gains - losses - commissions).<br>When it reaches the set value: closes open trades, shows a label and stops any new signal until the next day.</span></div>
       <div style="font-family:var(--mono);font-size:11px;color:var(--green);background:rgba(0,230,118,.06);border-radius:4px;padding:.5rem .75rem;">📌 Target = 500€ → alle 17:42 il netto supera 500€ → tutto si ferma per oggi</div>
     </div>
     <div class="hov-red" style="background:rgba(255,68,68,.04);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:1.5rem;">
       <div style="font-family:var(--display);font-size:24px;color:var(--red);letter-spacing:3px;margin-bottom:.75rem;">💸 TARGET LOSS</div>
-      <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:.75rem;">Il BOT calcola la perdita NETTA della sessione.<br>Quando la perdita netta supera il valore: chiude i trade aperti, mostra etichetta e ferma qualsiasi nuovo segnale per proteggere il capitale.</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:.75rem;"><span class="it-content">Il BOT calcola la perdita NETTA della sessione.<br>Quando la perdita netta supera il valore: chiude i trade aperti, mostra etichetta e ferma qualsiasi nuovo segnale per proteggere il capitale.</span><span class="en-content">The BOT calculates the NET loss of the session.<br>When net loss exceeds the value: closes open trades, shows a label and stops any new signal to protect capital.</span></div>
       <div style="font-family:var(--mono);font-size:11px;color:var(--red);background:rgba(255,68,68,.06);border-radius:4px;padding:.5rem .75rem;">📌 Target Loss = 300€ → alle 16:15 la perdita netta tocca -300€ → tutto si ferma per oggi</div>
     </div>
   </div>
@@ -2172,8 +2185,8 @@ body.en .en-content { display: block; }
 <section id="grafica">
   <div class="section-header">
     <div class="section-num">10</div>
-    <div class="section-title">FUNZIONALITÀ GRAFICHE</div>
-    <div class="section-desc">Strumenti professionali integrati per l'operatività quotidiana</div>
+    <div class="section-title" data-it="FUNZIONALITÀ GRAFICHE" data-en="CHART FEATURES">FUNZIONALITÀ GRAFICHE</div>
+    <div class="section-desc"><span class="it-content">Strumenti professionali integrati per l'operatività quotidiana</span><span class="en-content">Integrated professional tools for daily operations</span></div>
   </div>
   <div class="divider"></div>
   <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
@@ -2206,8 +2219,8 @@ body.en .en-content { display: block; }
 <section id="alert">
   <div class="section-header">
     <div class="section-num">11</div>
-    <div class="section-title">ALERT &amp; WEBHOOK JSON</div>
-    <div class="section-desc">4 alert sonori + 12 alert tecnici automatici per bot e automazione</div>
+    <div class="section-title" data-it="ALERT &amp; WEBHOOK JSON" data-en="ALERT &amp; WEBHOOK JSON">ALERT &amp; WEBHOOK JSON</div>
+    <div class="section-desc"><span class="it-content">4 alert sonori + 12 alert tecnici automatici per bot e automazione</span><span class="en-content">4 sound alerts + 12 automatic technical alerts for bots and automation</span></div>
   </div>
   <div class="divider"></div>
   <div class="alert-section">
@@ -2264,8 +2277,8 @@ body.en .en-content { display: block; }
 <section id="sim">
   <div class="section-header">
     <div class="section-num">12</div>
-    <div class="section-title">SIMULAZIONE &amp; BACKTEST STORICO</div>
-    <div class="section-desc">Analisi retroattiva precisa su qualsiasi giorno del passato<br>funzione esclusiva integrata negli input</div>
+    <div class="section-title" data-it="SIMULAZIONE &amp; BACKTEST STORICO" data-en="SIMULATION &amp; HISTORICAL BACKTEST">SIMULAZIONE &amp; BACKTEST STORICO</div>
+    <div class="section-desc"><span class="it-content">Analisi retroattiva precisa su qualsiasi giorno del passato<br>funzione esclusiva integrata negli input</span><span class="en-content">Precise retroactive analysis on any day in the past<br>exclusive function integrated in inputs</span></div>
   </div>
   <div class="divider" style="background:linear-gradient(90deg,var(--cyan),transparent)"></div>
 
@@ -2280,7 +2293,7 @@ body.en .en-content { display: block; }
     <div class="sim-body">
       <div class="sim-info-block" style="max-width:700px;margin:0 auto;">
         <div class="sim-info-title">Come funziona</div>
-        <div class="sim-info-item"><span class="dot"></span><span>Attivando il toggle <strong style="color:var(--cyan)">Abilita Simulazione Giorno Specifico</strong>, il BOT filtra tutti i segnali mostrando SOLO quelli relativi alla data impostata.</span></div>
+        <div class="sim-info-item"><span class="dot"></span><span>Attivando il toggle <strong style="color:var(--cyan)">Abilita Simulazione Giorno Specifico</strong>,<br>il BOT filtra tutti i segnali mostrando SOLO quelli relativi alla data impostata.</span></div>
         <div class="sim-info-item"><span class="dot"></span><span>È possibile specificare <strong style="color:var(--cyan)">giorno, mese e anno</strong><br>qualsiasi data dal 2000 al 2100.</span></div>
         <div class="sim-info-item"><span class="dot"></span><span>Disattivando il toggle, il BOT <strong style="color:var(--green)">torna alla modalità normale</strong> (operatività in tempo reale).</span></div>
         <div class="sim-info-item"><span class="dot"></span><span>Richiede la <strong style="color:var(--gold)">Fascia Oraria attiva</strong> per visualizzare correttamente le sessioni simulate.</span></div>
@@ -2332,7 +2345,7 @@ body.en .en-content { display: block; }
 <section id="strumenti">
   <div class="section-header">
     <div class="section-num">13</div>
-    <div class="section-title">CAMBIO STRUMENTO</div>
+    <div class="section-title" data-it="CAMBIO STRUMENTO" data-en="INSTRUMENT CHANGE">CAMBIO STRUMENTO</div>
     <div class="section-desc">Verifica sempre questi <span style="color:var(--red);font-weight:700;">6 parametri</span> prima di operare su un nuovo strumento finanziario<br><span style="font-size:12px;color:var(--text-muted);">Tick/PT · Pt/Tick · Valore PT (x Tab) · Valore PT (x TP/SL) · Commissione · Valuta</span></div>
   </div>
   <div class="divider"></div>
@@ -2375,13 +2388,13 @@ body.en .en-content { display: block; }
 <section id="fuso">
   <div class="section-header">
     <div class="section-num">14</div>
-    <div class="section-title">FUSO ORARIO</div>
-    <div class="section-desc">Impostazione del fuso orario in base al broker e alla stagione<br>fondamentale per allineare correttamente la Fascia Oraria</div>
+    <div class="section-title" data-it="FUSO ORARIO" data-en="TIME ZONE">FUSO ORARIO</div>
+    <div class="section-desc"><span class="it-content">Impostazione del fuso orario in base al broker e alla stagione<br>fondamentale per allineare correttamente la Fascia Oraria</span><span class="en-content">Time zone setting based on broker and season<br>essential to correctly align the Time Window</span></div>
   </div>
   <div class="divider"></div>
 
   <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.75rem;font-size:14px;color:var(--text);line-height:1.7;">
-    Il parametro <strong style="color:var(--cyan)">Fuso Orario</strong> indica lo <strong style="color:var(--text-bright)">scarto in ore</strong> tra l'orario del broker e l'orario italiano. Impostarlo correttamente è essenziale: un valore errato causa uno spostamento della fascia operativa e genera segnali negli orari sbagliati. Il valore cambia in base al broker (<strong style="color:var(--gold)">CME Chicago</strong> o <strong style="color:var(--gold)">EUREX UTC</strong>) e alla stagione (ora legale / ora solare).
+    Il parametro <strong style="color:var(--cyan)">Fuso Orario</strong> indica lo <strong style="color:var(--text-bright)">scarto in ore</strong> tra l'orario del broker e l'orario italiano. Impostarlo correttamente è essenziale: un valore errato causa uno spostamento della fascia operativa e genera segnali negli orari sbagliati. Il valore cambia in base al broker (<strong style="color:var(--gold)">CME Chicago</strong> o <strong style="color:var(--gold)">EUREX UTC</strong>) e alla stagione<br>(ora legale / ora solare).
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
@@ -2462,7 +2475,7 @@ body.en .en-content { display: block; }
   <div class="section-header">
     <div class="section-num">15</div>
     <div class="section-title">MESSAGGI DI ERRORE</div>
-    <div class="section-desc">Tutti i messaggi di avviso e correzione<br>il BOT mostra questi avvisi direttamente sul grafico TradingView</div>
+    <div class="section-desc"><span class="it-content">Tutti i messaggi di avviso e correzione<br>il BOT mostra questi avvisi direttamente sul grafico TradingView</span><span class="en-content">All warning and correction messages<br>the BOT shows these warnings directly on the TradingView chart</span></div>
   </div>
   <div class="divider" style="background:linear-gradient(90deg,var(--red),transparent)"></div>
 
@@ -2570,13 +2583,13 @@ body.en .en-content { display: block; }
   </div>
 
   <div style="background:rgba(255,213,79,.05);border:1px solid rgba(255,213,79,.2);border-radius:8px;padding:1rem 1.25rem;font-family:var(--mono);font-size:12px;color:var(--gold);text-align:center;">
-    ⚠️ Tutti i messaggi di errore vengono visualizzati direttamente sul grafico TradingView<br><strong>A CENTRO sinistra</strong><br>con sfondo rosso e testo bianco
+    <span class="it-content">⚠️ Tutti i messaggi di errore vengono visualizzati direttamente sul grafico TradingView<br><strong>A CENTRO sinistra</strong><br>con sfondo rosso e testo bianco</span><span class="en-content">⚠️ All error messages are displayed directly on the TradingView chart<br><strong>CENTER left</strong><br>with red background and white text</span>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div style="font-family:var(--display);font-size:28px;color:var(--green);letter-spacing:6px;margin-bottom:.5rem;">BOT ALGO</div>
+  <div style="font-family:var(--display);font-size:28px;color:#ffd700;letter-spacing:6px;margin-bottom:.5rem;text-shadow:0 0 14px rgba(200,148,10,0.7);">BOT ALGO</div>
   <div>Pine Script® v6 · TradingView · <strong>Multi-Strategia</strong></div>
   <div style="margin-top:.5rem;color:rgba(255,255,255,0.75);font-size:10px;">Futures · Azioni · Crypto · Forex · Commodities</div>
 </footer>
@@ -2672,7 +2685,7 @@ body.en .en-content { display: block; }
         // section taller than viewport: just align top below nav
         scrollTo = sec.getBoundingClientRect().top + window.scrollY - NAV_H - 8;
       }
-      window.scrollTo({ top: scrollTo, behavior: 'smooth' });
+      window.scrollTo({ top: scrollTo, behavior: 'instant' });
     });
   });
 
@@ -2724,7 +2737,7 @@ body.en .en-content { display: block; }
       <span class="tag">Supporto Illimitato</span>
     </div>
     <div class="cta-wrap">
-      <a href="https://lemonsqueezy.com" onclick="playSound('cta')" class="btn-primary">ABBONATI SU LEMON SQUEEZY</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://lemonsqueezy.com" onclick="playSound('cta')" class="btn-primary">ABBONATI SU LEMON SQUEEZY</a>
       <a href="#prodotti" onclick="playSound('cta')" class="btn-secondary">SCOPRI DI PIÙ</a>
     </div>
   </div>
@@ -2746,7 +2759,7 @@ body.en .en-content { display: block; }
       <span class="tag">Unlimited Support</span>
     </div>
     <div class="cta-wrap">
-      <a href="https://lemonsqueezy.com" onclick="playSound('cta')" class="btn-primary">SUBSCRIBE ON LEMON SQUEEZY</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://lemonsqueezy.com" onclick="playSound('cta')" class="btn-primary">SUBSCRIBE ON LEMON SQUEEZY</a>
       <a href="#prodotti" onclick="playSound('cta')" class="btn-secondary">LEARN MORE</a>
     </div>
   </div>
@@ -2804,6 +2817,7 @@ body.en .en-content { display: block; }
 </div>
 
 <!-- PRODUCTS -->
+<div id="anchor-strumenti" style="height:0;overflow:hidden;"></div>
 <div style="padding: 60px 24px;" id="prodotti"><span id="abb-strumenti"></span>
 <section style="padding: 0;">
 
@@ -2942,6 +2956,7 @@ body.en .en-content { display: block; }
 </div>
 
 <!-- PRICING -->
+<div id="anchor-piani" style="height:0;overflow:hidden;"></div>
 <div style="padding: 60px 24px;" id="prezzi"><span id="piani"></span>
 <section style="padding: 0;">
 
@@ -2999,7 +3014,7 @@ body.en .en-content { display: block; }
           <span class="en-content">👉 For <strong style="color:var(--gold-light);">semi-automatic</strong> trading:<br>configure the bot with your strategy,<br>and it generates the signals,<br>which you then execute manually on your broker.</span>
         </p>
       </div>
-      <a id="cta-base" onclick="playSound('cta')" href="https://botalgo.lemonsqueezy.com/checkout/buy/c96310d7-f1e3-40ad-8c62-e800eacf4177" class="price-cta outline" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
+      <a id="cta-base" onclick="playSound('cta')" target="_blank" rel="noopener noreferrer" href="https://botalgo.lemonsqueezy.com/checkout/buy/c96310d7-f1e3-40ad-8c62-e800eacf4177" class="price-cta outline" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
       <p style="text-align:center; margin-top:12px; font-size:15px; font-family:'Inter',sans-serif; font-weight:600;">🔄 <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener" onclick="playSound('cta')" style="color:var(--text-muted); text-decoration:underline; transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'"><span class="it-content">Disdici quando vuoi</span><span class="en-content">Cancel anytime</span></a></p>
     </div>
 
@@ -3041,7 +3056,7 @@ body.en .en-content { display: block; }
           </span>
         </div>
       </div>
-      <a id="cta-pro" onclick="playSound('cta')" href="https://botalgo.lemonsqueezy.com/checkout/buy/784f8d2f-03cc-4b71-8c35-07ab7700ba12" class="price-cta gold" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
+      <a id="cta-pro" onclick="playSound('cta')" target="_blank" rel="noopener noreferrer" href="https://botalgo.lemonsqueezy.com/checkout/buy/784f8d2f-03cc-4b71-8c35-07ab7700ba12" class="price-cta gold" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
       <p style="text-align:center; margin-top:12px; font-size:15px; font-family:'Inter',sans-serif; font-weight:600;">🔄 <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener" onclick="playSound('cta')" style="color:var(--text-muted); text-decoration:underline; transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'"><span class="it-content">Disdici quando vuoi</span><span class="en-content">Cancel anytime</span></a></p>
     </div>
 
@@ -3215,10 +3230,31 @@ function playSound(type) {
 }
 
 function setLang(lang) {
-  playSound('nav');
+  try { playSound('nav'); } catch(e) {}
+
+  // 1. body.en drives all .it-content / .en-content via CSS (abbonamento section)
   document.body.classList.toggle('en', lang === 'en');
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
+
+  // 2. Bot Algo section: data-it / data-en attributes on elements
+  document.querySelectorAll('[data-it]').forEach(function(el) {
+    el.innerHTML = (lang === 'en') ? el.getAttribute('data-en') : el.getAttribute('data-it');
+  });
+
+  // 3. Update ALL .lang-btn inside abbonamenti section
+  document.querySelectorAll('.lang-btn').forEach(function(b) {
+    var oc = b.getAttribute('onclick') || '';
+    b.classList.toggle('active', oc.indexOf("'" + lang + "'") !== -1 || oc.indexOf('"' + lang + '"') !== -1);
+  });
+
+  // 4. Update nav flag buttons visual state
+  var IT_ON = 'background:rgba(0,212,255,.15);border:1px solid rgba(0,212,255,.85);color:#00d4ff;font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.05em;box-shadow:0 0 8px rgba(0,212,255,.2);';
+  var OFF   = 'background:transparent;border:1px solid rgba(0,188,212,.2);color:rgba(160,160,160,.7);font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.05em;';
+  var itBtn = document.getElementById('nav-lang-it');
+  var enBtn = document.getElementById('nav-lang-en');
+  if (itBtn && enBtn) {
+    itBtn.style.cssText = (lang === 'it') ? IT_ON : OFF;
+    enBtn.style.cssText = (lang === 'en') ? IT_ON : OFF;
+  }
 }
 
 // suono su tutti i btn-primary, btn-secondary, contact-btn
