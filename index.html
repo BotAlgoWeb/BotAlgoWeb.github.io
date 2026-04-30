@@ -93,6 +93,7 @@ nav a.nav-active {
   background: rgba(0,230,118,0.12);
   box-shadow: 0 0 8px rgba(0,230,118,0.2);
 }
+#anchor-strumenti, #anchor-piani, #abb-hero, #abbonamenti { scroll-margin-top: 52px; }
 #clicca-btn.clicca-active {
   border-color: rgba(232,255,0,0.85) !important;
   box-shadow: 0 0 16px rgba(232,255,0,.25) !important;
@@ -1616,30 +1617,30 @@ body.en div.en-content { display: block; }
     <span class="nav-logo">BOT ALGO &nbsp;▾</span>
     <div class="nav-dropdown-menu">
       <div class="nav-dropdown-menu-inner">
-        <a href="#pipeline"   class="nav-dropdown-item" onclick="scrollToEl('pipeline');return false;">📊 &nbsp;La Pipeline Completa</a>
-        <a href="#abb-strumenti" class="nav-dropdown-item" onclick="scrollToEl('prodotti');return false;">🛠️ &nbsp;4 Strumenti Professionali</a>
-        <a href="#futures"    class="nav-dropdown-item" onclick="scrollToEl('futures');return false;">⚡ &nbsp;8 Futures Inclusi</a>
-        <a href="#piani"      class="nav-dropdown-item" onclick="scrollToEl('prezzi');return false;">💎 &nbsp;Scegli il Tuo Piano</a>
-        <a href="#supporto"   class="nav-dropdown-item" onclick="scrollToEl('supporto');return false;">🎧 &nbsp;Supporto Illimitato</a>
+        <a href="#pipeline"   class="nav-dropdown-item" onclick="scrollToEl('pipeline');return false;"><span class="it-content">📊 &nbsp;La Pipeline Completa</span><span class="en-content">📊 &nbsp;The Full Pipeline</span></a>
+        <a href="#abb-strumenti" class="nav-dropdown-item" onclick="scrollToEl('anchor-strumenti');return false;"><span class="it-content">🛠️ &nbsp;4 Strumenti Professionali</span><span class="en-content">🛠️ &nbsp;4 Professional Tools</span></a>
+        <a href="#futures"    class="nav-dropdown-item" onclick="scrollToEl('futures');return false;"><span class="it-content">⚡ &nbsp;8 Futures Inclusi</span><span class="en-content">⚡ &nbsp;8 Futures Included</span></a>
+        <a href="#piani"      class="nav-dropdown-item" onclick="scrollToEl('anchor-piani');return false;"><span class="it-content">💎 &nbsp;Scegli il Tuo Piano</span><span class="en-content">💎 &nbsp;Choose Your Plan</span></a>
+        <a href="#supporto"   class="nav-dropdown-item" onclick="scrollToEl('supporto');return false;"><span class="it-content">🎧 &nbsp;Supporto Illimitato</span><span class="en-content">🎧 &nbsp;Unlimited Support</span></a>
       </div>
     </div>
   </div>
   <div class="nav-links">
-    <a href="#flusso">FLUSSO</a>
-    <a href="#modalita">MODALITÀ</a>
-    <a href="#segnali">SEGNALI</a>
-    <a href="#filtri">FILTRI</a>
-    <a href="#fascia">FASCIA</a>
-    <a href="#entry">ENTRY</a>
+    <a href="#flusso"><span class="it-content">FLUSSO</span><span class="en-content">FLOW</span></a>
+    <a href="#modalita"><span class="it-content">MODALITÀ</span><span class="en-content">MODES</span></a>
+    <a href="#segnali"><span class="it-content">SEGNALI</span><span class="en-content">SIGNALS</span></a>
+    <a href="#filtri"><span class="it-content">FILTRI</span><span class="en-content">FILTERS</span></a>
+    <a href="#fascia"><span class="it-content">FASCIA</span><span class="en-content">TIME WINDOW</span></a>
+    <a href="#entry"><span class="it-content">ENTRY</span><span class="en-content">ENTRY</span></a>
     <a href="#tp">TP</a>
     <a href="#slts">SL/TS</a>
     <a href="#target">TARGET</a>
-    <a href="#grafica">GRAFICA</a>
+    <a href="#grafica"><span class="it-content">GRAFICA</span><span class="en-content">CHARTS</span></a>
     <a href="#alert">ALERT</a>
-    <a href="#sim">SIM &amp; BT</a>
-    <a href="#strumenti">STRUMENTI</a>
-    <a href="#fuso">FUSO</a>
-    <a href="#messaggi">MESSAGGI</a>
+    <a href="#sim"><span class="it-content">SIM &amp; BT</span><span class="en-content">SIM &amp; BT</span></a>
+    <a href="#strumenti"><span class="it-content">STRUMENTI</span><span class="en-content">INSTRUMENTS</span></a>
+    <a href="#fuso"><span class="it-content">FUSO</span><span class="en-content">TIMEZONE</span></a>
+    <a href="#messaggi"><span class="it-content">MESSAGGI</span><span class="en-content">MESSAGES</span></a>
   </div>
   <div id="clicca-btn">
     <span style="color:#e8ff00;font-size:15px;line-height:1;">←</span>
@@ -1689,23 +1690,23 @@ body.en div.en-content { display: block; }
 
   <div style="margin-top:0.3rem;margin-bottom:1.2rem;display:flex;flex-direction:column;align-items:center;gap:.4rem;position:relative;z-index:10;">
     <div style="color:var(--green);font-size:16px;line-height:1;animation:bounce-arrow 1.4s ease-in-out infinite;">▼</div>
-    <button class="attiva-bot-btn" onclick="playActivaSound();scrollToEl('abbonamenti');">
-      🤖 &nbsp;ATTIVA IL BOT
+    <button class="attiva-bot-btn" onclick="playActivaSound();scrollToEl('abb-hero');">
+      <span class="it-content">🤖 &nbsp;ATTIVA IL BOT</span><span class="en-content">🤖 &nbsp;ACTIVATE BOT</span>
     </button>
   </div>
   <div class="hero-badges" style="margin-top:-0.6rem;">
-    <div class="badge"><span class="badge-num">2</span><span class="badge-label">📊 MODALITÀ</span></div>
-    <div class="badge"><span class="badge-num">4</span><span class="badge-label">⚡ SEGNALI</span></div>
-    <div class="badge"><span class="badge-num">4</span><span class="badge-label">🔍 FILTRI SMART</span></div>
+    <div class="badge"><span class="badge-num">2</span><span class="badge-label"><span class="it-content">📊 MODALITÀ</span><span class="en-content">📊 MODES</span></span></div>
+    <div class="badge"><span class="badge-num">4</span><span class="badge-label"><span class="it-content">⚡ SEGNALI</span><span class="en-content">⚡ SIGNALS</span></span></div>
+    <div class="badge"><span class="badge-num">4</span><span class="badge-label"><span class="it-content">🔍 FILTRI SMART</span><span class="en-content">🔍 SMART FILTERS</span></span></div>
     <div class="badge"><span class="badge-num">16</span><span class="badge-label">🔔 ALERT JSON</span></div>
     <div class="badge"><span class="badge-num">∞</span><span class="badge-label">📅 BACKTEST</span></div>
   </div>
   <div class="markets-row">
-    <span class="market-pill market-btn">📈 FUTURES</span>
-    <span class="market-pill market-btn">🏦 AZIONI</span>
+    <span class="market-pill market-btn"><span class="it-content">📈 FUTURES</span><span class="en-content">📈 FUTURES</span></span>
+    <span class="market-pill market-btn"><span class="it-content">🏦 AZIONI</span><span class="en-content">🏦 STOCKS</span></span>
     <span class="market-pill market-btn">₿ CRYPTO</span>
     <span class="market-pill market-btn">💱 FOREX</span>
-    <span class="market-pill market-btn">📊 INDICI</span>
+    <span class="market-pill market-btn"><span class="it-content">📊 INDICI</span><span class="en-content">📊 INDICES</span></span>
     <span class="market-pill market-btn">🛢 COMMODITIES</span>
   </div>
 </div>
@@ -1732,7 +1733,7 @@ body.en div.en-content { display: block; }
     <div class="flow-step"><span class="step-num">11</span><div class="step-icon">🛠️</div><div class="step-name">STRUMENTI</div><div class="step-detail"><span class="it-content">Futures USA · Europa · Fuso</span><span class="en-content">Futures USA · Europe · Timezone</span></div></div>
     <div class="flow-step"><span class="step-num">12</span><div class="step-icon">⚠️</div><div class="step-name">MESSAGGI</div><div class="step-detail"><span class="it-content">Avvisi · Correzioni</span><span class="en-content">Warnings · Corrections</span></div></div>
   </div>
-  <div class="flow-warning" style="text-align:center;font-size:13px;padding:1rem 1.5rem;">⚠️&nbsp;&nbsp;<strong style="color:var(--gold)">4 MODALITÀ DI FILTRO</strong>&nbsp;(Passaggi 2 · 3 · 4): se non superati, il segnale viene scartato e nessun trade viene aperto</div>
+  <div class="flow-warning" style="text-align:center;font-size:13px;padding:1rem 1.5rem;">⚠️&nbsp;&nbsp;<strong style="color:var(--gold)"><span class="it-content">4 MODALITÀ DI FILTRO</span><span class="en-content">4 FILTER MODES</span></strong>&nbsp;<span class="it-content">(Passaggi 2 · 3 · 4): se non superati, il segnale viene scartato e nessun trade viene aperto</span><span class="en-content">(Steps 2 · 3 · 4): if not passed, the signal is discarded and no trade is opened</span></div>
 </section>
 
 <div class="section-sep"></div>
@@ -1749,41 +1750,41 @@ body.en div.en-content { display: block; }
     <div class="tmode-card tmode-scalp">
       <div class="tmode-emoji">🔨</div>
       <div class="tmode-name">SCALPING</div>
-      <div class="tmode-rule">TP a Valore ≤ 200 $/€</div>
-      <div class="tmode-rule">TP a Punti ≤ 10 pt</div>
+      <div class="tmode-rule"><span class="it-content">TP a Valore ≤ 200 $/€</span><span class="en-content">TP by Value ≤ 200 $/€</span></div>
+      <div class="tmode-rule"><span class="it-content">TP a Punti ≤ 10 pt</span><span class="en-content">TP by Points ≤ 10 pt</span></div>
       <div style="margin-top:.85rem;">
         <div style="font-size:12px;color:#c8940a;background:rgba(200,148,10,.06);border:1px solid rgba(200,148,10,.25);border-radius:5px;padding:.45rem .7rem;">
-          <span style="color:var(--gold);font-family:var(--mono);font-size:10px;letter-spacing:.1em;">TP &gt; 0</span> — Chiude SOLO al TP impostato · Stop &amp; Reverse
+          <span style="color:var(--gold);font-family:var(--mono);font-size:10px;letter-spacing:.1em;">TP &gt; 0</span> <span class="it-content">— Chiude SOLO al TP impostato · Stop &amp; Reverse</span><span class="en-content">— Closes ONLY at set TP · Stop &amp; Reverse</span>
         </div>
       </div>
     </div>
     <div class="tmode-card tmode-day">
       <div class="tmode-emoji">📈</div>
       <div class="tmode-name">DAY TRADING</div>
-      <div class="tmode-rule">TP a Valore &gt; 200 $/€</div>
-      <div class="tmode-rule">TP a Punti &gt; 10 pt oppure TP = 0</div>
+      <div class="tmode-rule"><span class="it-content">TP a Valore &gt; 200 $/€</span><span class="en-content">TP by Value &gt; 200 $/€</span></div>
+      <div class="tmode-rule"><span class="it-content">TP a Punti &gt; 10 pt</span><span class="en-content">TP by Points &gt; 10 pt</span> oppure TP = 0</div>
       <div style="margin-top:.85rem;display:grid;gap:.45rem;">
         <div style="font-size:12px;color:#00a86b;background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.15);border-radius:5px;padding:.45rem .7rem;">
-          <span style="color:var(--green);font-family:var(--mono);font-size:10px;letter-spacing:.1em;">TP &gt; 0</span> — Chiude SOLO al TP · Stop &amp; Reverse
+          <span style="color:var(--green);font-family:var(--mono);font-size:10px;letter-spacing:.1em;">TP &gt; 0</span> <span class="it-content">— Chiude SOLO al TP · Stop &amp; Reverse</span><span class="en-content">— Closes ONLY at TP · Stop &amp; Reverse</span>
         </div>
         <div style="font-size:12px;color:#00a8c8;background:rgba(0,188,212,.06);border:1px solid rgba(0,188,212,.15);border-radius:5px;padding:.45rem .7rem;">
-          <span style="color:var(--cyan);font-family:var(--mono);font-size:10px;letter-spacing:.1em;">TP = 0</span> — Indicatori · S&amp;R · SL · TS · Target · Fascia
+          <span style="color:var(--cyan);font-family:var(--mono);font-size:10px;letter-spacing:.1em;">TP = 0</span> — <span class="it-content">Indicatori · S&amp;R · SL · TS · Target · Fascia</span><span class="en-content">Indicators · S&amp;R · SL · TS · Target · Window</span>
         </div>
       </div>
     </div>
   </div>
   <div style="margin-top:1.5rem;">
-    <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.75rem;letter-spacing:.1em;">LOGICA DI SELEZIONE AUTOMATICA (in ordine di priorità)</div>
+    <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.75rem;letter-spacing:.1em;"><span style="color:#ffffff;">LOGICA DI SELEZIONE AUTOMATICA (<span class="it-content">in ordine di priorità</span><span class="en-content">in order of priority</span>)</span></div>
     <div class="logic-table-wrap">
       <table class="logic-table">
-        <thead><tr><th>CONDIZIONE</th><th>RISULTATO</th></tr></thead>
+        <thead><tr><th><span class="it-content">CONDIZIONE</span><span class="en-content">CONDITION</span></th><th><span class="it-content">RISULTATO</span><span class="en-content">RESULT</span></th></tr></thead>
         <tbody>
-          <tr><td>TP Limit attivo (prezzo personalizzato)</td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
-          <tr><td>TP a Valore $/€ ≤ 200</td><td><span class="tag-scalp">🔨 SCALPING</span></td></tr>
-          <tr><td>TP a Valore $/€ &gt; 200</td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
+          <tr><td><span class="it-content">TP Limit attivo (prezzo personalizzato)</span><span class="en-content">TP Limit active (custom price)</span></td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
+          <tr><td><span class="it-content">TP a Valore $/€ ≤ 200</span><span class="en-content">TP by Value $/€ ≤ 200</span></td><td><span class="tag-scalp">🔨 SCALPING</span></td></tr>
+          <tr><td><span class="it-content">TP a Valore $/€ &gt; 200</span><span class="en-content">TP by Value $/€ &gt; 200</span></td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
           <tr><td>TP a Punti ≤ 10 pt</td><td><span class="tag-scalp">🔨 SCALPING</span></td></tr>
           <tr><td>TP a Punti &gt; 10 pt</td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
-          <tr><td>TP non impostato (TP Punti = 0 e TP Valore = 0)</td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
+          <tr><td><span class="it-content">TP non impostato (TP Punti = 0 e TP Valore = 0)</span><span class="en-content">TP not set (TP Points = 0 and TP Value = 0)</span></td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1867,7 +1868,7 @@ body.en div.en-content { display: block; }
     </div>
   </div>
   <div style="margin-top:1.25rem; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1rem 1.5rem; font-family:var(--mono); font-size:13px; display:flex; align-items:center; justify-content:center; gap:1.5rem; flex-wrap:wrap; text-align:center;">
-    <div style="font-weight:700; color:var(--text); letter-spacing:.1em;">🚦 SCELTA SEGNALI</div>
+    <div style="font-weight:700; color:var(--text); letter-spacing:.1em;"><span class="it-content">🚦 SCELTA SEGNALI</span><span class="en-content">🚦 SIGNAL CHOICE</span></div>
     <div style="background:rgba(0,230,118,.08); border:1px solid rgba(0,230,118,.3); border-radius:6px; padding:.5rem 1.25rem; transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(0,230,118,0.85)';this.style.boxShadow='0 0 20px rgba(0,230,118,.22)'" onmouseleave="this.style.borderColor='rgba(0,230,118,.3)';this.style.boxShadow=''">
       <span style="color:var(--green); font-weight:700;">solo BUY ▲</span><br>
       <span style="color:var(--text-muted); font-size:10px;"><span class="it-content">genera solo Long</span><span class="en-content">generates Long only</span></span>
@@ -1896,7 +1897,7 @@ body.en div.en-content { display: block; }
 
   <!-- NESSUNO: opzione separata -->
   <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:.7rem 1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.45)';this.style.boxShadow='0 0 20px rgba(255,255,255,.07)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.1)';this.style.boxShadow=''">
-    <span style="font-family:var(--mono);font-size:11px;color:var(--text-bright);letter-spacing:.15em;white-space:nowrap;">⭕ NESSUN FILTRO</span>
+    <span style="font-family:var(--mono);font-size:11px;color:var(--text-bright);letter-spacing:.15em;white-space:nowrap;"><span class="it-content">⭕ NESSUN FILTRO</span><span class="en-content">⭕ NO FILTER</span></span>
     <div style="flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:5px;padding:.4rem .8rem;font-size:12px;color:var(--text-bright);line-height:1.6;">
       <span class="it-content">Tutti i segnali vengono accettati senza condizioni.<br>Operatività massima, nessun filtro di trend.</span><span class="en-content">All signals are accepted without conditions.<br>Maximum activity, no trend filter.</span>
     </div>
@@ -1908,7 +1909,7 @@ body.en div.en-content { display: block; }
     <!-- 1 - SMA 200 -->
     <div class="filter-card" style="position:relative;">
       <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(0,188,212,0.18);line-height:1;letter-spacing:1px;">1</div>
-      <div class="filter-title">📈 SOLO SMA 200</div>
+      <div class="filter-title"><span class="it-content">📈 SOLO SMA 200</span><span class="en-content">📈 SMA 200 ONLY</span></div>
       <div class="filter-rule"><span class="arrow-up">▲</span> <span class="it-content">BUY se prezzo &gt; SMA 200</span><span class="en-content">BUY if price &gt; SMA 200</span></div>
       <div class="filter-rule"><span class="arrow-dn">▼</span> <span class="it-content">SELL se prezzo &lt; SMA 200</span><span class="en-content">SELL if price &lt; SMA 200</span></div>
       <div class="filter-note" style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:5px;padding:.45rem .7rem;"><span class="it-content">Filtro semplice e rapido.<br>Nessuna attesa di conferma.</span><span class="en-content">Simple and fast filter.<br>No confirmation wait.</span></div>
@@ -1917,7 +1918,7 @@ body.en div.en-content { display: block; }
     <!-- 2 - SUPERTREND -->
     <div class="filter-card" style="position:relative;">
       <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(0,188,212,0.18);line-height:1;letter-spacing:1px;">2</div>
-      <div class="filter-title">🔁 SOLO SUPERTREND</div>
+      <div class="filter-title"><span class="it-content">🔁 SOLO SUPERTREND</span><span class="en-content">🔁 SUPERTREND ONLY</span></div>
       <div class="filter-rule"><span class="arrow-up">▲</span> <span class="it-content">BUY se SuperTrend rialzista</span><span class="en-content">BUY if SuperTrend bullish</span></div>
       <div class="filter-rule"><span class="arrow-dn">▼</span> <span class="it-content">SELL se SuperTrend ribassista</span><span class="en-content">SELL if SuperTrend bearish</span></div>
       <div class="filter-note" style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:5px;padding:.45rem .7rem;"><span class="it-content">Filtro dinamico basato su ATR.<br>Si adatta alla volatilità.</span><span class="en-content">Dynamic filter based on ATR.<br>Adapts to volatility.</span></div>
@@ -1926,7 +1927,7 @@ body.en div.en-content { display: block; }
     <!-- 3 - ENTRAMBI FLESSIBILE -->
     <div class="filter-card filter-gold" style="position:relative;background:#1a1700;border-color:#5a4800;">
       <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(200,148,10,0.22);line-height:1;letter-spacing:1px;">3</div>
-      <div class="filter-title" style="color:var(--gold);">🟡 ENTRAMBI — FLESSIBILE</div>
+      <div class="filter-title" style="color:var(--gold);"><span class="it-content">🟡 ENTRAMBI — FLESSIBILE</span><span class="en-content">🟡 BOTH — FLEXIBLE</span></div>
       <div class="filter-rule"><span class="arrow-up">▲</span> <span class="it-content">BUY se SMA + ST entrambi favorevoli</span><span class="en-content">BUY if SMA + ST both favorable</span></div>
       <div class="filter-rule"><span class="arrow-dn">▼</span> <span class="it-content">SELL se SMA + ST entrambi contrari</span><span class="en-content">SELL if SMA + ST both against</span></div>
       <div class="filter-note" style="color:#d4b020;background:rgba(200,148,10,.07);border:1px solid rgba(200,148,10,.25);border-radius:5px;padding:.45rem .7rem;"><span class="it-content">Controlla lo stato in qualsiasi momento.<br>Più reattivo, meno attesa.<br>Entry appena entrambi si allineano.</span><span class="en-content">Checks state at any time.<br>More reactive, less waiting.<br>Entry as soon as both align.</span></div>
@@ -1935,7 +1936,7 @@ body.en div.en-content { display: block; }
     <!-- 4 - ENTRAMBI RIGIDA -->
     <div class="filter-card filter-blue" style="position:relative;background:#001620;border-color:#004a6a;">
       <div style="position:absolute;top:.75rem;right:.85rem;font-family:var(--display);font-size:44px;color:rgba(66,165,245,0.22);line-height:1;letter-spacing:1px;">4</div>
-      <div class="filter-title" style="color:var(--blue);">🔵 ENTRAMBI — RIGIDA</div>
+      <div class="filter-title" style="color:var(--blue);"><span class="it-content">🔵 ENTRAMBI — RIGIDA</span><span class="en-content">🔵 BOTH — STRICT</span></div>
       <div class="filter-rule"><span class="arrow-up">▲</span> <span class="it-content">BUY: ST cambia → rialzista con prezzo &gt; SMA</span><span class="en-content">BUY: ST changes → bullish with price &gt; SMA</span></div>
       <div class="filter-rule"><span class="arrow-dn">▼</span> <span class="it-content">SELL: ST cambia → ribassista con prezzo &lt; SMA</span><span class="en-content">SELL: ST changes → bearish with price &lt; SMA</span></div>
       <div class="filter-note" style="color:#88cce4;background:rgba(66,165,245,.06);border:1px solid rgba(66,165,245,.2);border-radius:5px;padding:.45rem .7rem;"><span class="it-content">Attende il cambio di stato del SuperTrend.<br>Meno segnali, massima affidabilità.</span><span class="en-content">Waits for SuperTrend state change.<br>Fewer signals, maximum reliability.</span></div>
@@ -1960,14 +1961,14 @@ body.en div.en-content { display: block; }
       <div style="font-family:var(--mono);font-size:14px;color:var(--red);margin-bottom:.75rem;letter-spacing:.1em;"><span class="it-content">❌ DISATTIVATA</span><span class="en-content">❌ DISABLED</span></div>
       <div style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:1rem;">Il BOT opera <strong style="color:var(--text-bright)">H24</strong> senza alcun limite di orario. I segnali vengono generati in <strong style="color:var(--text-bright)">qualsiasi momento</strong> del giorno, incluse ore notturne e pre-market.</div>
       <div style="font-family:var(--mono);font-size:12px;color:var(--red);background:rgba(255,68,68,.06);border-radius:6px;padding:.6rem .9rem;">
-        ⚠️ Senza fascia: Target Profit · Target Loss · TP Limit non sono disponibili
+        ⚠️ <span class="it-content">Senza fascia: Target Profit · Target Loss · TP Limit non sono disponibili</span><span class="en-content">Without window: Target Profit · Target Loss · TP Limit are not available</span>
       </div>
     </div>
     <div class="hov-green" style="background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.25);border-radius:10px;padding:1.75rem;">
       <div style="font-family:var(--mono);font-size:14px;color:var(--green);margin-bottom:.75rem;letter-spacing:.1em;"><span class="it-content">✅ ATTIVA</span><span class="en-content">✅ ACTIVE</span></div>
-      <div style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:1rem;">I segnali vengono generati <strong style="color:var(--text-bright)">SOLO tra Ora Inizio e Ora Fine</strong>. Alla fine della fascia: se un trade è aperto viene <strong style="color:var(--gold)">chiuso automaticamente</strong>. Linee verticali verdi (inizio) e rosse (fine) vengono tracciate direttamente sul grafico.</div>
+      <div style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:1rem;">I segnali vengono generati <strong style="color:var(--text-bright)">SOLO tra Ora Inizio e Ora Fine</strong>. Alla fine della fascia: se un trade è aperto viene <strong style="color:var(--gold)">chiuso automaticamente</strong>. <span class="it-content">Linee verticali verdi (inizio) e rosse (fine) vengono tracciate direttamente sul grafico.</span><span class="en-content">Vertical green (start) and red (end) lines are drawn directly on the chart.</span></div>
       <div style="font-family:var(--mono);font-size:12px;color:var(--green);background:rgba(0,230,118,.06);border-radius:6px;padding:.6rem .9rem;">
-        ✅ Abilita: Target Profit · Target Loss · TP Limit · Mostra Fascia + Segnali
+        ✅ <span class="it-content">Abilita: Target Profit · Target Loss · TP Limit · Mostra Fascia + Segnali</span><span class="en-content">Enables: Target Profit · Target Loss · TP Limit · Show Band + Signals</span>
       </div>
     </div>
   </div>
@@ -1991,7 +1992,7 @@ body.en div.en-content { display: block; }
   </div>
 
   <div style="background:rgba(255,213,79,.05);border:1px solid rgba(255,213,79,.25);border-radius:8px;padding:1rem 1.5rem;font-family:var(--mono);font-size:12px;color:var(--gold);text-align:center;letter-spacing:.05em;">
-    ⚠️ &nbsp;OBBLIGATORIA per: &nbsp;<strong>Target Profit</strong> · <strong>Target Loss</strong> · <strong>TP Limit</strong> · <strong>Mostra Fascia + Segnali su Tutti i Giorni del Grafico</strong>
+    ⚠️ &nbsp;<span class="it-content">OBBLIGATORIA per:</span><span class="en-content">MANDATORY for:</span> &nbsp;<strong>Target Profit</strong> · <strong>Target Loss</strong> · <strong>TP Limit</strong> · <strong><span class="it-content">Mostra Fascia + Segnali su Tutti i Giorni del Grafico</span><span class="en-content">Show Band + Signals on All Chart Days</span></strong>
   </div>
 </section>
 
@@ -2602,9 +2603,8 @@ body.en div.en-content { display: block; }
 function scrollToEl(id) {
   var el = document.getElementById(id);
   if (!el) return;
-  var top = 0, e = el;
-  while (e) { top += e.offsetTop; e = e.offsetParent; }
-  window.scrollTo(0, top - 52);
+  el.scrollIntoView({block: 'start'});
+  window.scrollBy(0, -52);
 }
   // scroll top visibility + sound
   window.addEventListener('scroll', () => {
@@ -2691,6 +2691,36 @@ function playNavSound() {
     } catch(e) {}
   }
 
+function playCtaSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    // Suono "cassa + campanella": basso profondo + tono alto brillante
+    // Prima un colpo basso (kick)
+    const kick = ctx.createOscillator();
+    const kickGain = ctx.createGain();
+    kick.connect(kickGain); kickGain.connect(ctx.destination);
+    kick.type = 'sine';
+    kick.frequency.setValueAtTime(180, ctx.currentTime);
+    kick.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.15);
+    kickGain.gain.setValueAtTime(0.35, ctx.currentTime);
+    kickGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
+    kick.start(ctx.currentTime); kick.stop(ctx.currentTime + 0.2);
+    // Poi campanella metallica brillante
+    [1047, 1319, 1760].forEach((freq, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type = 'triangle';
+      o.frequency.value = freq;
+      const t = ctx.currentTime + 0.05 + i * 0.07;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.14, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+      o.start(t); o.stop(t + 0.35);
+    });
+  } catch(e) {}
+}
+
   // smart scroll: click nav → section fits entirely in viewport
   const NAV_H = 52;
   navLinks.forEach(link => {
@@ -2739,6 +2769,7 @@ function playNavSound() {
 <!-- ══ ABBONAMENTI ══ -->
 <div id="abbonamenti">
 <!-- LANG BAR -->
+<div id="abb-hero"></div>
 <div class="lang-bar" style="display:none;">
   <button class="lang-btn active" onclick="setLang('it')">🇮🇹 IT</button>
   <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
@@ -2764,8 +2795,8 @@ function playNavSound() {
       <span class="tag">Supporto Illimitato</span>
     </div>
     <div class="cta-wrap">
-      <a target="_blank" rel="noopener noreferrer" href="https://lemonsqueezy.com" onclick="playSound('cta')" class="btn-primary">ABBONATI SU LEMON SQUEEZY</a>
-      <a href="#prodotti" onclick="playSound('cta')" class="btn-secondary">SCOPRI DI PIÙ</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://lemonsqueezy.com" onclick="playCtaSound()" class="btn-primary">ABBONATI SU LEMON SQUEEZY</a>
+      <a href="#prodotti" onclick="playCtaSound()" class="btn-secondary">SCOPRI DI PIÙ</a>
     </div>
   </div>
 
@@ -2786,8 +2817,8 @@ function playNavSound() {
       <span class="tag">Unlimited Support</span>
     </div>
     <div class="cta-wrap">
-      <a target="_blank" rel="noopener noreferrer" href="https://lemonsqueezy.com" onclick="playSound('cta')" class="btn-primary">SUBSCRIBE ON LEMON SQUEEZY</a>
-      <a href="#prodotti" onclick="playSound('cta')" class="btn-secondary">LEARN MORE</a>
+      <a target="_blank" rel="noopener noreferrer" href="https://lemonsqueezy.com" onclick="playCtaSound()" class="btn-primary">SUBSCRIBE ON LEMON SQUEEZY</a>
+      <a href="#prodotti" onclick="playCtaSound()" class="btn-secondary">LEARN MORE</a>
     </div>
   </div>
 
@@ -3041,8 +3072,8 @@ function playNavSound() {
           <span class="en-content">👉 For <strong style="color:var(--gold-light);">semi-automatic</strong> trading:<br>configure the bot with your strategy,<br>and it generates the signals,<br>which you then execute manually on your broker.</span>
         </p>
       </div>
-      <a id="cta-base" onclick="playSound('cta')" target="_blank" rel="noopener noreferrer" href="https://botalgo.lemonsqueezy.com/checkout/buy/c96310d7-f1e3-40ad-8c62-e800eacf4177" class="price-cta outline" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
-      <p style="text-align:center; margin-top:12px; font-size:15px; font-family:'Inter',sans-serif; font-weight:600;">🔄 <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener" onclick="playSound('cta')" style="color:var(--text-muted); text-decoration:underline; transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'"><span class="it-content">Disdici quando vuoi</span><span class="en-content">Cancel anytime</span></a></p>
+      <a id="cta-base" onclick="playCtaSound()" target="_blank" rel="noopener noreferrer" href="https://botalgo.lemonsqueezy.com/checkout/buy/c96310d7-f1e3-40ad-8c62-e800eacf4177" class="price-cta outline" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
+      <p style="text-align:center; margin-top:12px; font-size:15px; font-family:'Inter',sans-serif; font-weight:600;">🔄 <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener" onclick="playCtaSound()" style="color:var(--text-muted); text-decoration:underline; transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'"><span class="it-content">Disdici quando vuoi</span><span class="en-content">Cancel anytime</span></a></p>
     </div>
 
     <!-- ABBONAMENTO PRO -->
@@ -3083,8 +3114,8 @@ function playNavSound() {
           </span>
         </div>
       </div>
-      <a id="cta-pro" onclick="playSound('cta')" target="_blank" rel="noopener noreferrer" href="https://botalgo.lemonsqueezy.com/checkout/buy/784f8d2f-03cc-4b71-8c35-07ab7700ba12" class="price-cta gold" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
-      <p style="text-align:center; margin-top:12px; font-size:15px; font-family:'Inter',sans-serif; font-weight:600;">🔄 <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener" onclick="playSound('cta')" style="color:var(--text-muted); text-decoration:underline; transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'"><span class="it-content">Disdici quando vuoi</span><span class="en-content">Cancel anytime</span></a></p>
+      <a id="cta-pro" onclick="playCtaSound()" target="_blank" rel="noopener noreferrer" href="https://botalgo.lemonsqueezy.com/checkout/buy/784f8d2f-03cc-4b71-8c35-07ab7700ba12" class="price-cta gold" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
+      <p style="text-align:center; margin-top:12px; font-size:15px; font-family:'Inter',sans-serif; font-weight:600;">🔄 <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener" onclick="playCtaSound()" style="color:var(--text-muted); text-decoration:underline; transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'"><span class="it-content">Disdici quando vuoi</span><span class="en-content">Cancel anytime</span></a></p>
     </div>
 
   </div>
@@ -3287,7 +3318,7 @@ function setLang(lang) {
 // suono su tutti i btn-primary, btn-secondary, contact-btn
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
-    btn.addEventListener('click', () => playSound('cta'));
+    btn.addEventListener('click', () => playCtaSound());
   });
   document.querySelectorAll('.contact-btn').forEach(btn => {
     btn.addEventListener('click', () => playSound('contact'));
