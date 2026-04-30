@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BOT ALGO — Algoritmo Avanzato TradingView</title>
+<!-- PWA -->
+<meta name="theme-color" content="#ffd700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BOT ALGO">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Sistema di Trading Automatico Multi-Strategia su TradingView · Pine Script v6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
@@ -1654,6 +1661,13 @@ body.en div.en-content { display: block; }
       style="background:transparent;border:1px solid rgba(0,188,212,.2);color:rgba(160,160,160,.7);font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:4px;cursor:pointer;transition:all .2s;letter-spacing:.05em;"
       onmouseenter="this.style.background='rgba(0,188,212,.15)'" onmouseleave="this.style.background='transparent'">🇬🇧 EN</button>
   </div>
+  <div id="pwa-install-btn" onclick="if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;document.getElementById('pwa-install-btn').style.display='none';});}"
+    style="display:none;align-items:center;gap:5px;margin-left:6px;flex-shrink:0;border:1px solid rgba(0,230,118,.4);border-radius:5px;padding:3px 8px;background:rgba(0,230,118,0.06);cursor:pointer;transition:all .22s;"
+    onmouseenter="this.style.borderColor='rgba(0,230,118,.8)';this.style.boxShadow='0 0 12px rgba(0,230,118,.2)'"
+    onmouseleave="this.style.borderColor='rgba(0,230,118,.4)';this.style.boxShadow=''">
+    <span style="font-size:13px;">📲</span>
+    <span style="font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:.05em;">APP</span>
+  </div>
 </nav>
 
 <!-- TICKER -->
@@ -1720,18 +1734,18 @@ body.en div.en-content { display: block; }
   </div>
   <div class="divider"></div>
   <div class="flow-steps">
-    <div class="flow-step"><span class="step-num">1</span><div class="step-icon">📊</div><div class="step-name">MODALITÀ</div><div class="step-detail"><span class="it-content">Scalping · Day Trading</span><span class="en-content">Scalping · Day Trading</span></div></div>
-    <div class="flow-step"><span class="step-num">2</span><div class="step-icon">⚡</div><div class="step-name">4 SEGNALI</div><div class="step-detail"><span class="it-content">ST · EMA · PSaR · BRK</span><span class="en-content">ST · EMA · PSaR · BRK</span></div></div>
-    <div class="flow-step"><span class="step-num">3</span><div class="step-icon">🔍</div><div class="step-name">FILTRI</div><div class="step-detail"><span class="it-content">Nessuno · SMA · ST · Entrambi</span><span class="en-content">None · SMA · ST · Both</span></div></div>
-    <div class="flow-step"><span class="step-num">4</span><div class="step-icon">⏰</div><div class="step-name">FASCIA ORARIA</div><div class="step-detail"><span class="it-content">Orario di operatività</span><span class="en-content">Trading hours</span></div></div>
-    <div class="flow-step"><span class="step-num">5</span><div class="step-icon">🚦</div><div class="step-name">SCELTA SEGNALI</div><div class="step-detail"><span class="it-content">BUY / SELL / BUY&amp;SELL</span><span class="en-content">BUY / SELL / BUY&amp;SELL</span></div></div>
-    <div class="flow-step"><span class="step-num">6</span><div class="step-icon">📥</div><div class="step-name">APERTURA TRADE</div><div class="step-detail"><span class="it-content">Prezzo · Qty · Mediazione</span><span class="en-content">Price · Qty · Averaging</span></div></div>
-    <div class="flow-step"><span class="step-num">7</span><div class="step-icon">💰</div><div class="step-name">GESTIONE TRADE</div><div class="step-detail"><span class="it-content">TP · SL · TS · Target</span><span class="en-content">TP · SL · TS · Target</span></div></div>
-    <div class="flow-step"><span class="step-num">8</span><div class="step-icon">📤</div><div class="step-name">CHIUSURA TRADE</div><div class="step-detail"><span class="it-content">P&amp;L · Commissioni</span><span class="en-content">P&amp;L · Commissions</span></div></div>
-    <div class="flow-step"><span class="step-num">9</span><div class="step-icon">🔔</div><div class="step-name">ALERT JSON</div><div class="step-detail"><span class="it-content">Webhook · Bot</span><span class="en-content">Webhook · Bot</span></div></div>
-    <div class="flow-step"><span class="step-num">10</span><div class="step-icon">🔬</div><div class="step-name">SIM &amp; BACKTEST</div><div class="step-detail"><span class="it-content">Giorno Specifico · Storico</span><span class="en-content">Specific Day · Historical</span></div></div>
-    <div class="flow-step"><span class="step-num">11</span><div class="step-icon">🛠️</div><div class="step-name">STRUMENTI</div><div class="step-detail"><span class="it-content">Futures USA · Europa · Fuso</span><span class="en-content">Futures USA · Europe · Timezone</span></div></div>
-    <div class="flow-step"><span class="step-num">12</span><div class="step-icon">⚠️</div><div class="step-name">MESSAGGI</div><div class="step-detail"><span class="it-content">Avvisi · Correzioni</span><span class="en-content">Warnings · Corrections</span></div></div>
+    <div class="flow-step"><span class="step-num">1</span><div class="step-icon">📊</div><div class="step-name"><span class="it-content">MODALITÀ</span><span class="en-content">MODES</span></div><div class="step-detail"><span class="it-content">Scalping · Day Trading</span><span class="en-content">Scalping · Day Trading</span></div></div>
+    <div class="flow-step"><span class="step-num">2</span><div class="step-icon">⚡</div><div class="step-name"><span class="it-content">4 SEGNALI</span><span class="en-content">4 SIGNALS</span></div><div class="step-detail"><span class="it-content">ST · EMA · PSaR · BRK</span><span class="en-content">ST · EMA · PSaR · BRK</span></div></div>
+    <div class="flow-step"><span class="step-num">3</span><div class="step-icon">🔍</div><div class="step-name"><span class="it-content">FILTRI</span><span class="en-content">FILTERS</span></div><div class="step-detail"><span class="it-content">Nessuno · SMA · ST · Entrambi</span><span class="en-content">None · SMA · ST · Both</span></div></div>
+    <div class="flow-step"><span class="step-num">4</span><div class="step-icon">⏰</div><div class="step-name"><span class="it-content">FASCIA ORARIA</span><span class="en-content">TIME WINDOW</span></div><div class="step-detail"><span class="it-content">Orario di operatività</span><span class="en-content">Trading hours</span></div></div>
+    <div class="flow-step"><span class="step-num">5</span><div class="step-icon">🚦</div><div class="step-name"><span class="it-content">SCELTA SEGNALI</span><span class="en-content">SIGNAL CHOICE</span></div><div class="step-detail"><span class="it-content">BUY / SELL / BUY&amp;SELL</span><span class="en-content">BUY / SELL / BUY&amp;SELL</span></div></div>
+    <div class="flow-step"><span class="step-num">6</span><div class="step-icon">📥</div><div class="step-name"><span class="it-content">APERTURA TRADE</span><span class="en-content">TRADE OPEN</span></div><div class="step-detail"><span class="it-content">Prezzo · Qty · Mediazione</span><span class="en-content">Price · Qty · Averaging</span></div></div>
+    <div class="flow-step"><span class="step-num">7</span><div class="step-icon">💰</div><div class="step-name"><span class="it-content">GESTIONE TRADE</span><span class="en-content">TRADE MANAGEMENT</span></div><div class="step-detail"><span class="it-content">TP · SL · TS · Target</span><span class="en-content">TP · SL · TS · Target</span></div></div>
+    <div class="flow-step"><span class="step-num">8</span><div class="step-icon">📤</div><div class="step-name"><span class="it-content">CHIUSURA TRADE</span><span class="en-content">TRADE CLOSE</span></div><div class="step-detail"><span class="it-content">P&amp;L · Commissioni</span><span class="en-content">P&amp;L · Commissions</span></div></div>
+    <div class="flow-step"><span class="step-num">9</span><div class="step-icon">🔔</div><div class="step-name"><span class="it-content">ALERT JSON</span><span class="en-content">ALERT JSON</span></div><div class="step-detail"><span class="it-content">Webhook · Bot</span><span class="en-content">Webhook · Bot</span></div></div>
+    <div class="flow-step"><span class="step-num">10</span><div class="step-icon">🔬</div><div class="step-name"><span class="it-content">SIM &amp; BACKTEST</span><span class="en-content">SIM &amp; BACKTEST</span></div><div class="step-detail"><span class="it-content">Giorno Specifico · Storico</span><span class="en-content">Specific Day · Historical</span></div></div>
+    <div class="flow-step"><span class="step-num">11</span><div class="step-icon">🛠️</div><div class="step-name"><span class="it-content">STRUMENTI</span><span class="en-content">INSTRUMENTS</span></div><div class="step-detail"><span class="it-content">Futures USA · Europa · Fuso</span><span class="en-content">Futures USA · Europe · Timezone</span></div></div>
+    <div class="flow-step"><span class="step-num">12</span><div class="step-icon">⚠️</div><div class="step-name"><span class="it-content">MESSAGGI</span><span class="en-content">MESSAGES</span></div><div class="step-detail"><span class="it-content">Avvisi · Correzioni</span><span class="en-content">Warnings · Corrections</span></div></div>
   </div>
   <div class="flow-warning" style="text-align:center;font-size:13px;padding:1rem 1.5rem;">⚠️&nbsp;&nbsp;<strong style="color:var(--gold)"><span class="it-content">4 MODALITÀ DI FILTRO</span><span class="en-content">4 FILTER MODES</span></strong>&nbsp;<span class="it-content">(Passaggi 2 · 3 · 4): se non superati, il segnale viene scartato e nessun trade viene aperto</span><span class="en-content">(Steps 2 · 3 · 4): if not passed, the signal is discarded and no trade is opened</span></div>
 </section>
@@ -1782,8 +1796,8 @@ body.en div.en-content { display: block; }
           <tr><td><span class="it-content">TP Limit attivo (prezzo personalizzato)</span><span class="en-content">TP Limit active (custom price)</span></td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
           <tr><td><span class="it-content">TP a Valore $/€ ≤ 200</span><span class="en-content">TP by Value $/€ ≤ 200</span></td><td><span class="tag-scalp">🔨 SCALPING</span></td></tr>
           <tr><td><span class="it-content">TP a Valore $/€ &gt; 200</span><span class="en-content">TP by Value $/€ &gt; 200</span></td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
-          <tr><td>TP a Punti ≤ 10 pt</td><td><span class="tag-scalp">🔨 SCALPING</span></td></tr>
-          <tr><td>TP a Punti &gt; 10 pt</td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
+          <tr><td><span class="it-content">TP a Punti ≤ 10 pt</span><span class="en-content">TP by Points ≤ 10 pt</span></td><td><span class="tag-scalp">🔨 SCALPING</span></td></tr>
+          <tr><td><span class="it-content">TP a Punti &gt; 10 pt</span><span class="en-content">TP by Points &gt; 10 pt</span></td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
           <tr><td><span class="it-content">TP non impostato (TP Punti = 0 e TP Valore = 0)</span><span class="en-content">TP not set (TP Points = 0 and TP Value = 0)</span></td><td><span class="tag-day">📈 DAY TRADING</span></td></tr>
         </tbody>
       </table>
@@ -3333,5 +3347,29 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </div>
 
+<!-- PWA: Service Worker Registration -->
+<script>
+if ('serviceWorker' in navigator) {
+  const swCode = `
+const CACHE = 'botalgo-v1';
+self.addEventListener('install', e => e.waitUntil(
+  caches.open(CACHE).then(cache => cache.addAll(['/']))
+));
+self.addEventListener('fetch', e => e.respondWith(
+  caches.match(e.request).then(r => r || fetch(e.request))
+));`;
+  const blob = new Blob([swCode], {type: 'application/javascript'});
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl).catch(() => {});
+}
+// PWA Install prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('pwa-install-btn');
+  if (btn) { btn.style.display = 'flex'; }
+});
+</script>
 </body>
 </html>
