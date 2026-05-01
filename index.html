@@ -3475,13 +3475,14 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
     <div style="text-align:center;margin-top:1.5rem;font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.1em;">
-      <span class="it-content">📹 Video dimostrativi — disponibili presto</span><span class="en-content">📹 Demo videos — coming soon</span>
+      <span class="it-content">📹 Guarda i video dimostrativi nella sezione <span onclick="openVideoGallery()" style="color:var(--gold);cursor:pointer;text-decoration:underline;text-underline-offset:3px;">VIDEO</span> — demo live · tutorial · strategie operative</span>
+      <span class="en-content">📹 Watch demo videos in the <span onclick="openVideoGallery()" style="color:var(--gold);cursor:pointer;text-decoration:underline;text-underline-offset:3px;">VIDEO</span> section — live demo · tutorial · trading strategies</span>
     </div>
   </div>
 </div>
 <!-- ZOOM overlay -->
-<div id="zoom-overlay" style="position:fixed;"  style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.96);align-items:center;justify-content:center;flex-direction:column;" onclick="if(event.target===this||event.target.id==='zoom-img'||event.target.id==='zoom-caption')closeZoom()">
-  <button onclick="closeZoom()" style="position:absolute;top:16px;right:16px;background:rgba(255,68,68,.15);border:1px solid rgba(255,68,68,.4);color:#ff6666;font-size:11px;padding:5px 14px;border-radius:6px;cursor:pointer;font-family:var(--mono);letter-spacing:.08em;transition:all .2s;" onmouseenter="this.style.background='rgba(255,68,68,.35)'" onmouseleave="this.style.background='rgba(255,68,68,.15)'">✕ &nbsp;<span class="it-content">CHIUDI</span><span class="en-content">CLOSE</span></button>
+<div id="zoom-overlay" style="display:none;position:fixed;inset:0;z-index:999999;background:rgba(0,0,0,0.96);align-items:center;justify-content:center;flex-direction:column;" onclick="if(event.target===this||event.target.id==='zoom-img'||event.target.id==='zoom-caption')closeZoom()">
+  <button onclick="closeZoom()" style="position:absolute;top:18px;right:18px;background:rgba(255,68,68,.18);border:2px solid rgba(255,68,68,.55);color:#ff6666;font-size:13px;font-weight:700;padding:8px 20px;border-radius:8px;cursor:pointer;font-family:var(--mono);letter-spacing:.12em;transition:all .2s;display:flex;align-items:center;gap:8px;z-index:10;" onmouseenter="this.style.background='rgba(255,68,68,.4)';this.style.borderColor='rgba(255,68,68,.9)';this.style.color='#fff'" onmouseleave="this.style.background='rgba(255,68,68,.18)';this.style.borderColor='rgba(255,68,68,.55)';this.style.color='#ff6666'">✕ &nbsp;<span class="it-content">CHIUDI</span><span class="en-content">CLOSE</span></button>
   <img id="zoom-img" style="max-width:90vw;max-height:82vh;border-radius:10px;box-shadow:0 0 60px rgba(200,148,10,.3);cursor:default;">
   <div id="zoom-caption" style="font-family:var(--mono);font-size:13px;color:var(--gold);margin-top:1rem;letter-spacing:.1em;"></div>
 </div>
