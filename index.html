@@ -1715,6 +1715,10 @@ body.en div.en-content { display: block; }
 <div id="hero">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
+  <!-- FOTO PROFILO -->
+  <div style="margin-bottom:1rem;position:relative;z-index:10;">
+    <img src="BOT_ALGO.png" alt="Bot Algo" style="width:110px;height:110px;border-radius:50%;object-fit:cover;border:2px solid rgba(200,148,10,.6);box-shadow:0 0 24px rgba(200,148,10,.4),0 0 50px rgba(200,148,10,.15);display:block;margin:0 auto;">
+  </div>
   <div class="hero-title" style="margin-bottom:1.5rem;text-shadow:0 0 60px rgba(200,148,10,0.5),0 0 120px rgba(200,148,10,0.2);"><span style="color:#c8940a">BOT</span><span style="color:#c8940a"> ALGO</span></div>
   <div class="hero-tag" data-it="▸ TradingView · Pine Script® v6 · Algoritmo Avanzato" data-en="▸ TradingView · Pine Script® v6 · Advanced Algorithm">▸ TradingView · Pine Script® v6 · Algoritmo Avanzato</div>
   <div class="hero-sub" data-it="Sistema di Trading Automatico Multi-Strategia" data-en="Automated Multi-Strategy Trading System">Sistema di Trading Automatico Multi-Strategia</div>
@@ -2649,6 +2653,7 @@ function openGallery() {
 function closeGallery() {
   document.getElementById('gallery-modal').style.display = 'none';
   document.body.style.overflow = '';
+  playZoomCloseSound();
 }
 function playZoomOpenSound() {
   try {
@@ -3494,7 +3499,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
 
       <!-- CARD 1 -->
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(200,148,10,.9)';this.style.boxShadow='0 0 24px rgba(200,148,10,.35)'" onmouseleave="this.style.borderColor='var(--border)';this.style.boxShadow=''">
         <div style="overflow:hidden;flex:1;min-height:0;">
           <img src="BOT_ALGO_TRADINGVIEW.png" onclick="openZoom('BOT_ALGO_TRADINGVIEW.png','BOT ALGO · TradingView')" style="cursor:pointer;width:100%;height:28vh;object-fit:cover;display:block;transition:transform .25s;" onmouseenter="this.style.transform='scale(1.03)'" onmouseleave="this.style.transform='scale(1)'">
         </div>
@@ -3505,7 +3510,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <!-- CARD 2 -->
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(200,148,10,.9)';this.style.boxShadow='0 0 24px rgba(200,148,10,.35)'" onmouseleave="this.style.borderColor='var(--border)';this.style.boxShadow=''">
         <div style="overflow:hidden;flex:1;min-height:0;">
           <img src="PYTHON_BRIDGE.png" onclick="openZoom('PYTHON_BRIDGE.png','Python Bridge')" style="cursor:pointer;width:100%;height:28vh;object-fit:cover;display:block;transition:transform .25s;" onmouseenter="this.style.transform='scale(1.03)'" onmouseleave="this.style.transform='scale(1)'">
         </div>
@@ -3516,7 +3521,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <!-- CARD 3 -->
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(200,148,10,.9)';this.style.boxShadow='0 0 24px rgba(200,148,10,.35)'" onmouseleave="this.style.borderColor='var(--border)';this.style.boxShadow=''">
         <div style="overflow:hidden;flex:1;min-height:0;">
           <img src="QUANTOWER_BRIDGE.png" onclick="openZoom('QUANTOWER_BRIDGE.png','Quantower Bridge')" style="cursor:pointer;width:100%;height:28vh;object-fit:cover;display:block;transition:transform .25s;" onmouseenter="this.style.transform='scale(1.03)'" onmouseleave="this.style.transform='scale(1)'">
         </div>
@@ -3527,7 +3532,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
 
       <!-- CARD 4 -->
-      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(200,148,10,.9)';this.style.boxShadow='0 0 24px rgba(200,148,10,.35)'" onmouseleave="this.style.borderColor='var(--border)';this.style.boxShadow=''">
         <div style="overflow:hidden;flex:1;min-height:0;">
           <img src="BOT_ALGO_SETUP_MANAGER.png" onclick="openZoom('BOT_ALGO_SETUP_MANAGER.png','Setup Manager + Claude AI')" style="cursor:pointer;width:100%;height:28vh;object-fit:cover;display:block;transition:transform .25s;" onmouseenter="this.style.transform='scale(1.03)'" onmouseleave="this.style.transform='scale(1)'">
         </div>
