@@ -713,7 +713,7 @@ section {
   padding: 1.5rem;
   border: 1px solid;
 }
-.tmode-scalp { background: #100a00; border-color: #4a2f00; }
+.tmode-scalp { background: #100a00; border-color: #c8940a; }
 .tmode-day   { background: #001a10; border-color: #004a28; }
 .tmode-emoji { font-size: 36px; margin-bottom: .75rem; }
 .tmode-name {
@@ -933,8 +933,8 @@ footer strong { color: var(--green); }
 .pir-card { transition: border-color .25s, box-shadow .25s, transform .2s; }
 .pir-card:hover { border-color: var(--cyan); box-shadow: 0 6px 24px rgba(0,188,212,.13); transform: translateY(-2px); }
 .tmode-card { transition: border-color .25s, box-shadow .25s; }
-.tmode-scalp:hover { border-color: rgba(160,160,160,.7) !important; box-shadow: 0 0 22px rgba(160,160,160,.18); }
-.tmode-day:hover { border-color: rgba(255,60,60,.85) !important; box-shadow: 0 0 28px rgba(255,60,60,.3); }
+/* tmode-scalp hover handled via JS only */
+/* tmode-day hover handled via JS only */
 .sim-card { transition: border-color .25s, box-shadow .25s; }
 .sim-card:hover { border-color: var(--green); box-shadow: 0 0 40px rgba(0,188,212,.18); }
 /* Utility glow classes for inline-styled cards */
@@ -1370,13 +1370,25 @@ section {
   padding: 36px 28px;
   text-align: center;
   position: relative;
-  transition: all 0.3s;
+  transition: all 0.35s ease;
+}
+
+.price-card:not(.best):hover {
+  border-color: rgba(0,188,212,0.8);
+  box-shadow: 0 0 32px rgba(0,188,212,0.25), 0 0 8px rgba(0,188,212,0.15);
+  transform: translateY(-4px);
 }
 
 .price-card.best {
   border-color: rgba(200,148,10,0.5);
   background: linear-gradient(160deg, #0f1e38, #0a1628);
   box-shadow: 0 0 40px rgba(200,148,10,0.1);
+}
+
+.price-card.best:hover {
+  border-color: rgba(255,215,0,0.9);
+  box-shadow: 0 0 40px rgba(200,148,10,0.45), 0 0 12px rgba(200,148,10,0.2);
+  transform: translateY(-4px);
 }
 
 .best-badge {
@@ -1812,7 +1824,7 @@ body.en div.en-content { display: block; }
   </div>
   <div style="margin-top:1.5rem;">
     <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.75rem;letter-spacing:.1em;"><span style="color:#ffffff;">LOGICA DI SELEZIONE AUTOMATICA (<span class="it-content">in ordine di priorità</span><span class="en-content">in order of priority</span>)</span></div>
-    <div class="logic-table-wrap" style="border:1px solid rgba(200,148,10,.35);border-radius:10px;overflow:hidden;transition:border-color .3s,box-shadow .3s;" onmouseenter="this.style.borderColor='rgba(200,148,10,.9)';this.style.boxShadow='0 0 28px rgba(200,148,10,.35),0 0 6px rgba(200,148,10,.2) inset'" onmouseleave="this.style.borderColor='rgba(200,148,10,.35)';this.style.boxShadow=''">
+    <div class="logic-table-wrap" style="border:1px solid rgba(160,160,160,.3);border-radius:10px;overflow:hidden;transition:border-color .3s,box-shadow .3s;" onmouseenter="this.style.borderColor='rgba(180,180,180,.75)';this.style.boxShadow='0 0 22px rgba(150,150,150,.25)'" onmouseleave="this.style.borderColor='rgba(160,160,160,.3)';this.style.boxShadow=''">
       <table class="logic-table">
         <thead><tr><th><span class="it-content">CONDIZIONE</span><span class="en-content">CONDITION</span></th><th><span class="it-content">RISULTATO</span><span class="en-content">RESULT</span></th></tr></thead>
         <tbody>
@@ -2067,7 +2079,7 @@ body.en div.en-content { display: block; }
       </div>
     </div>
   </div>
-  <div style="margin-top:1rem; background:rgba(255,68,68,.06); border:1px solid rgba(255,68,68,.2); border-radius:6px; padding:.75rem 1rem; font-size:12px; color:var(--text-muted); text-align:center;">
+  <div id="pir-warning" style="margin-top:1rem; background:rgba(255,68,68,.06); border:1px solid rgba(255,68,68,.2); border-radius:6px; padding:.75rem 1rem; font-size:12px; color:var(--text-muted); text-align:center; cursor:default;">
     ⚠️ In entrambi i casi il BOT aggiorna automaticamente: <strong style="color:var(--text)">Prezzo Medio · Take Profit · Stop Loss · Trailing Stop · Etichette grafiche</strong>
   </div>
 </section>
@@ -2874,47 +2886,55 @@ function playCtaSound() {
     });
   });
 
-  // card entrance animation
+  // card hover transitions only — no entrance animation, no delay
   const cards = document.querySelectorAll('.signal-card, .tp-card, .filter-card, .sim-card, .flow-step, .pir-card, .tmode-card');
-  const cardObserver = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-        cardObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  cards.forEach((c, i) => {
-    c.style.opacity = '0';
-    c.style.transform = 'translateY(18px)';
-    c.style.transition = `opacity .4s ${i * 0.06}s ease, transform .4s ${i * 0.06}s ease, border-color .25s ease, box-shadow .25s ease`;
-    cardObserver.observe(c);
+  cards.forEach((c) => {
+    c.style.opacity = '1';
+    c.style.transform = 'none';
+    c.style.transition = 'border-color .25s ease, box-shadow .25s ease';
   });
 
-  // Hover bordi tmode-card via JS (sovrascrive inline style)
+  // Hover SCALPING → oro/giallo brillante
   document.querySelectorAll('.tmode-scalp').forEach(el => {
-    el.style.transition = 'border-color .2s ease, box-shadow .2s ease';
+    el.style.transition = 'border-color .25s ease, box-shadow .25s ease';
     el.addEventListener('mouseenter', () => {
-      el.style.borderColor = 'rgba(180,180,180,.95)';
-      el.style.boxShadow = '0 0 30px rgba(180,180,180,.35), inset 0 0 8px rgba(180,180,180,.08)';
+      el.style.borderColor = 'rgba(200,148,10,0.95)';
+      el.style.boxShadow = '0 0 28px rgba(200,148,10,0.45), inset 0 0 8px rgba(200,148,10,0.1)';
     });
     el.addEventListener('mouseleave', () => {
-      el.style.borderColor = '#4a2f00';
+      el.style.borderColor = '#c8940a';
       el.style.boxShadow = 'none';
     });
   });
+
+  // Hover DAY TRADING → verde
   document.querySelectorAll('.tmode-day').forEach(el => {
-    el.style.transition = 'border-color .2s ease, box-shadow .2s ease';
+    el.style.transition = 'border-color .25s ease, box-shadow .25s ease';
     el.addEventListener('mouseenter', () => {
-      el.style.borderColor = 'rgba(255,40,40,1)';
-      el.style.boxShadow = '0 0 35px rgba(255,40,40,.45), inset 0 0 8px rgba(255,40,40,.1)';
+      el.style.borderColor = 'rgba(0,230,118,0.9)';
+      el.style.boxShadow = '0 0 28px rgba(0,230,118,0.35), inset 0 0 8px rgba(0,230,118,0.08)';
     });
     el.addEventListener('mouseleave', () => {
       el.style.borderColor = '#004a28';
       el.style.boxShadow = 'none';
     });
   });
+
+  // Hover rosso cella warning pir
+  const pirWarning = document.getElementById('pir-warning');
+  if (pirWarning) {
+    pirWarning.style.transition = 'border-color .25s ease, box-shadow .25s ease, background .25s ease';
+    pirWarning.addEventListener('mouseenter', () => {
+      pirWarning.style.borderColor = 'rgba(255,60,60,0.85)';
+      pirWarning.style.boxShadow = '0 0 22px rgba(255,50,50,0.35)';
+      pirWarning.style.background = 'rgba(255,50,50,0.1)';
+    });
+    pirWarning.addEventListener('mouseleave', () => {
+      pirWarning.style.borderColor = 'rgba(255,68,68,.2)';
+      pirWarning.style.boxShadow = 'none';
+      pirWarning.style.background = 'rgba(255,68,68,.06)';
+    });
+  }
 </script>
 
 
@@ -3224,7 +3244,7 @@ function playCtaSound() {
           <span class="en-content">👉 For <strong style="color:var(--gold-light);">semi-automatic</strong> trading:<br>configure the bot with your strategy,<br>and it generates the signals,<br>which you then execute manually on your broker.</span>
         </p>
       </div>
-      <a id="cta-base" onclick="playCtaSound()" target="_blank" rel="noopener noreferrer" href="https://botalgo.lemonsqueezy.com/checkout/buy/c96310d7-f1e3-40ad-8c62-e800eacf4177" class="price-cta outline" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
+      <a id="cta-base" onclick="playCtaSound()" target="_blank" rel="noopener noreferrer" href="https://botalgo.lemonsqueezy.com/checkout/buy/c96310d7-f1e3-40ad-8c62-e800eacf4177" class="price-cta gold" style="margin-top:24px; display:block; padding:18px; font-size:15px;"><span class="it-content">ABBONATI ORA</span><span class="en-content">SUBSCRIBE NOW</span></a>
       <p style="text-align:center; margin-top:12px; font-size:15px; font-family:'Inter',sans-serif; font-weight:600;">🔄 <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" rel="noopener" onclick="playCtaSound()" style="color:var(--text-muted); text-decoration:underline; transition:color 0.2s;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-muted)'"><span class="it-content">Disdici quando vuoi</span><span class="en-content">Cancel anytime</span></a></p>
     </div>
 
