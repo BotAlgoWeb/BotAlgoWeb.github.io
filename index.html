@@ -1667,9 +1667,9 @@ body.en div.en-content { display: block; }
     <div class="nav-dropdown-menu">
       <div class="nav-dropdown-menu-inner">
         <a href="#pipeline"   class="nav-dropdown-item" onclick="scrollToEl('pipeline');return false;"><span class="it-content">📊 &nbsp;La Pipeline Completa</span><span class="en-content">📊 &nbsp;The Full Pipeline</span></a>
-        <a href="#abb-strumenti" class="nav-dropdown-item" onclick="scrollToEl('anchor-strumenti');return false;"><span class="it-content">🛠️ &nbsp;4 Strumenti Professionali</span><span class="en-content">🛠️ &nbsp;4 Professional Tools</span></a>
+        <a href="#prodotti" class="nav-dropdown-item" onclick="scrollToEl('prodotti');return false;"><span class="it-content">🛠️ &nbsp;4 Strumenti Professionali</span><span class="en-content">🛠️ &nbsp;4 Professional Tools</span></a>
         <a href="#futures"    class="nav-dropdown-item" onclick="scrollToEl('futures');return false;"><span class="it-content">⚡ &nbsp;8 Futures Inclusi</span><span class="en-content">⚡ &nbsp;8 Futures Included</span></a>
-        <a href="#piani"      class="nav-dropdown-item" onclick="scrollToEl('anchor-piani');return false;"><span class="it-content">💎 &nbsp;Scegli il Tuo Piano</span><span class="en-content">💎 &nbsp;Choose Your Plan</span></a>
+        <a href="#prezzi" class="nav-dropdown-item" onclick="scrollToEl('prezzi');return false;"><span class="it-content">💎 &nbsp;Scegli il Tuo Piano</span><span class="en-content">💎 &nbsp;Choose Your Plan</span></a>
         <a href="#supporto"   class="nav-dropdown-item" onclick="scrollToEl('supporto');return false;"><span class="it-content">🎧 &nbsp;Supporto Illimitato</span><span class="en-content">🎧 &nbsp;Unlimited Support</span></a>
       </div>
     </div>
@@ -2747,9 +2747,7 @@ document.addEventListener('keydown', e => {
 
 function scrollToEl(id) {
   var el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({block: 'start'});
-  window.scrollBy(0, -52);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
   // scroll top visibility + sound
   window.addEventListener('scroll', () => {
@@ -3074,7 +3072,7 @@ function playCtaSound() {
 
 <!-- PRODUCTS -->
 <div id="anchor-strumenti" style="height:0;overflow:hidden;"></div>
-<div style="padding: 60px 24px;" id="prodotti"><span id="abb-strumenti"></span>
+<div style="padding: 60px 24px; scroll-margin-top: 60px;" id="prodotti"><span id="abb-strumenti"></span>
 <section style="padding: 0;">
 
   <div class="it-content">
@@ -3212,8 +3210,8 @@ function playCtaSound() {
 </div>
 
 <!-- PRICING -->
-<div id="anchor-piani" style="height:0;overflow:hidden;"></div>
-<div style="padding: 60px 24px;" id="prezzi"><span id="piani"></span>
+<div id="anchor-piani" style="height:0;overflow:hidden;scroll-margin-top:70px;"></div>
+<div style="padding: 60px 24px; scroll-margin-top: 60px;" id="prezzi"><span id="piani"></span>
 <section style="padding: 0;">
 
   <div class="it-content">
