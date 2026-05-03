@@ -364,6 +364,13 @@ section {
   font-family: var(--mono);
   font-size: 12px;
   color: var(--red);
+  cursor: default;
+  transition: border-color .25s, box-shadow .25s, background .25s;
+}
+.flow-warning:hover {
+  border-color: rgba(255,68,68,.9);
+  box-shadow: 0 0 24px rgba(255,68,68,.35);
+  background: rgba(255,68,68,.13);
 }
 
 /* ── SIGNAL CARDS ── */
@@ -549,7 +556,8 @@ section {
   background: rgba(0,188,212,.08);
   border-bottom: 1px solid rgba(0,188,212,.2);
   padding: 1rem 1.5rem;
-  display: flex; align-items: center; gap: 1.25rem;
+  display: flex; align-items: center; justify-content: center; gap: 1.25rem;
+  text-align: center;
 }
 .sim-icon { font-size: 30px; }
 .sim-title { font-family: var(--display); font-size: 26px; color: var(--cyan); letter-spacing: 4px; }
@@ -618,8 +626,10 @@ section {
   padding: .75rem 1rem;
   border: 1px solid;
 }
-.sim-on  { background: rgba(0,230,118,.05); border-color: rgba(0,230,118,.3); }
-.sim-off { background: rgba(255,68,68,.05); border-color: rgba(255,68,68,.3); }
+.sim-on  { background: rgba(0,230,118,.05); border-color: rgba(0,230,118,.3); cursor:default; transition: border-color .25s, box-shadow .25s, background .25s; }
+.sim-off { background: rgba(255,68,68,.05); border-color: rgba(255,68,68,.3); cursor:default; transition: border-color .25s, box-shadow .25s, background .25s; }
+.sim-on:hover  { border-color: rgba(0,230,118,.85); box-shadow: 0 0 22px rgba(0,230,118,.28); background: rgba(0,230,118,.1); }
+.sim-off:hover { border-color: rgba(255,68,68,.85); box-shadow: 0 0 22px rgba(255,68,68,.28); background: rgba(255,68,68,.1); }
 .sim-state-label {
   font-family: var(--mono);
   font-size: 10px;
@@ -692,6 +702,13 @@ section {
   border-radius: 6px;
   padding: .75rem 1rem;
   align-items: center;
+  cursor: default;
+  transition: border-color .25s, box-shadow .25s, background .25s;
+}
+.error-row:hover {
+  border-color: rgba(255,68,68,.75);
+  box-shadow: 0 0 18px rgba(255,68,68,.25);
+  background: rgba(255,68,68,.09);
 }
 .error-cause { font-family: var(--mono); font-size: 12px; color: var(--red); }
 .error-fix {
@@ -713,8 +730,8 @@ section {
   padding: 1.5rem;
   border: 1px solid;
 }
-.tmode-scalp { background: #100a00; border-color: #c8940a; }
-.tmode-day   { background: #001a10; border-color: #004a28; }
+.tmode-scalp { background: #100a00; border-color: rgba(200,148,10,0.2); }
+.tmode-day   { background: #001a10; border-color: rgba(0,74,40,0.5); }
 .tmode-emoji { font-size: 36px; margin-bottom: .75rem; }
 .tmode-name {
   font-family: var(--display);
@@ -1228,6 +1245,15 @@ section {
   padding: 20px 16px;
   flex: 1;
   min-width: 140px;
+  border-radius: 10px;
+  border: 1px solid rgba(200,148,10,.15);
+  cursor: default;
+  transition: border-color .25s, box-shadow .25s, background .25s;
+}
+.pipe-step:hover {
+  border-color: rgba(200,148,10,.8);
+  box-shadow: 0 0 24px rgba(200,148,10,.3);
+  background: rgba(200,148,10,.05);
 }
 
 .pipe-icon {
@@ -1916,7 +1942,7 @@ body.en div.en-content { display: block; }
       </div>
     </div>
   </div>
-  <div style="margin-top:1.25rem; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:1rem 1.5rem; font-family:var(--mono); font-size:13px; display:flex; align-items:center; justify-content:center; gap:1.5rem; flex-wrap:wrap; text-align:center;">
+  <div style="margin-top:1.25rem; background:var(--card); border:1px solid rgba(160,160,160,.3); border-radius:8px; padding:1rem 1.5rem; font-family:var(--mono); font-size:13px; display:flex; align-items:center; justify-content:center; gap:1.5rem; flex-wrap:wrap; text-align:center; cursor:default; transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(180,180,180,.75)';this.style.boxShadow='0 0 22px rgba(150,150,150,.25)'" onmouseleave="this.style.borderColor='rgba(160,160,160,.3)';this.style.boxShadow=''">
     <div style="font-weight:700; color:var(--text); letter-spacing:.1em;"><span class="it-content">🚦 SCELTA SEGNALI</span><span class="en-content">🚦 SIGNAL CHOICE</span></div>
     <div style="background:rgba(0,230,118,.08); border:1px solid rgba(0,230,118,.3); border-radius:6px; padding:.5rem 1.25rem; transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(0,230,118,0.85)';this.style.boxShadow='0 0 20px rgba(0,230,118,.22)'" onmouseleave="this.style.borderColor='rgba(0,230,118,.3)';this.style.boxShadow=''">
       <span style="color:var(--green); font-weight:700;"><span class="it-content">solo BUY ▲</span><span class="en-content">only BUY ▲</span></span><br>
@@ -2040,7 +2066,7 @@ body.en div.en-content { display: block; }
     </div>
   </div>
 
-  <div style="background:rgba(255,213,79,.05);border:1px solid rgba(255,213,79,.25);border-radius:8px;padding:1rem 1.5rem;font-family:var(--mono);font-size:12px;color:var(--gold);text-align:center;letter-spacing:.05em;">
+  <div style="background:rgba(255,213,79,.05);border:1px solid rgba(255,213,79,.25);border-radius:8px;padding:1rem 1.5rem;font-family:var(--mono);font-size:12px;color:var(--gold);text-align:center;letter-spacing:.05em;cursor:default;transition:border-color .25s,box-shadow .25s,background .25s;" onmouseenter="this.style.borderColor='rgba(255,213,79,.9)';this.style.boxShadow='0 0 24px rgba(255,213,79,.35)';this.style.background='rgba(255,213,79,.1)'" onmouseleave="this.style.borderColor='rgba(255,213,79,.25)';this.style.boxShadow='';this.style.background='rgba(255,213,79,.05)'">
     ⚠️ &nbsp;<span class="it-content">OBBLIGATORIA per:</span><span class="en-content">MANDATORY for:</span> &nbsp;<strong>Target Profit</strong> · <strong>Target Loss</strong> · <strong>TP Limit</strong> · <strong><span class="it-content">Mostra Fascia + Segnali su Tutti i Giorni del Grafico</span><span class="en-content">Show Band + Signals on All Chart Days</span></strong>
   </div>
 </section>
@@ -2150,7 +2176,7 @@ body.en div.en-content { display: block; }
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
     <!-- STOP LOSS -->
     <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;">
-      <div style="font-family:var(--mono);font-size:14px;color:var(--red);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);letter-spacing:.1em;">💸 STOP LOSS</div>
+      <div style="font-family:var(--mono);font-size:14px;color:var(--red);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);letter-spacing:.1em;text-align:center;">💸 STOP LOSS</div>
       <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.7)';this.style.boxShadow='0 0 12px rgba(0,188,212,.15)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.25)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
           <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">A PUNTI</div>
@@ -2168,7 +2194,7 @@ body.en div.en-content { display: block; }
     </div>
     <!-- TRAILING STOP -->
     <div class="hov-gold" style="background:var(--card);border:1px solid rgba(255,140,0,.35);border-radius:8px;padding:1.5rem;">
-      <div style="font-family:var(--mono);font-size:14px;color:#ff8c00;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(255,140,0,.25);letter-spacing:.1em;">🛡️ TRAILING STOP</div>
+      <div style="font-family:var(--mono);font-size:14px;color:#ff8c00;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid rgba(255,140,0,.25);letter-spacing:.1em;text-align:center;">🛡️ TRAILING STOP</div>
       <!-- CLASSICO -->
       <div style="border:1px solid rgba(255,140,0,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(255,140,0,.75)';this.style.boxShadow='0 0 12px rgba(255,140,0,.15)'" onmouseleave="this.style.borderColor='rgba(255,140,0,.25)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
@@ -2221,7 +2247,7 @@ body.en div.en-content { display: block; }
       <div style="font-family:var(--mono);font-size:11px;color:var(--red);background:rgba(255,68,68,.06);border-radius:4px;padding:.5rem .75rem;">📌 Target Loss = 300€ → alle 16:15 la perdita netta tocca -300€ → tutto si ferma per oggi</div>
     </div>
   </div>
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;display:grid;gap:.5rem;">
+  <div style="background:var(--card);border:1px solid rgba(160,160,160,.3);border-radius:8px;padding:1rem 1.25rem;display:grid;gap:.5rem;cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(180,180,180,.75)';this.style.boxShadow='0 0 22px rgba(150,150,150,.25)'" onmouseleave="this.style.borderColor='rgba(160,160,160,.3)';this.style.boxShadow=''">
     <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">⏰ Richiedono Fascia Oraria OBBLIGATORIAMENTE attiva · senza fascia il sistema si blocca con errore</div>
     <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">🔀 Se entrambi attivi → il sistema reagisce al PRIMO evento raggiunto (profit o loss)</div>
     <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">📅 Si resettano automaticamente ogni giorno alla mezzanotte</div>
@@ -2275,7 +2301,7 @@ body.en div.en-content { display: block; }
   <div class="divider"></div>
   <div class="alert-section">
     <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;">
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;">🔔 4 ALERT SONORI</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;text-align:center;">🔔 4 ALERT SONORI</div>
       <div class="alert-sounds">
         <div class="alert-sound"><span class="alert-sound-icon">🟢</span><div><div class="alert-sound-name">ENTRY BUY</div><div class="alert-sound-desc"><span class="it-content">Segnale BUY accettato<br>trade long aperto</span><span class="en-content">BUY signal accepted<br>long trade opened</span></div></div></div>
         <div class="alert-sound"><span class="alert-sound-icon">🔴</span><div><div class="alert-sound-name">ENTRY SELL</div><div class="alert-sound-desc"><span class="it-content">Segnale SELL accettato<br>trade short aperto</span><span class="en-content">SELL signal accepted<br>short trade opened</span></div></div></div>
@@ -2284,7 +2310,7 @@ body.en div.en-content { display: block; }
       </div>
     </div>
     <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;">
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;">⚡ 12 ALERT WEBHOOK JSON</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;text-align:center;">⚡ 12 ALERT WEBHOOK JSON</div>
       <div class="webhook-grid">
         <div class="webhook-group">
           <div class="webhook-group-header">ENTRY (2)</div>
@@ -2314,7 +2340,7 @@ body.en div.en-content { display: block; }
           </div>
         </div>
       </div>
-      <div style="margin-top:.75rem;font-family:var(--mono);font-size:11px;color:var(--text-muted);background:var(--card);border-radius:5px;padding:.6rem .75rem;border:1px solid var(--border);">
+      <div style="margin-top:.75rem;font-family:var(--mono);font-size:11px;color:var(--text-muted);background:var(--card);border-radius:5px;padding:.6rem .75rem;border:1px solid rgba(160,160,160,.3);cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(180,180,180,.75)';this.style.boxShadow='0 0 22px rgba(150,150,150,.25)'" onmouseleave="this.style.borderColor='rgba(160,160,160,.3)';this.style.boxShadow=''">
         🔄 Ogni alert JSON include: <span style="color:var(--cyan)">symbol · action · side · quantity · price</span><br><span class="it-content">Pronto per integrazione con bot o servizi webhook</span><span class="en-content">Ready for integration with bots or webhook services</span>
       </div>
     </div>
@@ -2363,22 +2389,22 @@ body.en div.en-content { display: block; }
       <div style="margin-top:1.25rem;">
         <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem;text-align:center;border:1px solid rgba(0,188,212,.35);border-radius:5px;padding:.35rem .8rem;background:rgba(0,188,212,.05);display:inline-block;width:100%;">▸ Parametri Input</div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
-          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+          <div style="background:var(--bg3);border:1px solid rgba(0,188,212,.2);border-radius:8px;padding:1rem;text-align:center;cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.85)';this.style.boxShadow='0 0 18px rgba(0,188,212,.25)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.2)';this.style.boxShadow=''">
             <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem;">INPUT</div>
             <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.4rem;">abilitaFiltroData</div>
             <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);">bool · default: false</div>
           </div>
-          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+          <div style="background:var(--bg3);border:1px solid rgba(0,188,212,.2);border-radius:8px;padding:1rem;text-align:center;cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.85)';this.style.boxShadow='0 0 18px rgba(0,188,212,.25)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.2)';this.style.boxShadow=''">
             <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem;">INPUT</div>
             <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.4rem;">giornoSim</div>
             <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);">int · min: 1 · max: 31</div>
           </div>
-          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+          <div style="background:var(--bg3);border:1px solid rgba(0,188,212,.2);border-radius:8px;padding:1rem;text-align:center;cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.85)';this.style.boxShadow='0 0 18px rgba(0,188,212,.25)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.2)';this.style.boxShadow=''">
             <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem;">INPUT</div>
             <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.4rem;">meseSim</div>
             <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);">int · min: 1 · max: 12</div>
           </div>
-          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;text-align:center;">
+          <div style="background:var(--bg3);border:1px solid rgba(0,188,212,.2);border-radius:8px;padding:1rem;text-align:center;cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.85)';this.style.boxShadow='0 0 18px rgba(0,188,212,.25)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.2)';this.style.boxShadow=''">
             <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem;">INPUT</div>
             <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);margin-bottom:.4rem;">annoSim</div>
             <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);">int · min: 2000 · max: 2100</div>
@@ -2443,7 +2469,7 @@ body.en div.en-content { display: block; }
   </div>
   <div class="divider"></div>
 
-  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.75rem;font-size:14px;color:var(--text);line-height:1.7;">
+  <div style="background:var(--card);border:1px solid rgba(160,160,160,.3);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.75rem;font-size:14px;color:var(--text);line-height:1.7;cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(180,180,180,.75)';this.style.boxShadow='0 0 22px rgba(150,150,150,.25)'" onmouseleave="this.style.borderColor='rgba(160,160,160,.3)';this.style.boxShadow=''">
     Il parametro <strong style="color:var(--cyan)">Fuso Orario</strong> indica lo <strong style="color:var(--text-bright)">scarto in ore</strong> tra l'orario del broker e l'orario italiano. Impostarlo correttamente è essenziale: un valore errato causa uno spostamento della fascia operativa e genera segnali negli orari sbagliati. Il valore cambia in base al broker (<strong style="color:var(--gold)">CME Chicago</strong> o <strong style="color:var(--gold)">EUREX UTC</strong>) e alla stagione<br>(ora legale / ora solare).
   </div>
 
@@ -2513,7 +2539,7 @@ body.en div.en-content { display: block; }
 
   </div>
 
-  <div style="margin-top:1.5rem;background:rgba(255,68,68,.05);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:1rem 1.5rem;font-family:var(--mono);font-size:12px;color:var(--text-muted);text-align:center;">
+  <div style="margin-top:1.5rem;background:rgba(255,68,68,.05);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:1rem 1.5rem;font-family:var(--mono);font-size:12px;color:var(--text-muted);text-align:center;cursor:default;transition:border-color .25s,box-shadow .25s,background .25s;" onmouseenter="this.style.borderColor='rgba(255,68,68,.9)';this.style.boxShadow='0 0 24px rgba(255,68,68,.35)';this.style.background='rgba(255,68,68,.1)'" onmouseleave="this.style.borderColor='rgba(255,68,68,.2)';this.style.boxShadow='';this.style.background='rgba(255,68,68,.05)'">
     ⚠️ &nbsp;Fuso errato → la Fascia Oraria si sposta di conseguenza → segnali generati negli orari sbagliati<br>
     <span style="color:var(--gold);">Verificare sempre prima di operare su un nuovo broker</span>
   </div>
@@ -2632,7 +2658,7 @@ body.en div.en-content { display: block; }
   </div>
   </div>
 
-  <div style="background:rgba(255,213,79,.05);border:1px solid rgba(255,213,79,.2);border-radius:8px;padding:1rem 1.25rem;font-family:var(--mono);font-size:12px;color:var(--gold);text-align:center;">
+  <div style="background:rgba(255,213,79,.05);border:1px solid rgba(255,213,79,.2);border-radius:8px;padding:1rem 1.25rem;font-family:var(--mono);font-size:12px;color:var(--gold);text-align:center;cursor:default;transition:border-color .25s,box-shadow .25s,background .25s;" onmouseenter="this.style.borderColor='rgba(255,213,79,.9)';this.style.boxShadow='0 0 24px rgba(255,213,79,.35)';this.style.background='rgba(255,213,79,.1)'" onmouseleave="this.style.borderColor='rgba(255,213,79,.2)';this.style.boxShadow='';this.style.background='rgba(255,213,79,.05)'">
     <span class="it-content"><span class="it-content">⚠️ Tutti i messaggi di errore vengono visualizzati direttamente sul grafico TradingView<br><strong>A CENTRO sinistra</strong><br>con sfondo rosso e testo bianco</span><span class="en-content">⚠️ All error messages are shown directly on the TradingView chart<br><strong>CENTER left</strong><br>with red background and white text</span></span><span class="en-content">⚠️ All error messages are displayed directly on the TradingView chart<br><strong>CENTER left</strong><br>with red background and white text</span>
   </div>
 </section>
@@ -2902,7 +2928,7 @@ function playCtaSound() {
       el.style.boxShadow = '0 0 28px rgba(200,148,10,0.45), inset 0 0 8px rgba(200,148,10,0.1)';
     });
     el.addEventListener('mouseleave', () => {
-      el.style.borderColor = '#c8940a';
+      el.style.borderColor = 'rgba(200,148,10,0.2)';
       el.style.boxShadow = 'none';
     });
   });
