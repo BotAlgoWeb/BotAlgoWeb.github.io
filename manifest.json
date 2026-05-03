@@ -1,0 +1,21 @@
+{
+  "name": "BOT ALGO",
+  "short_name": "BOT ALGO",
+  "description": "Sistema di Trading Automatico Multi-Strategia",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#c8940a",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
