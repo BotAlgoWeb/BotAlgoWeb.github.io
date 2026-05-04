@@ -1223,10 +1223,16 @@ section {
 /* PIPELINE */
 .pipeline {
   background: linear-gradient(135deg, rgba(5,13,26,0.8), rgba(13,30,53,0.8));
-  border: 1px solid var(--border);
+  border: 1px solid rgba(0,188,212,.3);
   border-radius: 12px;
   padding: 40px;
   margin-bottom: 40px;
+  cursor: default;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+.pipeline:hover {
+  border-color: rgba(0,188,212,.85);
+  box-shadow: 0 0 32px rgba(0,188,212,.25), 0 0 8px rgba(0,188,212,.1);
 }
 
 .pipeline-steps {
@@ -1565,6 +1571,12 @@ section {
   border-radius: 12px;
   padding: 40px;
   text-align: center;
+  cursor: default;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+.support-card:hover {
+  border-color: rgba(0,255,136,.85);
+  box-shadow: 0 0 32px rgba(0,255,136,.25), 0 0 8px rgba(0,255,136,.1);
 }
 
 .support-title {
@@ -1765,7 +1777,7 @@ body.en div.en-content { display: block; }
 
   <div style="margin-top:0.3rem;margin-bottom:1.2rem;display:flex;flex-direction:column;align-items:center;gap:.4rem;position:relative;z-index:10;">
     <div style="color:var(--green);font-size:16px;line-height:1;animation:bounce-arrow 1.4s ease-in-out infinite;">▼</div>
-    <button class="attiva-bot-btn" onclick="playActivaSound();scrollToEl('abb-hero');">
+    <button class="attiva-bot-btn" onclick="playActivaSound();document.getElementById('abb-hero').scrollIntoView({block:'start'});">
       <span class="it-content">🤖 &nbsp;ATTIVA IL BOT</span><span class="en-content">🤖 &nbsp;ACTIVATE BOT</span>
     </button>
   </div>
@@ -2087,26 +2099,26 @@ body.en div.en-content { display: block; }
   </div>
   <div class="pir-grid">
     <div class="pir-card">
-      <div class="pir-head"><span class="pir-icon">📉</span><div><div class="pir-name">MEDIAZIONE</div><div class="pir-sub"><span class="it-content">Trade in LOSS</span><span class="en-content">Trade in LOSS</span></div></div></div>
+      <div class="pir-head"><span class="pir-icon">📉</span><div><div class="pir-name"><span class="it-content">MEDIAZIONE</span><span class="en-content">AVERAGING</span></div><div class="pir-sub"><span class="it-content">Trade in LOSS</span><span class="en-content">Trade in LOSS</span></div></div></div>
       <div class="pir-body">
         <div class="pir-entry">Entry 1: 100 pt → qty 1</div>
         <div class="pir-entry">Entry 2: 98 pt → qty 1</div>
-        <div class="pir-result" style="color:var(--gold)">Prezzo medio: 99 pt · TP/SL si ricalcola</div>
+        <div class="pir-result" style="color:var(--gold)"><span class="it-content">Prezzo medio: 99 pt · TP/SL si ricalcola</span><span class="en-content">Average price: 99 pt · TP/SL recalculated</span></div>
         <div style="font-size:13px;color:var(--text);margin-top:.5rem"><span class="it-content">Nuovo segnale nella stessa direzione con trade in perdita.<br>Il BOT aggiorna automaticamente il prezzo medio.</span><span class="en-content">New signal in the same direction with a losing trade.<br>The BOT automatically updates the average price.</span></div>
       </div>
     </div>
     <div class="pir-card">
-      <div class="pir-head"><span class="pir-icon">📈</span><div><div class="pir-name">PIRAMIDAZIONE</div><div class="pir-sub"><span class="it-content">Trade in PROFITTO</span><span class="en-content">Trade in PROFIT</span></div></div></div>
+      <div class="pir-head"><span class="pir-icon">📈</span><div><div class="pir-name"><span class="it-content">PIRAMIDAZIONE</span><span class="en-content">PYRAMIDING</span></div><div class="pir-sub"><span class="it-content">Trade in PROFITTO</span><span class="en-content">Trade in PROFIT</span></div></div></div>
       <div class="pir-body">
         <div class="pir-entry">Entry 1: 100 pt → qty 1</div>
         <div class="pir-entry">Entry 2: 105 pt → qty 1</div>
-        <div class="pir-result" style="color:var(--green)">Prezzo medio: 102.5 pt · amplifica i guadagni</div>
+        <div class="pir-result" style="color:var(--green)"><span class="it-content">Prezzo medio: 102.5 pt · amplifica i guadagni</span><span class="en-content">Average price: 102.5 pt · amplifies gains</span></div>
         <div style="font-size:13px;color:var(--text);margin-top:.5rem"><span class="it-content">Aggiungo posizioni nella stessa direzione con trend forte.<br>Amplifica i guadagni nel momento giusto.</span><span class="en-content">Adding positions in the same direction with a strong trend.<br>Amplifies gains at the right moment.</span></div>
       </div>
     </div>
   </div>
   <div id="pir-warning" style="margin-top:1rem; background:rgba(255,68,68,.06); border:1px solid rgba(255,68,68,.2); border-radius:6px; padding:.75rem 1rem; font-size:12px; color:var(--text-muted); text-align:center; cursor:default;">
-    ⚠️ In entrambi i casi il BOT aggiorna automaticamente: <strong style="color:var(--text)">Prezzo Medio · Take Profit · Stop Loss · Trailing Stop · Etichette grafiche</strong>
+    ⚠️ <span class="it-content">In entrambi i casi il BOT aggiorna automaticamente: <strong style="color:var(--text)">Prezzo Medio · Take Profit · Stop Loss · Trailing Stop · Etichette grafiche</strong></span><span class="en-content">In both cases the BOT automatically updates: <strong style="color:var(--text)">Average Price · Take Profit · Stop Loss · Trailing Stop · Chart Labels</strong></span>
   </div>
 </section>
 
@@ -2127,37 +2139,37 @@ body.en div.en-content { display: block; }
         <div class="tp-title-block">
           <div class="tp-name"><span class="it-content">TP A PUNTI</span><span class="en-content">TP BY POINTS</span></div>
         </div>
-        <span class="tp-priority" style="border-color:var(--text-muted);color:var(--text-muted);background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
+        <span class="tp-priority" style="border-color:var(--text-muted);color:var(--text-muted);background:rgba(255,255,255,0.04);"><span class="it-content">NESSUNA PRIORITÀ</span><span class="en-content">NO PRIORITY</span></span>
       </div>
       <div class="tp-body">
         <div class="tp-desc"><span class="it-content">Chiude il trade quando il profitto raggiunge il numero di punti impostato.</span><span class="en-content">Closes the trade when profit reaches the set number of points.</span></div>
-        <div class="tp-example">📌 TP = 20 → chiude a +20 punti dal prezzo di ingresso</div>
+        <div class="tp-example"><span class="it-content">📌 TP = 20 → chiude a +20 punti dal prezzo di ingresso</span><span class="en-content">📌 TP = 20 → closes at +20 points from entry price</span></div>
       </div>
     </div>
     <div class="tp-card">
       <div class="tp-head">
         <div class="tp-icon">💵</div>
         <div class="tp-title-block">
-          <div class="tp-name">TP A VALORE<br><span style="font-size:11px;">$/€</span></div>
+          <div class="tp-name"><span class="it-content">TP A VALORE<br><span style="font-size:11px;">$/€</span></span><span class="en-content">TP BY VALUE<br><span style="font-size:11px;">$/€</span></span></div>
         </div>
         <span class="tp-priority"><span class="it-content">HA PRIORITÀ SU TP A PUNTI</span><span class="en-content">PRIORITY OVER TP BY POINTS</span></span>
       </div>
       <div class="tp-body">
         <div class="tp-desc"><span class="it-content">Chiude quando il P&amp;L monetario raggiunge l'importo impostato.</span><span class="en-content">Closes when monetary P&amp;L reaches the set amount.</span></div>
-        <div class="tp-example">📌 TP = 50€ → chiude a +50€ dal prezzo di ingresso</div>
+        <div class="tp-example"><span class="it-content">📌 TP = 50€ → chiude a +50€ dal prezzo di ingresso</span><span class="en-content">📌 TP = 50€ → closes at +50€ from entry price</span></div>
       </div>
     </div>
     <div class="tp-card">
       <div class="tp-head">
         <div class="tp-icon">🎯</div>
         <div class="tp-title-block">
-          <div class="tp-name">TP LIMIT<br><span style="font-size:11px;color:var(--text-muted);">(PREZZO ASSOLUTO)</span></div>
+          <div class="tp-name">TP LIMIT<br><span style="font-size:11px;color:var(--text-muted);">(<span class="it-content">PREZZO ASSOLUTO</span><span class="en-content">ABSOLUTE PRICE</span>)</span></div>
         </div>
-        <span class="tp-priority" style="border-color:var(--red);color:var(--red);background:var(--red-dim);">MAX PRIORITÀ</span>
+        <span class="tp-priority" style="border-color:var(--red);color:var(--red);background:var(--red-dim);"><span class="it-content">MAX PRIORITÀ</span><span class="en-content">MAX PRIORITY</span></span>
       </div>
       <div class="tp-body">
         <div class="tp-desc"><span class="it-content">Chiude quando il prezzo raggiunge un livello assoluto prefissato. Una volta raggiunto &rarr;<br>il trading <strong style="color:var(--red)">si FERMA</strong> per il resto della giornata.</span><span class="en-content">Closes when price reaches a preset absolute level. Once reached &rarr;<br>trading <strong style="color:var(--red)">STOPS</strong> for the rest of the day.</span></div>
-        <div class="tp-example">📌 solo BUY + TP Limit = 21.500 → chiude quando prezzo tocca 21.500</div>
+        <div class="tp-example"><span class="it-content">📌 solo BUY + TP Limit = 21.500 → chiude quando prezzo tocca 21.500</span><span class="en-content">📌 BUY only + TP Limit = 21.500 → closes when price hits 21.500</span></div>
       </div>
     </div>
   </div>
@@ -2179,15 +2191,15 @@ body.en div.en-content { display: block; }
       <div style="font-family:var(--mono);font-size:14px;color:var(--red);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);letter-spacing:.1em;text-align:center;">💸 STOP LOSS</div>
       <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.7)';this.style.boxShadow='0 0 12px rgba(0,188,212,.15)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.25)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
-          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">A PUNTI</div>
-          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);"><span class="it-content">A PUNTI</span><span class="en-content">BY POINTS</span></div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);"><span class="it-content">NESSUNA PRIORITÀ</span><span class="en-content">NO PRIORITY</span></span>
         </div>
         <div style="font-size:13px;color:var(--text);"><span class="it-content">Chiude quando la perdita raggiunge N punti. Es: SL=20 → chiude a -20 punti</span><span class="en-content">Closes when loss reaches N points. Ex: SL=20 → closes at -20 points</span></div>
       </div>
       <div style="border:1px solid rgba(0,188,212,.25);border-radius:6px;padding:.85rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.7)';this.style.boxShadow='0 0 12px rgba(0,188,212,.15)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.25)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
-          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">A VALORE $/€</div>
-          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);">PRIORITÀ SU SL PUNTI</span>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);"><span class="it-content">A VALORE $/€</span><span class="en-content">BY VALUE $/€</span></div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);"><span class="it-content">PRIORITÀ SU SL PUNTI</span><span class="en-content">PRIORITY OVER SL POINTS</span></span>
         </div>
         <div style="font-size:13px;color:var(--text);"><span class="it-content">Chiude quando la perdita raggiunge l'importo. Es: SL=100€ → chiude a -100€</span><span class="en-content">Closes when loss reaches the amount. Ex: SL=100€ → closes at -100€</span></div>
       </div>
@@ -2198,16 +2210,16 @@ body.en div.en-content { display: block; }
       <!-- CLASSICO -->
       <div style="border:1px solid rgba(255,140,0,.25);border-radius:6px;padding:.85rem;margin-bottom:.75rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(255,140,0,.75)';this.style.boxShadow='0 0 12px rgba(255,140,0,.15)'" onmouseleave="this.style.borderColor='rgba(255,140,0,.25)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem;">
-          <div style="font-family:var(--mono);font-size:13px;color:#ff8c00;">CLASSICO &nbsp;<span style="font-size:10px;color:var(--text-muted);">Punti Fissi</span></div>
-          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);">NESSUNA PRIORITÀ</span>
+          <div style="font-family:var(--mono);font-size:13px;color:#ff8c00;">CLASSICO &nbsp;<span style="font-size:10px;color:var(--text-muted);"><span class="it-content">Punti Fissi</span><span class="en-content">Fixed Points</span></span></div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--text-muted);color:var(--text-muted);border-radius:4px;padding:1px 7px;background:rgba(255,255,255,0.04);"><span class="it-content">NESSUNA PRIORITÀ</span><span class="en-content">NO PRIORITY</span></span>
         </div>
         <div style="font-size:13px;color:var(--text);"><span class="it-content">Stop fisso che segue il prezzo ad ogni tick. Es: TS=20 → stop sempre a -20 punti dal prezzo corrente</span><span class="en-content">Fixed stop that follows price at each tick. Ex: TS=20 → stop always at -20 points from current price</span></div>
       </div>
       <!-- MODO A -->
       <div style="background:rgba(0,188,212,.05);border:1px solid rgba(0,188,212,.2);border-radius:6px;padding:.85rem;margin-bottom:.75rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.7)';this.style.boxShadow='0 0 12px rgba(0,188,212,.15)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.2)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.2rem;">
-          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">DINAMICO · <strong>MODO A</strong> &nbsp;<span style="font-size:10px;color:var(--cyan);">(solo Break Even)</span></div>
-          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);">PRIORITÀ SU CLASSICO</span>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--cyan);">DINAMICO · <strong>MODO A</strong> &nbsp;<span style="font-size:10px;color:var(--cyan);">(<span class="it-content">solo Break Even</span><span class="en-content">Break Even only</span>)</span></div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:1px 7px;background:rgba(200,148,10,0.06);"><span class="it-content">PRIORITÀ SU CLASSICO</span><span class="en-content">PRIORITY OVER CLASSIC</span></span>
         </div>
         <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.4rem;">(50 / 0 / 0)</div>
         <div style="font-size:13px;color:var(--text);"><span class="it-content">Porta lo stop a pareggio dopo +50 punti di profitto.<br>Lo stop non si muove ulteriormente.</span><span class="en-content">Brings stop to breakeven after +50 points of profit.<br>The stop does not move further.</span></div>
@@ -2215,8 +2227,8 @@ body.en div.en-content { display: block; }
       <!-- MODO B -->
       <div style="background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.2);border-radius:6px;padding:.85rem;transition:border-color .22s,box-shadow .22s;" onmouseenter="this.style.borderColor='rgba(0,230,118,.7)';this.style.boxShadow='0 0 12px rgba(0,230,118,.15)'" onmouseleave="this.style.borderColor='rgba(0,230,118,.2)';this.style.boxShadow=''">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.2rem;">
-          <div style="font-family:var(--mono);font-size:13px;color:var(--green);">DINAMICO · <strong>MODO B</strong> &nbsp;<span style="font-size:10px;color:var(--green);">(Break Even + Movimento)</span></div>
-          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--red);color:var(--red);border-radius:4px;padding:1px 7px;background:var(--red-dim);">MAX PRIORITÀ</span>
+          <div style="font-family:var(--mono);font-size:13px;color:var(--green);">DINAMICO · <strong>MODO B</strong> &nbsp;<span style="font-size:10px;color:var(--green);">(<span class="it-content">Break Even + Movimento</span><span class="en-content">Break Even + Movement</span>)</span></div>
+          <span style="font-family:var(--mono);font-size:10px;border:1px solid var(--red);color:var(--red);border-radius:4px;padding:1px 7px;background:var(--red-dim);"><span class="it-content">MAX PRIORITÀ</span><span class="en-content">MAX PRIORITY</span></span>
         </div>
         <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);margin-bottom:.4rem;">(50 / 20 / 20)</div>
         <div style="font-size:13px;color:var(--text);"><span class="it-content">Pareggio a +50 punti → poi avanza ogni +20 punti di prezzo di +20 punti → protegge il profitto crescente.</span><span class="en-content">Breakeven at +50 points → then advances every +20 price points by +20 points → protects growing profit.</span></div>
@@ -2239,19 +2251,19 @@ body.en div.en-content { display: block; }
     <div class="hov-green" style="background:rgba(0,230,118,.04);border:1px solid rgba(0,230,118,.2);border-radius:8px;padding:1.5rem;">
       <div style="font-family:var(--display);font-size:24px;color:var(--green);letter-spacing:3px;margin-bottom:.75rem;"><span class="it-content">💰 TARGET PROFIT</span><span class="en-content">💰 TARGET PROFIT</span></div>
       <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:.75rem;"><span class="it-content">Il BOT calcola il profitto NETTO (guadagni - perdite - commissioni).<br>Quando raggiunge il valore impostato: chiude i trade aperti, mostra etichetta e ferma qualsiasi nuovo segnale fino al giorno successivo.</span><span class="en-content">The BOT calculates NET profit (gains - losses - commissions).<br>When it reaches the set value: closes open trades, shows a label and stops any new signal until the next day.</span></div>
-      <div style="font-family:var(--mono);font-size:11px;color:var(--green);background:rgba(0,230,118,.06);border-radius:4px;padding:.5rem .75rem;">📌 Target = 500€ → alle 17:42 il netto supera 500€ → tutto si ferma per oggi</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--green);background:rgba(0,230,118,.06);border-radius:4px;padding:.5rem .75rem;"><span class="it-content">📌 Target = 500€ → alle 17:42 il netto supera 500€ → tutto si ferma per oggi</span><span class="en-content">📌 Target = 500€ → at 17:42 net exceeds 500€ → everything stops for today</span></div>
     </div>
     <div class="hov-red" style="background:rgba(255,68,68,.04);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:1.5rem;">
       <div style="font-family:var(--display);font-size:24px;color:var(--red);letter-spacing:3px;margin-bottom:.75rem;">💸 TARGET LOSS</div>
       <div style="font-size:13px;color:var(--text);line-height:1.6;margin-bottom:.75rem;"><span class="it-content">Il BOT calcola la perdita NETTA della sessione.<br>Quando la perdita netta supera il valore: chiude i trade aperti, mostra etichetta e ferma qualsiasi nuovo segnale per proteggere il capitale.</span><span class="en-content">The BOT calculates the NET loss of the session.<br>When net loss exceeds the value: closes open trades, shows a label and stops any new signal to protect capital.</span></div>
-      <div style="font-family:var(--mono);font-size:11px;color:var(--red);background:rgba(255,68,68,.06);border-radius:4px;padding:.5rem .75rem;">📌 Target Loss = 300€ → alle 16:15 la perdita netta tocca -300€ → tutto si ferma per oggi</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--red);background:rgba(255,68,68,.06);border-radius:4px;padding:.5rem .75rem;"><span class="it-content">📌 Target Loss = 300€ → alle 16:15 la perdita netta tocca -300€ → tutto si ferma per oggi</span><span class="en-content">📌 Target Loss = 300€ → at 16:15 net loss hits -300€ → everything stops for today</span></div>
     </div>
   </div>
   <div style="background:var(--card);border:1px solid rgba(160,160,160,.3);border-radius:8px;padding:1rem 1.25rem;display:grid;gap:.5rem;cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(180,180,180,.75)';this.style.boxShadow='0 0 22px rgba(150,150,150,.25)'" onmouseleave="this.style.borderColor='rgba(160,160,160,.3)';this.style.boxShadow=''">
-    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">⏰ Richiedono Fascia Oraria OBBLIGATORIAMENTE attiva · senza fascia il sistema si blocca con errore</div>
-    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">🔀 Se entrambi attivi → il sistema reagisce al PRIMO evento raggiunto (profit o loss)</div>
-    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">📅 Si resettano automaticamente ogni giorno alla mezzanotte</div>
-    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">🧮 Il calcolo è NETTO: profitti lordi - perdite lorde - commissioni totali della sessione</div>
+    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">⏰ <span class="it-content">Richiedono Fascia Oraria OBBLIGATORIAMENTE attiva · senza fascia il sistema si blocca con errore</span><span class="en-content">Require Time Window MANDATORILY active · without it the system stops with an error</span></div>
+    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">🔀 <span class="it-content">Se entrambi attivi → il sistema reagisce al PRIMO evento raggiunto (profit o loss)</span><span class="en-content">If both active → the system reacts to the FIRST event reached (profit or loss)</span></div>
+    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">📅 <span class="it-content">Si resettano automaticamente ogni giorno alla mezzanotte</span><span class="en-content">Automatically reset every day at midnight</span></div>
+    <div style="font-family:var(--mono);font-size:13px;color:var(--text-muted);">🧮 <span class="it-content">Il calcolo è NETTO: profitti lordi - perdite lorde - commissioni totali della sessione</span><span class="en-content">The calculation is NET: gross profits - gross losses - total commissions of the session</span></div>
   </div>
 </section>
 
@@ -2301,7 +2313,7 @@ body.en div.en-content { display: block; }
   <div class="divider"></div>
   <div class="alert-section">
     <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;">
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;text-align:center;">🔔 4 ALERT SONORI</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;text-align:center;"><span class="it-content">🔔 4 ALERT SONORI</span><span class="en-content">🔔 4 SOUND ALERTS</span></div>
       <div class="alert-sounds">
         <div class="alert-sound"><span class="alert-sound-icon">🟢</span><div><div class="alert-sound-name">ENTRY BUY</div><div class="alert-sound-desc"><span class="it-content">Segnale BUY accettato<br>trade long aperto</span><span class="en-content">BUY signal accepted<br>long trade opened</span></div></div></div>
         <div class="alert-sound"><span class="alert-sound-icon">🔴</span><div><div class="alert-sound-name">ENTRY SELL</div><div class="alert-sound-desc"><span class="it-content">Segnale SELL accettato<br>trade short aperto</span><span class="en-content">SELL signal accepted<br>short trade opened</span></div></div></div>
@@ -2310,7 +2322,7 @@ body.en div.en-content { display: block; }
       </div>
     </div>
     <div class="hov" style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;">
-      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;text-align:center;">⚡ 12 ALERT WEBHOOK JSON</div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:.75rem;text-align:center;"><span class="it-content">⚡ 12 ALERT WEBHOOK JSON</span><span class="en-content">⚡ 12 WEBHOOK JSON ALERTS</span></div>
       <div class="webhook-grid">
         <div class="webhook-group">
           <div class="webhook-group-header">ENTRY (2)</div>
@@ -2341,7 +2353,7 @@ body.en div.en-content { display: block; }
         </div>
       </div>
       <div style="margin-top:.75rem;font-family:var(--mono);font-size:11px;color:var(--text-muted);background:var(--card);border-radius:5px;padding:.6rem .75rem;border:1px solid rgba(160,160,160,.3);cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(180,180,180,.75)';this.style.boxShadow='0 0 22px rgba(150,150,150,.25)'" onmouseleave="this.style.borderColor='rgba(160,160,160,.3)';this.style.boxShadow=''">
-        🔄 Ogni alert JSON include: <span style="color:var(--cyan)">symbol · action · side · quantity · price</span><br><span class="it-content">Pronto per integrazione con bot o servizi webhook</span><span class="en-content">Ready for integration with bots or webhook services</span>
+        🔄 <span class="it-content">Ogni alert JSON include: <span style="color:var(--cyan)">symbol · action · side · quantity · price</span><br>Pronto per integrazione con bot o servizi webhook</span><span class="en-content">Every JSON alert includes: <span style="color:var(--cyan)">symbol · action · side · quantity · price</span><br>Ready for integration with bots or webhook services</span>
       </div>
     </div>
   </div>
@@ -2362,32 +2374,32 @@ body.en div.en-content { display: block; }
     <div class="sim-header">
       <div class="sim-icon">🔬</div>
       <div>
-        <div class="sim-title">SIMULAZIONE GIORNO SPECIFICO</div>
-        <div class="sim-subtitle">Sezione 2<br>Input · Pine Script® v6</div>
+        <div class="sim-title"><span class="it-content">SIMULAZIONE GIORNO SPECIFICO</span><span class="en-content">SPECIFIC DAY SIMULATION</span></div>
+        <div class="sim-subtitle"><span class="it-content">Sezione 2<br>Input · Pine Script® v6</span><span class="en-content">Section 2<br>Input · Pine Script® v6</span></div>
       </div>
     </div>
     <div class="sim-body">
       <div class="sim-info-block" style="max-width:700px;margin:0 auto;">
-        <div class="sim-info-title">Come funziona</div>
+        <div class="sim-info-title"><span class="it-content">Come funziona</span><span class="en-content">How it works</span></div>
         <div class="sim-info-item"><span class="dot"></span><span><span class="it-content">Attivando il toggle <strong style="color:var(--cyan)">Abilita Simulazione Giorno Specifico</strong>,<br>il BOT filtra tutti i segnali mostrando SOLO quelli relativi alla data impostata.</span><span class="en-content">By enabling the <strong style="color:var(--cyan)">Enable Specific Day Simulation</strong> toggle,<br>the BOT filters all signals showing ONLY those related to the set date.</span></span></div>
         <div class="sim-info-item"><span class="dot"></span><span><span class="it-content">È possibile specificare <strong style="color:var(--cyan)">giorno, mese e anno</strong><br>qualsiasi data dal 2000 al 2100.</span><span class="en-content">You can specify <strong style="color:var(--cyan)">day, month and year</strong><br>any date from 2000 to 2100.</span></span></div>
         <div class="sim-info-item"><span class="dot"></span><span><span class="it-content">Disattivando il toggle, il BOT <strong style="color:var(--green)">torna alla modalità normale</strong> (operatività in tempo reale).</span><span class="en-content">By disabling the toggle, the BOT <strong style="color:var(--green)">returns to normal mode</strong> (real-time operations).</span></span></div>
-        <div class="sim-info-item"><span class="dot"></span><span>Richiede la <strong style="color:var(--gold)">Fascia Oraria attiva</strong> per visualizzare correttamente le sessioni simulate.</span></div>
+        <div class="sim-info-item"><span class="dot"></span><span><span class="it-content">Richiede la <strong style="color:var(--gold)">Fascia Oraria attiva</strong> per visualizzare correttamente le sessioni simulate.</span><span class="en-content">Requires the <strong style="color:var(--gold)">Time Window active</strong> to correctly display the simulated sessions.</span></span></div>
 
         <div class="sim-states">
           <div class="sim-state sim-on">
-            <div class="sim-state-label">✅ ATTIVA</div>
-            <div class="sim-state-text">Mostra segnali SOLO per il giorno selezionato<br>modalità backtest</div>
+            <div class="sim-state-label">✅ <span class="it-content">ATTIVA</span><span class="en-content">ACTIVE</span></div>
+            <div class="sim-state-text"><span class="it-content">Mostra segnali SOLO per il giorno selezionato<br>modalità backtest</span><span class="en-content">Shows signals ONLY for the selected day<br>backtest mode</span></div>
           </div>
           <div class="sim-state sim-off">
-            <div class="sim-state-label">❌ DISATTIVA</div>
-            <div class="sim-state-text">Torna alla modalità normale<br>operatività OGGI in tempo reale</div>
+            <div class="sim-state-label">❌ <span class="it-content">DISATTIVA</span><span class="en-content">INACTIVE</span></div>
+            <div class="sim-state-text"><span class="it-content">Torna alla modalità normale<br>operatività OGGI in tempo reale</span><span class="en-content">Returns to normal mode<br>live operations TODAY in real time</span></div>
           </div>
         </div>
       </div>
 
       <div style="margin-top:1.25rem;">
-        <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem;text-align:center;border:1px solid rgba(0,188,212,.35);border-radius:5px;padding:.35rem .8rem;background:rgba(0,188,212,.05);display:inline-block;width:100%;">▸ Parametri Input</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.75rem;text-align:center;border:1px solid rgba(0,188,212,.35);border-radius:5px;padding:.35rem .8rem;background:rgba(0,188,212,.05);display:inline-block;width:100%;"><span class="it-content">▸ Parametri Input</span><span class="en-content">▸ Input Parameters</span></div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
           <div style="background:var(--bg3);border:1px solid rgba(0,188,212,.2);border-radius:8px;padding:1rem;text-align:center;cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(0,188,212,.85)';this.style.boxShadow='0 0 18px rgba(0,188,212,.25)'" onmouseleave="this.style.borderColor='rgba(0,188,212,.2)';this.style.boxShadow=''">
             <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:.5rem;">INPUT</div>
@@ -2422,14 +2434,14 @@ body.en div.en-content { display: block; }
   <div class="section-header">
     <div class="section-num">13</div>
     <div class="section-title" data-it="CAMBIO STRUMENTO" data-en="INSTRUMENT CHANGE">CAMBIO STRUMENTO</div>
-    <div class="section-desc">Verifica sempre questi <span style="color:var(--red);font-weight:700;">6 parametri</span> prima di operare su un nuovo strumento finanziario<br><span style="font-size:12px;color:var(--text-muted);">Tick/PT · Pt/Tick · Valore PT (x Tab) · Valore PT (x TP/SL) · Commissione · Valuta</span></div>
+    <div class="section-desc"><span class="it-content">Verifica sempre questi <span style="color:var(--red);font-weight:700;">6 parametri</span> prima di operare su un nuovo strumento finanziario<br><span style="font-size:12px;color:var(--text-muted);">Tick/PT · Pt/Tick · Valore PT (x Tab) · Valore PT (x TP/SL) · Commissione · Valuta</span></span><span class="en-content">Always verify these <span style="color:var(--red);font-weight:700;">6 parameters</span> before trading a new financial instrument<br><span style="font-size:12px;color:var(--text-muted);">Tick/PT · Pt/Tick · PT Value (x Tab) · PT Value (x TP/SL) · Commission · Currency</span></span></div>
   </div>
   <div class="divider"></div>
   <div class="instruments-grid">
     <div class="hov" style="border:1px solid rgba(0,188,212,0.5);border-radius:10px;padding:1.25rem;background:rgba(0,188,212,0.03);">
       <div class="instr-label"><span class="it-content">⚡ FUTURES USA</span><span class="en-content">⚡ USA FUTURES</span></div>
       <table class="data-table" style="font-size:11.5px;">
-        <thead><tr><th>STRUMENTO</th><th>TICK/PT</th><th>PT/TICK</th><th style="color:var(--cyan);">VALORE PT (TAB)</th><th style="color:var(--cyan);">VALORE PT (TP/SL)</th><th>COMM. $</th><th>VALUTA</th></tr></thead>
+        <thead><tr><th><span class="it-content">STRUMENTO</span><span class="en-content">INSTRUMENT</span></th><th>TICK/PT</th><th>PT/TICK</th><th style="color:var(--cyan);"><span class="it-content">VALORE PT (TAB)</span><span class="en-content">PT VALUE (TAB)</span></th><th style="color:var(--cyan);"><span class="it-content">VALORE PT (TP/SL)</span><span class="en-content">PT VALUE (TP/SL)</span></th><th><span class="it-content">COMM. $</span><span class="en-content">COMM. $</span></th><th><span class="it-content">VALUTA</span><span class="en-content">CURRENCY</span></th></tr></thead>
         <tbody>
           <tr><td>Micro NQ (MNQ)</td><td class="td-green">4</td><td class="td-green">0.25</td><td class="td-gold">2 $</td><td class="td-gold">2 $</td><td style="color:#ff9800;">1.24 $</td><td style="color:var(--text-muted);">USD</td></tr>
           <tr><td>E-mini NQ (NQ)</td><td class="td-green">4</td><td class="td-green">0.25</td><td class="td-gold">20 $</td><td class="td-gold">20 $</td><td style="color:#ff9800;">4.50 $</td><td style="color:var(--text-muted);">USD</td></tr>
@@ -2443,7 +2455,7 @@ body.en div.en-content { display: block; }
     <div class="hov" style="border:1px solid rgba(0,188,212,0.5);border-radius:10px;padding:1.25rem;background:rgba(0,188,212,0.03);">
       <div class="instr-label"><span class="it-content">🇪🇺 FUTURES EUROPA</span><span class="en-content">🇪🇺 EUROPE FUTURES</span></div>
       <table class="data-table" style="font-size:11.5px;">
-        <thead><tr><th>STRUMENTO</th><th>PT/TICK</th><th>TICK SIZE</th><th style="color:var(--cyan);">VALORE PT (TAB)</th><th style="color:var(--cyan);">VALORE PT (TP/SL)</th><th>COMM. €</th><th>VALUTA</th></tr></thead>
+        <thead><tr><th><span class="it-content">STRUMENTO</span><span class="en-content">INSTRUMENT</span></th><th>PT/TICK</th><th>TICK SIZE</th><th style="color:var(--cyan);"><span class="it-content">VALORE PT (TAB)</span><span class="en-content">PT VALUE (TAB)</span></th><th style="color:var(--cyan);"><span class="it-content">VALORE PT (TP/SL)</span><span class="en-content">PT VALUE (TP/SL)</span></th><th><span class="it-content">COMM. €</span><span class="en-content">COMM. €</span></th><th><span class="it-content">VALUTA</span><span class="en-content">CURRENCY</span></th></tr></thead>
         <tbody>
           <tr><td>DAX (FDAX)</td><td class="td-green">1</td><td class="td-green">0.5</td><td class="td-gold">25 €</td><td class="td-gold">25 €</td><td style="color:#ff9800;">3.74 €</td><td style="color:var(--text-muted);">EUR</td></tr>
           <tr><td>Mini DAX</td><td class="td-green">1</td><td class="td-green">1</td><td class="td-gold">5 €</td><td class="td-gold">5 €</td><td style="color:#ff9800;">1.72 €</td><td style="color:var(--text-muted);">EUR</td></tr>
@@ -2470,7 +2482,8 @@ body.en div.en-content { display: block; }
   <div class="divider"></div>
 
   <div style="background:var(--card);border:1px solid rgba(160,160,160,.3);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.75rem;font-size:14px;color:var(--text);line-height:1.7;cursor:default;transition:border-color .25s,box-shadow .25s;" onmouseenter="this.style.borderColor='rgba(180,180,180,.75)';this.style.boxShadow='0 0 22px rgba(150,150,150,.25)'" onmouseleave="this.style.borderColor='rgba(160,160,160,.3)';this.style.boxShadow=''">
-    Il parametro <strong style="color:var(--cyan)">Fuso Orario</strong> indica lo <strong style="color:var(--text-bright)">scarto in ore</strong> tra l'orario del broker e l'orario italiano. Impostarlo correttamente è essenziale: un valore errato causa uno spostamento della fascia operativa e genera segnali negli orari sbagliati. Il valore cambia in base al broker (<strong style="color:var(--gold)">CME Chicago</strong> o <strong style="color:var(--gold)">EUREX UTC</strong>) e alla stagione<br>(ora legale / ora solare).
+    <span class="it-content">Il parametro <strong style="color:var(--cyan)">Fuso Orario</strong> indica lo <strong style="color:var(--text-bright)">scarto in ore</strong> tra l'orario del broker e l'orario italiano. Impostarlo correttamente è essenziale: un valore errato causa uno spostamento della fascia operativa e genera segnali negli orari sbagliati. Il valore cambia in base al broker (<strong style="color:var(--gold)">CME Chicago</strong> o <strong style="color:var(--gold)">EUREX UTC</strong>) e alla stagione<br>(ora legale / ora solare).</span>
+    <span class="en-content">The <strong style="color:var(--cyan)">Time Zone</strong> parameter indicates the <strong style="color:var(--text-bright)">hour offset</strong> between the broker's time and Italian time. Setting it correctly is essential: a wrong value shifts the operating window and generates signals at the wrong times. The value changes based on the broker (<strong style="color:var(--gold)">CME Chicago</strong> or <strong style="color:var(--gold)">EUREX UTC</strong>) and the season<br>(daylight saving / standard time).</span>
   </div>
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
@@ -2484,25 +2497,25 @@ body.en div.en-content { display: block; }
       <div style="padding:1.5rem;">
         <div style="background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.3);border-radius:8px;padding:.5rem;text-align:center;margin-bottom:.75rem;">
           <div style="font-family:var(--display);font-size:38px;color:var(--green);line-height:1;">7</div>
-          <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-top:.2rem;">VALORE STANDARD</div>
-          <div style="font-size:12px;color:var(--text);margin-top:.25rem;">Valore da usare come riferimento base</div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.15em;margin-top:.2rem;"><span class="it-content">VALORE STANDARD</span><span class="en-content">STANDARD VALUE</span></div>
+          <div style="font-size:12px;color:var(--text);margin-top:.25rem;"><span class="it-content">Valore da usare come riferimento base</span><span class="en-content">Value to use as base reference</span></div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
           <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.5rem;text-align:center;">
             <div style="font-family:var(--display);font-size:30px;color:var(--gold);line-height:1;">6</div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;margin-top:.2rem;">PRIMAVERA</div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.1rem;">USA ora legale</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;margin-top:.2rem;"><span class="it-content">PRIMAVERA</span><span class="en-content">SPRING</span></div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.1rem;"><span class="it-content">USA ora legale</span><span class="en-content">USA daylight saving</span></div>
             <div style="font-size:11px;color:var(--text);margin-top:.25rem;">Mar → Nov</div>
           </div>
           <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.5rem;text-align:center;">
             <div style="font-family:var(--display);font-size:30px;color:var(--blue);line-height:1;">8</div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:.1em;margin-top:.2rem;">AUTUNNO</div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.1rem;">USA ora solare</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:.1em;margin-top:.2rem;"><span class="it-content">AUTUNNO</span><span class="en-content">AUTUMN</span></div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.1rem;"><span class="it-content">USA ora solare</span><span class="en-content">USA standard time</span></div>
             <div style="font-size:11px;color:var(--text);margin-top:.25rem;">Nov → Mar</div>
           </div>
         </div>
         <div style="margin-top:1rem;font-family:var(--mono);font-size:11px;color:var(--text-muted);background:var(--bg3);border-radius:6px;padding:.6rem .9rem;text-align:center;">
-          🕐 Sessione operativa standard: <strong style="color:var(--green)">15:30 → 22:00</strong> ora italiana
+          🕐 <span class="it-content">Sessione operativa standard: <strong style="color:var(--green)">15:30 → 22:00</strong> ora italiana</span><span class="en-content">Standard operating session: <strong style="color:var(--green)">15:30 → 22:00</strong> Italian time</span>
         </div>
       </div>
     </div>
@@ -2515,24 +2528,24 @@ body.en div.en-content { display: block; }
       </div>
       <div style="padding:1.5rem;">
         <div style="margin-bottom:1rem;font-family:var(--mono);font-size:12px;color:var(--cyan);background:rgba(0,188,212,.06);border:1px solid rgba(0,188,212,.2);border-radius:8px;padding:.9rem;text-align:center;line-height:1.6;">
-          Il broker EUREX usa <strong style="color:var(--text-bright)">UTC</strong> come fuso base.<br>L'Italia si trova a UTC+1 (solare) o UTC+2 (legale).
+          <span class="it-content">Il broker EUREX usa <strong style="color:var(--text-bright)">UTC</strong> come fuso base.<br>L'Italia si trova a UTC+1 (solare) o UTC+2 (legale).</span><span class="en-content">The EUREX broker uses <strong style="color:var(--text-bright)">UTC</strong> as base timezone.<br>Italy is at UTC+1 (standard) or UTC+2 (daylight saving).</span>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
           <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.9rem;text-align:center;">
             <div style="font-family:var(--display);font-size:42px;color:var(--gold);line-height:1;">2</div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;margin-top:.3rem;">ORA LEGALE</div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.2rem;">Primavera / Estate</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;margin-top:.3rem;"><span class="it-content">ORA LEGALE</span><span class="en-content">DAYLIGHT SAVING</span></div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.2rem;"><span class="it-content">Primavera / Estate</span><span class="en-content">Spring / Summer</span></div>
             <div style="font-size:11px;color:var(--text);margin-top:.4rem;">Mar → Ott</div>
           </div>
           <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.9rem;text-align:center;">
             <div style="font-family:var(--display);font-size:42px;color:var(--blue);line-height:1;">1</div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:.1em;margin-top:.3rem;">ORA SOLARE</div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.2rem;">Autunno / Inverno</div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--blue);letter-spacing:.1em;margin-top:.3rem;"><span class="it-content">ORA SOLARE</span><span class="en-content">STANDARD TIME</span></div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--text-muted);margin-top:.2rem;"><span class="it-content">Autunno / Inverno</span><span class="en-content">Autumn / Winter</span></div>
             <div style="font-size:11px;color:var(--text);margin-top:.4rem;">Ott → Mar</div>
           </div>
         </div>
         <div style="margin-top:1rem;font-family:var(--mono);font-size:11px;color:var(--text-muted);background:var(--bg3);border-radius:6px;padding:.6rem .9rem;text-align:center;">
-          🕐 Sessione operativa standard: <strong style="color:var(--cyan)">08:00 → 17:30</strong> ora italiana
+          🕐 <span class="it-content">Sessione operativa standard: <strong style="color:var(--cyan)">08:00 → 17:30</strong> ora italiana</span><span class="en-content">Standard operating session: <strong style="color:var(--cyan)">08:00 → 17:30</strong> Italian time</span>
         </div>
       </div>
     </div>
@@ -2540,8 +2553,10 @@ body.en div.en-content { display: block; }
   </div>
 
   <div style="margin-top:1.5rem;background:rgba(255,68,68,.05);border:1px solid rgba(255,68,68,.2);border-radius:8px;padding:1rem 1.5rem;font-family:var(--mono);font-size:12px;color:var(--text-muted);text-align:center;cursor:default;transition:border-color .25s,box-shadow .25s,background .25s;" onmouseenter="this.style.borderColor='rgba(255,68,68,.9)';this.style.boxShadow='0 0 24px rgba(255,68,68,.35)';this.style.background='rgba(255,68,68,.1)'" onmouseleave="this.style.borderColor='rgba(255,68,68,.2)';this.style.boxShadow='';this.style.background='rgba(255,68,68,.05)'">
-    ⚠️ &nbsp;Fuso errato → la Fascia Oraria si sposta di conseguenza → segnali generati negli orari sbagliati<br>
-    <span style="color:var(--gold);">Verificare sempre prima di operare su un nuovo broker</span>
+    <span class="it-content">⚠️ &nbsp;Fuso errato → la Fascia Oraria si sposta di conseguenza → segnali generati negli orari sbagliati<br>
+    <span style="color:var(--gold);">Verificare sempre prima di operare su un nuovo broker</span></span>
+    <span class="en-content">⚠️ &nbsp;Wrong timezone → the Time Window shifts accordingly → signals generated at wrong times<br>
+    <span style="color:var(--gold);">Always verify before trading on a new broker</span></span>
   </div>
 </section>
 
@@ -2550,7 +2565,7 @@ body.en div.en-content { display: block; }
 <section id="messaggi">
   <div class="section-header">
     <div class="section-num">15</div>
-    <div class="section-title">MESSAGGI DI ERRORE</div>
+    <div class="section-title"><span class="it-content">MESSAGGI DI ERRORE</span><span class="en-content">ERROR MESSAGES</span></div>
     <div class="section-desc"><span class="it-content">Tutti i messaggi di avviso e correzione<br>il BOT mostra questi avvisi direttamente sul grafico TradingView</span><span class="en-content">All warning and correction messages<br>the BOT shows these warnings directly on the TradingView chart</span></div>
   </div>
   <div class="divider" style="background:linear-gradient(90deg,var(--red),transparent)"></div>
@@ -2560,20 +2575,20 @@ body.en div.en-content { display: block; }
     <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;"><span class="it-content">⚙️ Cambio Mercato / Strumento</span><span class="en-content">⚙️ Market / Instrument Change</span></div>
     <div class="error-grid">
     <div class="error-row">
-      <span class="error-cause">⛔ Futures EUREX rilevato con impostazioni CME (Mercato = USA o Fuso ≥ 6)</span>
-      <span class="error-fix">✅ Sez. 8: Mercato = Europa · Sez. 15: Fuso = 2</span>
+      <span class="error-cause"><span class="it-content">⛔ Futures EUREX rilevato con impostazioni CME (Mercato = USA o Fuso ≥ 6)</span><span class="en-content">⛔ EUREX Futures detected with CME settings (Market = USA or Timezone ≥ 6)</span></span>
+      <span class="error-fix"><span class="it-content">✅ Sez. 8: Mercato = Europa · Sez. 15: Fuso = 2</span><span class="en-content">✅ Sec. 8: Market = Europe · Sec. 15: Timezone = 2</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ Futures CME rilevato con impostazioni EUREX (Mercato = Europa o Fuso ≤ 2)</span>
-      <span class="error-fix">✅ Sez. 8: Mercato = USA · Sez. 15: Fuso = 7</span>
+      <span class="error-cause"><span class="it-content">⛔ Futures CME rilevato con impostazioni EUREX (Mercato = Europa o Fuso ≤ 2)</span><span class="en-content">⛔ CME Futures detected with EUREX settings (Market = Europe or Timezone ≤ 2)</span></span>
+      <span class="error-fix"><span class="it-content">✅ Sez. 8: Mercato = USA · Sez. 15: Fuso = 7</span><span class="en-content">✅ Sec. 8: Market = USA · Sec. 15: Timezone = 7</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ Commodity rilevata con Gap Mercato Cash attivo<br>il simbolo non ha mercato cash</span>
-      <span class="error-fix">✅ Sez. 8: Disattiva "Mostra Gap – Mercato Cash"</span>
+      <span class="error-cause"><span class="it-content">⛔ Commodity rilevata con Gap Mercato Cash attivo<br>il simbolo non ha mercato cash</span><span class="en-content">⛔ Commodity detected with Cash Market Gap active<br>the symbol has no cash market</span></span>
+      <span class="error-fix"><span class="it-content">✅ Sez. 8: Disattiva "Mostra Gap – Mercato Cash"</span><span class="en-content">✅ Sec. 8: Disable "Show Gap – Cash Market"</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ Strumento non riconosciuto<br>dati non compilati o ticker non confermato</span>
-      <span class="error-fix">✅ Compilare i parametri strumento e confermare il ticker</span>
+      <span class="error-cause"><span class="it-content">⛔ Strumento non riconosciuto<br>dati non compilati o ticker non confermato</span><span class="en-content">⛔ Instrument not recognized<br>data not filled or ticker not confirmed</span></span>
+      <span class="error-fix"><span class="it-content">✅ Compilare i parametri strumento e confermare il ticker</span><span class="en-content">✅ Fill in instrument parameters and confirm the ticker</span></span>
     </div>
   </div>
   </div>
@@ -2583,12 +2598,12 @@ body.en div.en-content { display: block; }
     <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;"><span class="it-content">📅 Simulazione &amp; Backtest</span><span class="en-content">📅 Simulation &amp; Backtest</span></div>
     <div class="error-grid">
     <div class="error-row">
-      <span class="error-cause">⛔ Giorno simulato non disponibile nel grafico (storico insufficiente / timeframe basso / giorno festivo)</span>
-      <span class="error-fix">✅ Prova un timeframe più alto o verifica il giorno</span>
+      <span class="error-cause"><span class="it-content">⛔ Giorno simulato non disponibile nel grafico (storico insufficiente / timeframe basso / giorno festivo)</span><span class="en-content">⛔ Simulated day not available on chart (insufficient history / low timeframe / holiday)</span></span>
+      <span class="error-fix"><span class="it-content">✅ Prova un timeframe più alto o verifica il giorno</span><span class="en-content">✅ Try a higher timeframe or verify the day</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ Mostra Fascia + Segnali su Tutti i Giorni attiva senza Fascia Oraria</span>
-      <span class="error-fix">✅ Abilitare la Fascia Oraria</span>
+      <span class="error-cause"><span class="it-content">⛔ Mostra Fascia + Segnali su Tutti i Giorni attiva senza Fascia Oraria</span><span class="en-content">⛔ Show Band + Signals on All Days active without Time Window</span></span>
+      <span class="error-fix"><span class="it-content">✅ Abilitare la Fascia Oraria</span><span class="en-content">✅ Enable the Time Window</span></span>
     </div>
   </div>
   </div>
@@ -2598,16 +2613,16 @@ body.en div.en-content { display: block; }
     <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;"><span class="it-content">🛡️ Protezione Trade (Stop &amp; Profit)</span><span class="en-content">🛡️ Trade Protection (Stop &amp; Profit)</span></div>
     <div class="error-grid">
     <div class="error-row">
-      <span class="error-cause">⛔ Nessun PROFIT impostato e nessuno STOP impostato<br>strategia priva di finalità 💀</span>
-      <span class="error-fix">✅ Imposta almeno un TP e uno SL / TS</span>
+      <span class="error-cause"><span class="it-content">⛔ Nessun PROFIT impostato e nessuno STOP impostato<br>strategia priva di finalità 💀</span><span class="en-content">⛔ No PROFIT set and no STOP set<br>strategy with no purpose 💀</span></span>
+      <span class="error-fix"><span class="it-content">✅ Imposta almeno un TP e uno SL / TS</span><span class="en-content">✅ Set at least one TP and one SL / TS</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ Nessuno STOP impostato (SL e TS assenti)<br>TP presente ma trade non protetto</span>
-      <span class="error-fix">✅ Imposta Stop Loss o Trailing Stop</span>
+      <span class="error-cause"><span class="it-content">⛔ Nessuno STOP impostato (SL e TS assenti)<br>TP presente ma trade non protetto</span><span class="en-content">⛔ No STOP set (SL and TS absent)<br>TP present but trade unprotected</span></span>
+      <span class="error-fix"><span class="it-content">✅ Imposta Stop Loss o Trailing Stop</span><span class="en-content">✅ Set Stop Loss or Trailing Stop</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ Nessun PROFIT impostato (TP e Target Profit assenti)<br>SL/TS presenti ma nessun obiettivo</span>
-      <span class="error-fix">✅ Imposta Take Profit o Target Profit</span>
+      <span class="error-cause"><span class="it-content">⛔ Nessun PROFIT impostato (TP e Target Profit assenti)<br>SL/TS presenti ma nessun obiettivo</span><span class="en-content">⛔ No PROFIT set (TP and Target Profit absent)<br>SL/TS present but no target</span></span>
+      <span class="error-fix"><span class="it-content">✅ Imposta Take Profit o Target Profit</span><span class="en-content">✅ Set Take Profit or Target Profit</span></span>
     </div>
   </div>
   </div>
@@ -2617,16 +2632,16 @@ body.en div.en-content { display: block; }
     <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;"><span class="it-content">💰 Target Profit / Target Loss</span><span class="en-content">💰 Target Profit / Target Loss</span></div>
     <div class="error-grid">
     <div class="error-row">
-      <span class="error-cause">⛔ Target Profit + Target Loss attivi senza Fascia Oraria</span>
-      <span class="error-fix">✅ Attivare la Fascia Oraria</span>
+      <span class="error-cause"><span class="it-content">⛔ Target Profit + Target Loss attivi senza Fascia Oraria</span><span class="en-content">⛔ Target Profit + Target Loss active without Time Window</span></span>
+      <span class="error-fix"><span class="it-content">✅ Attivare la Fascia Oraria</span><span class="en-content">✅ Enable the Time Window</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ Target Profit attivo senza Fascia Oraria</span>
-      <span class="error-fix">✅ Attivare la Fascia Oraria</span>
+      <span class="error-cause"><span class="it-content">⛔ Target Profit attivo senza Fascia Oraria</span><span class="en-content">⛔ Target Profit active without Time Window</span></span>
+      <span class="error-fix"><span class="it-content">✅ Attivare la Fascia Oraria</span><span class="en-content">✅ Enable the Time Window</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ Target Loss attivo senza Fascia Oraria</span>
-      <span class="error-fix">✅ Attivare la Fascia Oraria</span>
+      <span class="error-cause"><span class="it-content">⛔ Target Loss attivo senza Fascia Oraria</span><span class="en-content">⛔ Target Loss active without Time Window</span></span>
+      <span class="error-fix"><span class="it-content">✅ Attivare la Fascia Oraria</span><span class="en-content">✅ Enable the Time Window</span></span>
     </div>
   </div>
   </div>
@@ -2636,24 +2651,24 @@ body.en div.en-content { display: block; }
     <div style="font-family:var(--mono);font-size:11px;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.6rem;"><span class="it-content">🎯 TP Limit (Prezzo Assoluto)</span><span class="en-content">🎯 TP Limit (Absolute Price)</span></div>
     <div class="error-grid">
     <div class="error-row">
-      <span class="error-cause">⛔ TP Limit attivo senza Fascia Oraria</span>
-      <span class="error-fix">✅ Attivare la Fascia Oraria</span>
+      <span class="error-cause"><span class="it-content">⛔ TP Limit attivo senza Fascia Oraria</span><span class="en-content">⛔ TP Limit active without Time Window</span></span>
+      <span class="error-fix"><span class="it-content">✅ Attivare la Fascia Oraria</span><span class="en-content">✅ Enable the Time Window</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ TP Limit attivo con BUY &amp; SELL<br>modalità incompatibile</span>
-      <span class="error-fix">✅ Selezionare solo BUY oppure solo SELL</span>
+      <span class="error-cause"><span class="it-content">⛔ TP Limit attivo con BUY &amp; SELL<br>modalità incompatibile</span><span class="en-content">⛔ TP Limit active with BUY &amp; SELL<br>incompatible mode</span></span>
+      <span class="error-fix"><span class="it-content">✅ Selezionare solo BUY oppure solo SELL</span><span class="en-content">✅ Select BUY only or SELL only</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ TP Limit attivo ma nessun prezzo inserito nel campo</span>
-      <span class="error-fix">✅ Inserire un prezzo nel campo TP Limit</span>
+      <span class="error-cause"><span class="it-content">⛔ TP Limit attivo ma nessun prezzo inserito nel campo</span><span class="en-content">⛔ TP Limit active but no price entered in the field</span></span>
+      <span class="error-fix"><span class="it-content">✅ Inserire un prezzo nel campo TP Limit</span><span class="en-content">✅ Enter a price in the TP Limit field</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ BUY + prezzo TP Limit ≤ prezzo attuale<br>profitto impossibile</span>
-      <span class="error-fix">✅ Inserire un prezzo SUPERIORE al corrente</span>
+      <span class="error-cause"><span class="it-content">⛔ BUY + prezzo TP Limit ≤ prezzo attuale<br>profitto impossibile</span><span class="en-content">⛔ BUY + TP Limit price ≤ current price<br>profit impossible</span></span>
+      <span class="error-fix"><span class="it-content">✅ Inserire un prezzo SUPERIORE al corrente</span><span class="en-content">✅ Enter a price ABOVE the current one</span></span>
     </div>
     <div class="error-row">
-      <span class="error-cause">⛔ SELL + prezzo TP Limit ≥ prezzo attuale<br>profitto impossibile</span>
-      <span class="error-fix">✅ Inserire un prezzo INFERIORE al corrente</span>
+      <span class="error-cause"><span class="it-content">⛔ SELL + prezzo TP Limit ≥ prezzo attuale<br>profitto impossibile</span><span class="en-content">⛔ SELL + TP Limit price ≥ current price<br>profit impossible</span></span>
+      <span class="error-fix"><span class="it-content">✅ Inserire un prezzo INFERIORE al corrente</span><span class="en-content">✅ Enter a price BELOW the current one</span></span>
     </div>
   </div>
   </div>
