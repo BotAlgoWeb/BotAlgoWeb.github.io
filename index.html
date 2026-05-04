@@ -768,6 +768,7 @@ section {
   color: var(--cyan);
   letter-spacing: .2em;
   margin-bottom: .75rem;
+  text-align: center;
 }
 
 /* ── FOOTER ── */
@@ -1769,7 +1770,7 @@ body.en div.en-content { display: block; }
   <div class="hero-glow"></div>
   <!-- FOTO PROFILO -->
   <div style="margin-bottom:1rem;position:relative;z-index:10;">
-    <img src="BOT_ALGO.png" alt="Bot Algo" style="width:150px;height:150px;border-radius:50%;object-fit:cover;object-position:center center;border:2px solid rgba(200,148,10,.7);box-shadow:0 0 28px rgba(200,148,10,.5),0 0 60px rgba(200,148,10,.2);display:block;margin:0 auto;">
+    <img src="BOT_ALGO.png" alt="Bot Algo" style="width:150px;height:150px;border-radius:50%;object-fit:cover;object-position:center center;border:2px solid rgba(200,148,10,.7);box-shadow:0 0 28px rgba(200,148,10,.5),0 0 60px rgba(200,148,10,.2);display:block;margin:0 auto;cursor:pointer;transition:box-shadow .3s ease, border-color .3s ease, transform .3s ease;" onmouseenter="this.style.boxShadow='0 0 50px rgba(200,148,10,.9),0 0 100px rgba(200,148,10,.5),0 0 150px rgba(200,148,10,.2)';this.style.borderColor='rgba(255,215,0,.95)';this.style.transform='scale(1.06)'" onmouseleave="this.style.boxShadow='0 0 28px rgba(200,148,10,.5),0 0 60px rgba(200,148,10,.2)';this.style.borderColor='rgba(200,148,10,.7)';this.style.transform='scale(1)'">
   </div>
   <div class="hero-title" style="margin-bottom:1.5rem;text-shadow:0 0 60px rgba(200,148,10,0.5),0 0 120px rgba(200,148,10,0.2);"><span style="color:#c8940a">BOT</span><span style="color:#c8940a"> ALGO</span></div>
   <div class="hero-tag" data-it="▸ TradingView · Pine Script® v6 · Algoritmo Avanzato" data-en="▸ TradingView · Pine Script® v6 · Advanced Algorithm">▸ TradingView · Pine Script® v6 · Algoritmo Avanzato</div>
@@ -2681,8 +2682,8 @@ body.en div.en-content { display: block; }
 <!-- FOOTER -->
 <footer>
   <div style="font-family:var(--display);font-size:28px;color:#ffd700;letter-spacing:6px;margin-bottom:.5rem;text-shadow:0 0 14px rgba(200,148,10,0.7);">BOT ALGO</div>
-  <div>Pine Script® v6 · TradingView · <strong>Multi-Strategia</strong></div>
-  <div style="margin-top:.5rem;color:rgba(255,255,255,0.75);font-size:10px;">Futures · Azioni · Crypto · Forex · Commodities</div>
+  <div>Pine Script® v6 · TradingView · <strong><span class="it-content">Multi-Strategia</span><span class="en-content">Multi-Strategy</span></strong></div>
+  <div style="margin-top:.5rem;color:rgba(255,255,255,0.75);font-size:10px;"><span class="it-content">Futures · Azioni · Crypto · Forex · Commodities</span><span class="en-content">Futures · Stocks · Crypto · Forex · Commodities</span></div>
 </footer>
 
 <!-- SCROLL TOP -->
@@ -2699,6 +2700,7 @@ function openVideoGallery() {
 function closeVideoGallery() {
   document.getElementById('video-gallery-modal').style.display = 'none';
   document.body.style.overflow = '';
+  playZoomCloseSound();
 }
 function openGallery() {
   document.getElementById('gallery-modal').style.display = 'block';
@@ -3410,10 +3412,10 @@ function playCtaSound() {
 
     <div class="contact-links">
       <a href="https://t.me/Bot_Algo_Channel" class="contact-btn" target="_blank" rel="noopener">
-        💬 Scrivimi su Telegram ➜ @Bot_Algo_Channel
+        <span class="it-content">💬 Scrivimi su Telegram ➜ @Bot_Algo_Channel</span><span class="en-content">💬 Message me on Telegram ➜ @Bot_Algo_Channel</span>
       </a>
       <a href="mailto:traderman972@gmail.com" class="contact-btn">
-        📧 Scrivimi per email ➜ traderman972@gmail.com
+        <span class="it-content">📧 Scrivimi per email ➜ traderman972@gmail.com</span><span class="en-content">📧 Email me ➜ traderman972@gmail.com</span>
       </a>
     </div>
 
@@ -3642,7 +3644,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- VIDEO GALLERY MODAL -->
 <div id="video-gallery-modal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.92);backdrop-filter:blur(8px);overflow-y:auto;padding:60px 20px 40px;" onclick="if(event.target===this)closeVideoGallery();">
-  <button onclick="closeVideoGallery()" style="position:fixed;top:14px;right:16px;background:rgba(255,68,68,.15);border:1px solid rgba(255,68,68,.4);color:#ff6666;font-size:11px;padding:5px 14px;border-radius:6px;cursor:pointer;font-family:var(--mono);letter-spacing:.08em;transition:all .2s;z-index:100000;display:flex;align-items:center;gap:6px;" onmouseenter="this.style.background='rgba(255,68,68,.35)'" onmouseleave="this.style.background='rgba(255,68,68,.15)'">✕ &nbsp;<span class="it-content">CHIUDI</span><span class="en-content">CLOSE</span></button>
+  <button onclick="closeVideoGallery()" style="position:fixed;top:18px;right:18px;background:rgba(255,68,68,.18);border:2px solid rgba(255,68,68,.55);color:#ff6666;font-size:13px;font-weight:700;padding:8px 20px;border-radius:8px;cursor:pointer;font-family:var(--mono);letter-spacing:.12em;transition:all .2s;z-index:100000;display:flex;align-items:center;gap:8px;" onmouseenter="this.style.background='rgba(255,68,68,.4)';this.style.borderColor='rgba(255,68,68,.9)';this.style.color='#fff'" onmouseleave="this.style.background='rgba(255,68,68,.18)';this.style.borderColor='rgba(255,68,68,.55)';this.style.color='#ff6666'">✕ &nbsp;<span class="it-content">CHIUDI</span><span class="en-content">CLOSE</span></button>
   <div style="max-width:700px;margin:0 auto;text-align:center;">
     <div style="font-family:var(--display);font-size:32px;color:var(--gold);letter-spacing:4px;margin-bottom:.4rem;">🎥 <span class="it-content">VIDEO</span><span class="en-content">VIDEOS</span></div>
     <div style="font-family:var(--mono);font-size:12px;color:var(--text-muted);letter-spacing:.15em;margin-bottom:2.5rem;"><span class="it-content">Demo · Tutorial · Funzioni</span><span class="en-content">Demo · Tutorial · Features</span></div>
