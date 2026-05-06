@@ -1770,7 +1770,7 @@ body.en div.en-content { display: block; }
   <div class="hero-glow"></div>
   <!-- FOTO PROFILO -->
   <div style="margin-bottom:1rem;position:relative;z-index:10;">
-    <img src="BOT_ALGO.png" alt="Bot Algo" style="width:200px;height:200px;border-radius:50%;object-fit:cover;object-position:center center;border:2px solid rgba(200,148,10,.7);box-shadow:0 0 28px rgba(200,148,10,.5),0 0 60px rgba(200,148,10,.2);display:block;margin:0 auto 20px;cursor:pointer;transition:box-shadow .3s ease, border-color .3s ease, transform .3s ease;" onmouseenter="this.style.boxShadow='0 0 50px rgba(200,148,10,.9),0 0 100px rgba(200,148,10,.5),0 0 150px rgba(200,148,10,.2)';this.style.borderColor='rgba(255,215,0,.95)';this.style.transform='scale(1.06)'" onmouseleave="this.style.boxShadow='0 0 28px rgba(200,148,10,.5),0 0 60px rgba(200,148,10,.2)';this.style.borderColor='rgba(200,148,10,.7)';this.style.transform='scale(1)'">
+    <img src="BOT_ALGO.png" alt="Bot Algo" style="width:250px;height:250px;border-radius:50%;object-fit:cover;object-position:center center;border:2px solid rgba(200,148,10,.7);box-shadow:0 0 28px rgba(200,148,10,.5),0 0 60px rgba(200,148,10,.2);display:block;margin:0 auto 32px;cursor:pointer;transition:box-shadow .3s ease, border-color .3s ease, transform .3s ease;" onmouseenter="playLogoHoverSound();this.style.boxShadow='0 0 50px rgba(200,148,10,.9),0 0 100px rgba(200,148,10,.5),0 0 150px rgba(200,148,10,.2)';this.style.borderColor='rgba(255,215,0,.95)';this.style.transform='scale(1.06)'" onmouseleave="this.style.boxShadow='0 0 28px rgba(200,148,10,.5),0 0 60px rgba(200,148,10,.2)';this.style.borderColor='rgba(200,148,10,.7)';this.style.transform='scale(1)'">
   </div>
   <div class="hero-title" style="margin-bottom:1.5rem;text-shadow:0 0 60px rgba(200,148,10,0.5),0 0 120px rgba(200,148,10,0.2);"><span style="color:#c8940a">BOT</span><span style="color:#c8940a"> ALGO</span></div>
   <div class="hero-tag" data-it="▸ TradingView · Pine Script® v6 · Algoritmo Avanzato" data-en="▸ TradingView · Pine Script® v6 · Advanced Algorithm">▸ TradingView · Pine Script® v6 · Algoritmo Avanzato</div>
@@ -1791,10 +1791,10 @@ body.en div.en-content { display: block; }
   </div>
   <div class="markets-row">
     <span class="market-pill market-btn"><span class="it-content">📈 FUTURES</span><span class="en-content">📈 FUTURES</span></span>
+    <span class="market-pill market-btn"><span class="it-content">📊 INDICI</span><span class="en-content">📊 INDICES</span></span>
     <span class="market-pill market-btn"><span class="it-content">🏦 AZIONI</span><span class="en-content">🏦 STOCKS</span></span>
     <span class="market-pill market-btn">₿ CRYPTO</span>
     <span class="market-pill market-btn">💱 FOREX</span>
-    <span class="market-pill market-btn"><span class="it-content">📊 INDICI</span><span class="en-content">📊 INDICES</span></span>
     <span class="market-pill market-btn">🛢 COMMODITIES</span>
   </div>
 </div>
@@ -2711,6 +2711,32 @@ function closeGallery() {
   document.getElementById('gallery-modal').style.display = 'none';
   document.body.style.overflow = '';
   playZoomCloseSound();
+}
+function playLogoHoverSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    // Onda elettromagnetica: sweep rapido + risonanza
+    const osc1 = ctx.createOscillator();
+    const osc2 = ctx.createOscillator();
+    const g1 = ctx.createGain();
+    const g2 = ctx.createGain();
+    osc1.connect(g1); g1.connect(ctx.destination);
+    osc2.connect(g2); g2.connect(ctx.destination);
+    osc1.type = 'sine';
+    osc2.type = 'sawtooth';
+    // sweep da basso ad alto
+    osc1.frequency.setValueAtTime(200, ctx.currentTime);
+    osc1.frequency.exponentialRampToValueAtTime(1800, ctx.currentTime + 0.18);
+    g1.gain.setValueAtTime(0.12, ctx.currentTime);
+    g1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+    // risonanza
+    osc2.frequency.setValueAtTime(1200, ctx.currentTime + 0.08);
+    osc2.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.25);
+    g2.gain.setValueAtTime(0.05, ctx.currentTime + 0.08);
+    g2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
+    osc1.start(ctx.currentTime); osc1.stop(ctx.currentTime + 0.25);
+    osc2.start(ctx.currentTime + 0.08); osc2.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
 }
 function playZoomOpenSound() {
   try {
